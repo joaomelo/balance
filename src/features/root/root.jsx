@@ -1,10 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  useRouteMatch
-} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { useGetter } from '../../app/store';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
@@ -59,14 +53,30 @@ function InPages ({ dependencies }) {
   const defaultInRoute = `${path}/accounts`;
 
   return (
-    <Switch>
-      <Route path={`${path}/accounts`}>
-        <Accounts dependencies={dependencies}/>
-      </Route>
-      <Route path={`${path}/balances`}>
-        <Balances dependencies={dependencies}/>
-      </Route>
-      <Redirect to={defaultInRoute} />
-    </Switch>
+    <>
+      <NavBar />
+      <Switch>
+        <Route path={`${path}/accounts`}>
+          <Accounts dependencies={dependencies}/>
+        </Route>
+        <Route path={`${path}/balances`}>
+          <Balances dependencies={dependencies}/>
+        </Route>
+        <Redirect to={defaultInRoute} />
+      </Switch>
+    </>
+  );
+}
+
+function NavBar () {
+  return (
+    <>
+      <nav>
+        <Link to="/i/accounts" >Accounts</Link>
+        <span> | </span>
+        <Link to="/i/balances" >Balances</Link>
+      </nav>
+      <hr />
+    </>
   );
 }
