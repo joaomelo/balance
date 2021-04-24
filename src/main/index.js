@@ -4,8 +4,8 @@ import 'regenerator-runtime/runtime';
 import { initFirebaseSuiteFromEnv } from '../app/firebase';
 import { createRepositoryProvider } from '../app/repository';
 import { createAuthStore, createIdentityProvider } from '../features/auth';
-import { createArcsStore, createArcsRepository } from '../features/arcs';
-import { createChallengesRepository, createChallengesStore } from '../features/challenges';
+import { createAccountsStore, createAccountsRepository } from '../features/accounts';
+import { createBalancesRepository, createBalancesStore } from '../features/balances';
 import { mountRoot } from '../features/root';
 
 async function main () {
@@ -18,18 +18,18 @@ async function main () {
   const firestoreEmulatorHost = process.env.FIRESTORE_EMULATOR_HOST;
   const repositoryProvider = await createRepositoryProvider({ ...suite, firestoreEmulatorHost });
 
-  const arcsRepository = createArcsRepository(repositoryProvider);
-  const arcsStore = createArcsStore(arcsRepository, authStore);
-  const challengesRepository = createChallengesRepository(repositoryProvider);
-  const challengesStore = createChallengesStore(challengesRepository, authStore);
+  const accountsRepository = createAccountsRepository(repositoryProvider);
+  const accountsStore = createAccountsStore(accountsRepository, authStore);
+  const balancesRepository = createBalancesRepository(repositoryProvider);
+  const balancesStore = createBalancesStore(balancesRepository, authStore);
 
   const dependencies = {
     identityProvider,
     authStore,
-    arcsRepository,
-    arcsStore,
-    challengesRepository,
-    challengesStore
+    accountsRepository,
+    accountsStore,
+    balancesRepository,
+    balancesStore
   };
 
   // dependencies exposed globally to facilitate e2e tests

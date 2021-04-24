@@ -9,8 +9,8 @@ import { useGetter } from '../../app/store';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
 import { SignInPresenter } from '../auth';
-import { ArcsPresenter } from '../arcs';
-import { ChallengesPresenter } from '../challenges';
+import { AccountsPresenter } from '../accounts';
+import { BalancesPresenter } from '../balances';
 
 export function Root ({ dependencies }) {
   const { authStore } = dependencies;
@@ -60,12 +60,12 @@ function InPages ({ dependencies }) {
 
   return (
     <Switch>
-      <Route path={`${path}/arcs/:arcId/challenges`}>
-        <ChallengesPresenter dependencies={dependencies}
+      <Route path={`${path}/accounts`}>
+        <AccountsPresenter dependencies={dependencies}
         />
       </Route>
-      <Route path={`${path}/arcs`}>
-        <ArcsPresenter dependencies={dependencies}/>
+      <Route path={`${path}/balances`}>
+        <BalancesPresenter dependencies={dependencies}/>
       </Route>
       <Redirect to={defaultInRoute} />
     </Switch>
