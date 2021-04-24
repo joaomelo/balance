@@ -1,4 +1,6 @@
 export async function add (items, collection, firestore) {
+  console.log({ user: firestore.app.auth().currentUser.email });
+
   if (!items || typeof items !== 'object') {
     throw new Error('Add supports only non-empty arrays or objects');
   };

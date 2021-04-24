@@ -8,9 +8,9 @@ import {
 import { useGetter } from '../../app/store';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
-import { SignInPresenter } from '../auth';
-import { AccountsPresenter } from '../accounts';
-import { BalancesPresenter } from '../balances';
+import { SignIn } from '../auth';
+import { Accounts } from '../accounts';
+import { Balances } from '../balances';
 
 export function Root ({ dependencies }) {
   const { authStore } = dependencies;
@@ -47,7 +47,7 @@ function OutPages ({ dependencies }) {
   return (
     <Switch>
       <Route path={`${path}/sign-in`}>
-        <SignInPresenter dependencies={dependencies}/>
+        <SignIn dependencies={dependencies}/>
       </Route>
       <Redirect to={defaultOutRoute} />
     </Switch>
@@ -56,16 +56,15 @@ function OutPages ({ dependencies }) {
 
 function InPages ({ dependencies }) {
   const { path } = useRouteMatch();
-  const defaultInRoute = `${path}/arcs`;
+  const defaultInRoute = `${path}/accounts`;
 
   return (
     <Switch>
       <Route path={`${path}/accounts`}>
-        <AccountsPresenter dependencies={dependencies}
-        />
+        <Accounts dependencies={dependencies}/>
       </Route>
       <Route path={`${path}/balances`}>
-        <BalancesPresenter dependencies={dependencies}/>
+        <Balances dependencies={dependencies}/>
       </Route>
       <Redirect to={defaultInRoute} />
     </Switch>

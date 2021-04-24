@@ -22,6 +22,7 @@ async function initFireauth (config) {
 
 function adaptFirebaseAuth (fireauth) {
   return {
+    _fireauth: fireauth,
     subscribe: observer => subscribe(observer, fireauth),
     signIn: credentials => signIn(credentials, fireauth)
   };

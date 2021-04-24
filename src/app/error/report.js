@@ -1,4 +1,4 @@
-export function createErrorReport (error, schema) {
+export function createErrorReport (error, schema = {}) {
   const entries = Object.entries(schema);
   const report = entries.reduce((acc, [key, codes]) => {
     acc[key] = reportOnCodes(error, codes);

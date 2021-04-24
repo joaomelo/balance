@@ -69,4 +69,12 @@ describe('error report module', () => {
       escaped: null
     }));
   });
+
+  test('no schema creates a report only escaped key', () => {
+    const errors = createErrorReport(errorWithCode);
+
+    expect(errors).toEqual(expect.objectContaining({
+      escaped: 'SOME_CODE'
+    }));
+  });
 });
