@@ -1,0 +1,1 @@
+export { createIdentityProvider } from './factory';
