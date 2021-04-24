@@ -1,11 +1,11 @@
-// import { ListView } from './list-view';
 import { Add } from './add';
+import { List } from './list';
 
 export function Accounts ({ dependencies }) {
   return (
     <>
       <Add dependencies={dependencies}/>
-      {/* <ListView accounts={accounts}/> */}
+      <List dependencies={dependencies}/>
     </>
   );
 }

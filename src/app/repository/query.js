@@ -17,12 +17,11 @@ export function subscribe (filters, observer, collection, firebase) {
 }
 
 function mountQuery (filters = [], collection) {
-  let query = collection;
-  filters.forEach(filter => {
-    const { field, operator, value } = filter;
-    query = query.where(field, operator, value);
-  });
-  return query;
+  return filters.reduce((query, filter) => {
+    const filterData = typeof filter === 'function' ? filter() : filter;
+    const { field, operator, value } = filterData;
+    return query.where(field, operator, value);
+  }, collection);
 }
 
 function convertSnapshotToItems (snapshot, firebase) {

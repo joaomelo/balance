@@ -6,8 +6,9 @@ export const ResetStyles = css`
     box-sizing: border-box;
   }
 
-  body, h1, h2, h3, h4, p, li, figure, figcaption, blockquote, dl, dd {
+  body, h1, h2, h3, h4, p, ul, li, figure, figcaption, blockquote, dl, dd {
     margin: 0;
+    padding: 0;
   }
 
   html:focus-within {
