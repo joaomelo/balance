@@ -1,7 +1,11 @@
 import { createUuid } from '../../../app/ids';
+import { validateAccount } from '../body';
 
-export function addCase (accountData, dependencies) {
-  const { accountsRepository, authStore } = dependencies;
+export async function addCase (accountData, dependencies) {
+  const { accountsRepository, authStore, accountsStore } = dependencies;
+
+  const accounts = accountsStore.getters.allItems;
+  validateAccount(accountData, accounts);
 
   const account = {
     id: createUuid(),
@@ -9,5 +13,5 @@ export function addCase (accountData, dependencies) {
     ...accountData
   };
 
-  return accountsRepository.add(account);
+  await accountsRepository.add(account);
 }

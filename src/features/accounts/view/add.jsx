@@ -5,14 +5,19 @@ import { addCase } from '../cases';
 
 export function Add ({ dependencies }) {
   const { run, isRunning, error } = useCase(addCase, dependencies);
-  const { payload, updatePayload } = usePayload({ name: '' });
+  const { payload, updatePayload, resetPayload } = usePayload({ name: '' });
 
   const errors = createErrorReport(error);
+
+  const onSubmit = async () => {
+    const success = await run(payload);
+    success && resetPayload();
+  };
 
   return (
     <>
       <Loading isLoading={isRunning} />
-      <Form onSubmit={() => run(payload)}>
+      <Form onSubmit={onSubmit}>
         <input
           value={payload.name}
           onChange={e => updatePayload({ name: e.target.value })}

@@ -11,16 +11,21 @@ export function useCase (myUseCase, dependencies = {}) {
   const run = async payload => {
     if (isRunning) return;
 
+    let success = true;
+
     setIsRunning(true);
     setError(null);
 
     try {
       await myUseCase(payload, dependencies);
     } catch (error) {
+      success = false;
       isMounted.current && setError(error);
     } finally {
       isMounted.current && setIsRunning(false);
     }
+
+    return success;
   };
 
   return { run, isRunning, error };

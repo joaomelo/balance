@@ -10,5 +10,9 @@ export function usePayload (initialValue = {}) {
     }));
   };
 
-  return { payload, updatePayload };
+  const resetPayload = () => {
+    setPayload(initialValue);
+  };
+
+  return { payload, updatePayload, resetPayload };
 }
