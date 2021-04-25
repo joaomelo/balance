@@ -1,11 +1,12 @@
-import { Add } from './add';
-import { List } from './list';
+import { AddAccountView } from './add';
+import { ListAccountsView } from './list';
 
-export function Accounts ({ dependencies }) {
+export function AccountsPage ({ dependencies }) {
   return (
     <>
-      <Add dependencies={dependencies}/>
-      <List dependencies={dependencies}/>
+      <h2>Accounts</h2>
+      <AddAccountView dependencies={dependencies}/>
+      <ListAccountsView dependencies={dependencies}/>
     </>
   );
 }

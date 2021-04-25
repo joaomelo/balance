@@ -21,6 +21,7 @@ export function useCase (myUseCase, dependencies = {}) {
     } catch (error) {
       success = false;
       isMounted.current && setError(error);
+      console.error(error);
     } finally {
       isMounted.current && setIsRunning(false);
     }

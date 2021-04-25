@@ -1,6 +1,6 @@
 import { createUuid } from '../../../app/ids';
 
-export function addCase (balanceData, dependencies) {
+export function addBalanceCase (balanceData, dependencies) {
   const { balancesRepository, authStore } = dependencies;
 
   const balance = {

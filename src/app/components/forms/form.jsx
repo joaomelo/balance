@@ -1,7 +1,8 @@
-export function Form ({ onSubmit, children }) {
-  const handleSubmit = e => {
+export function Form ({ onSubmit, onSuccess, children }) {
+  const handleSubmit = async e => {
     e.preventDefault();
-    onSubmit();
+    const success = await onSubmit();
+    if (success && onSuccess) onSuccess();
   };
 
   return (

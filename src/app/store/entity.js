@@ -11,6 +11,9 @@ export function createEntityStore (config) {
     get allItems () {
       return Object.values(state.items);
     },
+    get activeItems () {
+      return Object.values(state.items).filter(i => !i._deleted);
+    },
     get itemById () {
       return id => state.items[id];
     }

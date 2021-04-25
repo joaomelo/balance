@@ -2,13 +2,13 @@ import { Loading, Form, usePayload } from '../../../app/components';
 import { useCase } from '../../../app/use-case';
 import { useGetter } from '../../../app/store';
 import { createErrorReport } from '../../../app/error';
-import { addCase } from '../cases';
+import { addBalanceCase } from '../cases';
 
 export function Add ({ dependencies }) {
   const { accountsStore } = dependencies;
   const accounts = useGetter(accountsStore, 'allItems', []);
 
-  const { run, isRunning, error } = useCase(addCase, dependencies);
+  const { run, isRunning, error } = useCase(addBalanceCase, dependencies);
   const { payload, updatePayload } = usePayload({
     date: '',
     accountId: '',

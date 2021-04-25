@@ -1,6 +1,6 @@
 export async function add (items, collection, firestore) {
   if (!items || typeof items !== 'object') {
-    throw new Error('Add supports only non-empty arrays or objects');
+    throw new Error('Add supports only non-empty arrays or a single object');
   };
 
   if (Array.isArray(items) && items.length === 0) {
@@ -15,11 +15,19 @@ export async function add (items, collection, firestore) {
 
   const batch = firestore.batch();
   itemsToAdd.forEach(item => {
-    const record = { ...item };
+    const record = convertItemToRecord(item);
     const docRef = collection.doc(record.id);
     batch.set(docRef, record);
   });
   await batch.commit();
+}
 
-  return true;
+function convertItemToRecord (item) {
+  const now = new Date();
+  return {
+    ...item,
+    _deleted: false,
+    _created: now,
+    _updated: now
+  };
 }

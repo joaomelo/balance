@@ -1,7 +1,7 @@
 import { createUuid } from '../../../app/ids';
 import { validateAccount } from '../body';
 
-export async function addCase (accountData, dependencies) {
+export async function addAccountCase (accountData, dependencies) {
   const { accountsRepository, authStore, accountsStore } = dependencies;
 
   const accounts = accountsStore.getters.allItems;

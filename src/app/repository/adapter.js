@@ -1,4 +1,5 @@
 import { add } from './add';
+import { del } from './del';
 import { query, subscribe } from './query';
 
 export function adaptFirestore (config) {
@@ -13,6 +14,7 @@ function collection (name, config) {
 
   return {
     add: items => add(items, collection, firestore),
+    del: ids => del(ids, collection, firestore),
     query: filters => query(filters, collection, firebase),
     subscribe: (filter, observer) => subscribe(filter, observer, collection, firebase)
   };

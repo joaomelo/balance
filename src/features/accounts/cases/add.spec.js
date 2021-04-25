@@ -1,6 +1,6 @@
 import { accounts } from '../../../../tests/fixtures';
 import { NameInvalidError, NameNonUniqueError } from '../body';
-import { addCase } from './add';
+import { addAccountCase } from './add';
 
 describe('add account use case', () => {
   const accountsRepository = {
@@ -28,7 +28,7 @@ describe('add account use case', () => {
   test('add account to repository with correct data shape', async () => {
     const accountData = { name: 'new account' };
 
-    await addCase(accountData, dependencies);
+    await addAccountCase(accountData, dependencies);
 
     expect(accountsRepository.add)
       .toHaveBeenCalledWith(expect.objectContaining({
@@ -41,7 +41,7 @@ describe('add account use case', () => {
   test('throws if empty account name', async () => {
     const accountData = { name: '' };
 
-    await expect(addCase(accountData, dependencies))
+    await expect(addAccountCase(accountData, dependencies))
       .rejects
       .toThrow(NameInvalidError);
   });
@@ -50,7 +50,7 @@ describe('add account use case', () => {
     const name = accounts[0].name;
     const accountData = { name };
 
-    await expect(addCase(accountData, dependencies))
+    await expect(addAccountCase(accountData, dependencies))
       .rejects
       .toThrow(NameNonUniqueError);
   });
