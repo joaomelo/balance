@@ -5,7 +5,7 @@ export function addCase (balanceData, dependencies) {
 
   const balance = {
     id: createUuid(),
-    creator: authStore.getters.userId,
+    user: authStore.getters.userId,
     ...balanceData
   };
 

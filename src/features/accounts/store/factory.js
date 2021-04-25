@@ -1,4 +1,4 @@
-import { createEntityStore } from '../../../app/store';
+import { createEntityStore, createUserFilter } from '../../../app/store';
 
 export function createAccountsStore (accountsRepository, authStore) {
   return createEntityStore({
@@ -6,15 +6,4 @@ export function createAccountsStore (accountsRepository, authStore) {
     filters: [createUserFilter(authStore)],
     authStore
   });
-}
-
-function createUserFilter (authStore) {
-  return () => {
-    const userId = authStore.getters.userId;
-    return {
-      field: 'user',
-      operator: '==',
-      value: userId
-    };
-  };
 }

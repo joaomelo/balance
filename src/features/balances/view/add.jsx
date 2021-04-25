@@ -1,13 +1,17 @@
 import { Loading, Form, usePayload } from '../../../app/components';
 import { useCase } from '../../../app/use-case';
+import { useGetter } from '../../../app/store';
 import { createErrorReport } from '../../../app/error';
 import { addCase } from '../cases';
 
 export function Add ({ dependencies }) {
+  const { accountsStore } = dependencies;
+  const accounts = useGetter(accountsStore, 'allItems', []);
+
   const { run, isRunning, error } = useCase(addCase, dependencies);
   const { payload, updatePayload } = usePayload({
-    date: new Date(),
-    account: '',
+    date: '',
+    accountId: '',
     amount: 0
   });
 
@@ -22,10 +26,14 @@ export function Add ({ dependencies }) {
           onChange={e => updatePayload({ date: e.target.value })}
           type="date"
         />
-        <input
-          value={payload.account}
-          onChange={e => updatePayload({ account: e.target.value })}
-        />
+        <select
+          value={payload.accountId}
+          onChange={e => updatePayload({ accountId: e.target.value })}
+        >
+          <option value="">--Please choose an account--</option>
+          {accounts.map(({ id, name }) =>
+            <option key={id} value={id}>{name}</option>)}
+        </select>
         <input
           value={payload.amount}
           onChange={e => updatePayload({ amount: e.target.value })}
