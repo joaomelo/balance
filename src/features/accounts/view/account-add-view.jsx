@@ -1,4 +1,5 @@
-import { Form, usePayload } from '../../../app/components';
+import { Form } from '../../../app/components';
+import { usePayload } from '../../../app/hooks';
 
 export function AccountAddView ({
   onAdd,

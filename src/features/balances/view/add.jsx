@@ -1,5 +1,5 @@
-import { Loading, Form, usePayload } from '../../../app/components';
-import { useCase } from '../../../app/use-case';
+import { Loading, Form } from '../../../app/components';
+import { useCase, usePayload } from '../../../app/hooks';
 import { useGetter } from '../../../app/store';
 import { createErrorReport } from '../../../app/error';
 import { addBalanceCase } from '../cases';
