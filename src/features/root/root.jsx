@@ -3,7 +3,7 @@ import { useGetter } from '../../app/store';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
 import { SignIn } from '../auth';
-import { AccountsPage } from '../accounts';
+import { AccountsPagePresenter } from '../accounts';
 import { Balances } from '../balances';
 
 export function Root ({ dependencies }) {
@@ -57,7 +57,7 @@ function InPages ({ dependencies }) {
       <NavBar />
       <Switch>
         <Route path={`${path}/accounts`}>
-          <AccountsPage dependencies={dependencies}/>
+          <AccountsPagePresenter dependencies={dependencies}/>
         </Route>
         <Route path={`${path}/balances`}>
           <Balances dependencies={dependencies}/>

@@ -1,1 +1,1 @@
-export * from './accounts';
+export { AccountsPagePresenter } from './accounts-page-presenter';

@@ -44,7 +44,7 @@ export const ResetStyles = css`
   }
 
   html, body, input, button, textarea, select, option, 
-  h1, h2, h3, h4, h5, h6, strong {
+  h1, h2, h3, h4, h5, h6, strong, th {
     font-family: 'Roboto', sans-serif;
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-normal);
