@@ -19,9 +19,9 @@ export function useCase (myUseCase, dependencies = {}) {
     try {
       await myUseCase(payload, dependencies);
     } catch (error) {
+      console.error(error);
       success = false;
       isMounted.current && setError(error);
-      console.error(error);
     } finally {
       isMounted.current && setIsRunning(false);
     }
@@ -29,5 +29,5 @@ export function useCase (myUseCase, dependencies = {}) {
     return success;
   };
 
-  return { run, isRunning, error };
+  return [run, isRunning, error];
 }

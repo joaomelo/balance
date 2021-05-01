@@ -1,9 +1,10 @@
-export function BalancesListView ({ accounts, balances }) {
-  const renderBalance = b => <Balance
-      key={b.id}
-      balance={b}
-      accounts={accounts}
-    />;
+import { useState } from 'react';
+import { BalanceReadView } from './balance-read-view';
+import { BalanceEditView } from './balance-edit-view';
+
+export function BalancesListView ({ accounts, balances, onDel, onEdit, errorsEdit }) {
+  const [idOnEdit, claimEdit] = useState(null);
+  const releaseEdit = () => claimEdit(null);
 
   return (
     <table>
@@ -11,23 +12,29 @@ export function BalancesListView ({ accounts, balances }) {
         <th>Account</th>
         <th>Date</th>
         <th>Amount</th>
+        <th colSpan="2">Actions</th>
       </thead>
       <tbody>
-        {balances.map(renderBalance)}
+        {balances.map(b =>
+          <BalanceView
+            key={b.id}
+            balance={b}
+            accounts={accounts}
+            onDel={onDel}
+            onEdit={onEdit}
+            errorsEdit={errorsEdit}
+            idOnEdit={idOnEdit}
+            claimEdit={claimEdit}
+            releaseEdit={releaseEdit}
+          />)
+        }
       </tbody>
     </table>
   );
 }
 
-export function Balance ({ balance, accounts }) {
-  const { accountId, date, amount } = balance;
-  const { name } = accounts.find(a => a.id === accountId);
-
-  return (
-    <tr>
-      <td>{name}</td>
-      <td>{date}</td>
-      <td>{amount}</td>
-    </tr>
-  );
+function BalanceView ({ idOnEdit, ...props }) {
+  return idOnEdit === props.balance.id
+    ? <BalanceEditView {...props} />
+    : <BalanceReadView {...props} />;
 }

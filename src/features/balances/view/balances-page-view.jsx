@@ -3,10 +3,13 @@ import { BalancesAddView } from './balance-add-view';
 import { BalancesListView } from './balances-list-view';
 
 export function BalancesPageView ({
-  accounts,
   balances,
+  accounts,
   onAdd,
   errorsAdd,
+  onEdit,
+  errorsEdit,
+  onDel,
   isLoading
 }) {
   return (
@@ -19,6 +22,10 @@ export function BalancesPageView ({
       />
       <BalancesListView
         balances={balances}
+        accounts={accounts}
+        onDel={onDel}
+        onEdit={onEdit}
+        errorsEdit={errorsEdit}
       />
       <Loading isLoading={isLoading} />
     </>

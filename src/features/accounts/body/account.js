@@ -1,13 +1,16 @@
 import { AppError } from '../../../app/error';
 
 export function validateAccount (account, accounts) {
-  const { name } = account;
+  const { id, name } = account;
 
   if (typeof name !== 'string' || name.length < 3 || name.length > 64) {
     throw new NameInvalidError();
   }
 
-  const names = accounts.map(({ name }) => name);
+  const names = accounts
+    .filter(a => a.id !== id)
+    .map(({ name }) => name);
+
   if (names.includes(name)) {
     throw new NameNonUniqueError();
   }

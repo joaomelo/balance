@@ -1,28 +1,32 @@
 import { useCase } from '../../../app/components';
 import { useGetter } from '../../../app/store';
 import { createErrorReport } from '../../../app/error';
-import { addBalanceCase } from '../cases';
+import { setBalanceCase, delBalanceCase } from '../cases';
 import { BalancesPageView } from './balances-page-view';
 
 export function BalancesPagePresenter ({ dependencies }) {
   const { balancesStore, accountsStore } = dependencies;
-  const accounts = useGetter(accountsStore, 'allItems', []);
-  const balances = useGetter(balancesStore, 'allItems', []);
+  const accounts = useGetter(accountsStore, 'activeItems', []);
+  const balances = useGetter(balancesStore, 'activeItems', []);
 
-  const {
-    run: onAdd,
-    isRunning: isAdding,
-    error: errorAdd
-  } = useCase(addBalanceCase, dependencies);
+  const [onAdd, isAdding, errorAdd] = useCase(setBalanceCase, dependencies);
   const errorsAdd = createErrorReport(errorAdd);
+
+  const [onEdit, isEditing, errorEdit] = useCase(setBalanceCase, dependencies);
+  const errorsEdit = createErrorReport(errorEdit);
+
+  const [onDel, isDeleting] = useCase(delBalanceCase, dependencies);
 
   return (
     <BalancesPageView
-      accounts={accounts}
       balances={balances}
+      accounts={accounts}
       onAdd={onAdd}
       errorsAdd={errorsAdd}
-      isLoading={isAdding}
+      onEdit={onEdit}
+      errorsEdit={errorsEdit}
+      onDel={onDel}
+      isLoading={isAdding || isDeleting || isEditing}
     />
   );
 }

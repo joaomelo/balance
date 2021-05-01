@@ -1,4 +1,4 @@
-import { add } from './add';
+import { set } from './set';
 import { del } from './del';
 import { query, subscribe } from './query';
 
@@ -13,7 +13,7 @@ function collection (name, config) {
   const collection = firestore.collection(name);
 
   return {
-    add: items => add(items, collection, firestore),
+    set: items => set(items, collection, firestore),
     del: ids => del(ids, collection, firestore),
     query: filters => query(filters, collection, firebase),
     subscribe: (filter, observer) => subscribe(filter, observer, collection, firebase)

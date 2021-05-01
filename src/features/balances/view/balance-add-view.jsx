@@ -1,21 +1,21 @@
-import { Form, usePayload } from '../../../app/components';
+import { Form, InputDate, usePayload } from '../../../app/components';
 
 export function BalancesAddView ({ accounts, onAdd, errors }) {
   const initialPayload = {
-    date: '',
+    date: new Date(),
     accountId: '',
     amount: 0
   };
   const { payload, bind, reset } = usePayload(initialPayload);
 
   const onSubmit = async () => {
-    await onAdd(payload);
-    reset();
+    const success = await onAdd(payload);
+    success && reset();
   };
 
   return (
     <Form onSubmit={onSubmit}>
-      <input {...bind('date')} type="date"/>
+      <InputDate {...bind('date')}/>
       <select {...bind('accountId')}>
         <option value=""> --Please choose an account-- </option>
         {accounts.map(AccountOption)}

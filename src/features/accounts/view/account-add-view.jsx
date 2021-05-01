@@ -4,8 +4,8 @@ export function AccountAddView ({ onAdd, errors }) {
   const { payload, reset, bind } = usePayload({ name: '' });
 
   const onSubmit = async () => {
-    await onAdd(payload);
-    reset();
+    const success = await onAdd(payload);
+    success && reset();
   };
 
   return (

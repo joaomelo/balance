@@ -1,1 +1,2 @@
-export * from './add-balance';
+export * from './set-balance';
+export * from './del-balance';

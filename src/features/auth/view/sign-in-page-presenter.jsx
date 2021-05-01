@@ -4,7 +4,7 @@ import { signInCase } from '../cases';
 import { SignInPageView } from './sign-in-page-view';
 
 export function SignInPagePresenter ({ dependencies }) {
-  const { run, isRunning, error } = useCase(signInCase, dependencies);
+  const [onSignIn, isSigning, error] = useCase(signInCase, dependencies);
   const errors = createErrorReport(error, {
     email: 'AUTH/EMAIL_INVALID',
     password: 'AUTH/PASSWORD_INVALID'
@@ -12,9 +12,9 @@ export function SignInPagePresenter ({ dependencies }) {
 
   return (
     <SignInPageView
-      onSignIn={run}
+      onSignIn={onSignIn}
       errors={errors}
-      isLoading={isRunning}
+      isLoading={isSigning}
     />
   );
 }

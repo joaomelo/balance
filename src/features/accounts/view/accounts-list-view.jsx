@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { AccountReadView } from './account-read-view';
+import { AccountEditView } from './account-edit-view';
 
-export function AccountsListView ({ accounts, onDel }) {
+export function AccountsListView ({ accounts, onDel, onEdit, errorsEdit }) {
   const [idOnEdit, claimEdit] = useState(null);
   const releaseEdit = () => claimEdit(null);
 
@@ -16,6 +18,8 @@ export function AccountsListView ({ accounts, onDel }) {
             key={a.id}
             account={a}
             onDel={onDel}
+            onEdit={onEdit}
+            errorsEdit={errorsEdit}
             idOnEdit={idOnEdit}
             claimEdit={claimEdit}
             releaseEdit={releaseEdit}
@@ -30,43 +34,4 @@ function AccountView ({ idOnEdit, ...props }) {
   return idOnEdit === props.account.id
     ? <AccountEditView {...props} />
     : <AccountReadView {...props} />;
-}
-
-function AccountReadView ({ account, onDel, claimEdit }) {
-  const { id, name } = account;
-  return (
-    <tr>
-      <td>{name}</td>
-      <td>
-        <button onClick={() => claimEdit(id)}>
-          edt
-        </button>
-      </td>
-      <td>
-        <button onClick={() => onDel({ id })}>
-          del
-        </button>
-      </td>
-    </tr>
-  );
-}
-
-function AccountEditView ({ account, releaseEdit }) {
-  const { id, name } = account;
-  const onSave = () => console.log({ save: id });
-  return (
-    <tr>
-      <td>editing: {name}</td>
-      <td>
-        <button onClick={onSave}>
-          sav
-        </button>
-      </td>
-      <td>
-        <button onClick={releaseEdit}>
-          can
-        </button>
-      </td>
-    </tr>
-  );
 }

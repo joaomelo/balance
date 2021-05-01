@@ -6,6 +6,8 @@ export function AccountsPageView ({
   accounts,
   onAdd,
   errorsAdd,
+  onEdit,
+  errorsEdit,
   onDel,
   isLoading
 }) {
@@ -19,6 +21,8 @@ export function AccountsPageView ({
       <AccountsListView
         accounts={accounts}
         onDel={onDel}
+        onEdit={onEdit}
+        errorsEdit={errorsEdit}
       />
       <Loading isLoading={isLoading} />
     </>
