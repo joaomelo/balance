@@ -1,21 +1,16 @@
-import { Form } from '../../../app/components';
-import { usePayload } from '../../../app/hooks';
+import { Form, usePayload } from '../../../app/components';
 
-export function AccountAddView ({
-  onAdd,
-  errors
-}) {
-  const { payload, updatePayload, resetPayload } = usePayload({ name: '' });
+export function AccountAddView ({ onAdd, errors }) {
+  const { payload, reset, bind } = usePayload({ name: '' });
+
+  const onSubmit = async () => {
+    await onAdd(payload);
+    reset();
+  };
 
   return (
-    <Form
-      onSubmit={() => onAdd(payload)}
-      onSuccess={resetPayload}
-    >
-      <input
-        value={payload.name}
-        onChange={e => updatePayload({ name: e.target.value })}
-      />
+    <Form onSubmit={onSubmit}>
+      <input {...bind('name')} />
       <button type="submit">Add</button>
       <p>{errors.escaped}</p>
     </Form>

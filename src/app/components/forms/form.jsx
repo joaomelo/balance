@@ -1,12 +1,11 @@
-export function Form ({ onSubmit, onSuccess, children }) {
+export function Form ({ onSubmit, children, ...props }) {
   const handleSubmit = async e => {
     e.preventDefault();
-    const success = await onSubmit();
-    if (success && onSuccess) onSuccess();
+    onSubmit();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} {...props}>
       { children }
     </form>
   );

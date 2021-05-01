@@ -1,2 +1,2 @@
-export * from './add';
-export * from './del';
+export * from './add-account';
+export * from './del-account';

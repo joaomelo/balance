@@ -4,8 +4,8 @@ import 'regenerator-runtime/runtime';
 import { initFirebaseSuiteFromEnv } from '../app/firebase';
 import { createRepositoryProvider } from '../app/repository';
 import { createAuthStore, createIdentityProvider } from '../features/auth';
-import { createAccountsStore, createAccountsRepository } from '../features/accounts';
-import { createBalancesRepository, createBalancesStore } from '../features/balances';
+import { createAccountsStore } from '../features/accounts';
+import { createBalancesStore } from '../features/balances';
 import { mountRoot } from '../features/root';
 
 async function main () {
@@ -18,9 +18,9 @@ async function main () {
   const firestoreEmulatorHost = process.env.FIRESTORE_EMULATOR_HOST;
   const repositoryProvider = await createRepositoryProvider({ ...suite, firestoreEmulatorHost });
 
-  const accountsRepository = createAccountsRepository(repositoryProvider);
+  const accountsRepository = repositoryProvider.repository('accounts');
   const accountsStore = createAccountsStore(accountsRepository, authStore);
-  const balancesRepository = createBalancesRepository(repositoryProvider);
+  const balancesRepository = repositoryProvider.repository('balances');
   const balancesStore = createBalancesStore(balancesRepository, authStore);
 
   const dependencies = {

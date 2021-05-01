@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Link, Switch, Route, Redirect, useRouteMatch }
 import { useGetter } from '../../app/store';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
-import { SignIn } from '../auth';
+import { SignInPagePresenter } from '../auth';
 import { AccountsPagePresenter } from '../accounts';
-import { Balances } from '../balances';
+import { BalancesPagePresenter } from '../balances';
 
 export function Root ({ dependencies }) {
   const { authStore } = dependencies;
@@ -41,7 +41,7 @@ function OutPages ({ dependencies }) {
   return (
     <Switch>
       <Route path={`${path}/sign-in`}>
-        <SignIn dependencies={dependencies}/>
+        <SignInPagePresenter dependencies={dependencies}/>
       </Route>
       <Redirect to={defaultOutRoute} />
     </Switch>
@@ -60,7 +60,7 @@ function InPages ({ dependencies }) {
           <AccountsPagePresenter dependencies={dependencies}/>
         </Route>
         <Route path={`${path}/balances`}>
-          <Balances dependencies={dependencies}/>
+          <BalancesPagePresenter dependencies={dependencies}/>
         </Route>
         <Redirect to={defaultInRoute} />
       </Switch>

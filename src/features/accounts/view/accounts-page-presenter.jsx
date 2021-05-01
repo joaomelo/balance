@@ -1,4 +1,4 @@
-import { useCase } from '../../../app/hooks';
+import { useCase } from '../../../app/components';
 import { useGetter } from '../../../app/store';
 import { createErrorReport } from '../../../app/error';
 import { addAccountCase, delAccountCase } from '../cases';
