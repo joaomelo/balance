@@ -1,9 +1,10 @@
-import { Form, InputDate, usePayload } from '../../../app/components';
+import { usePayload } from '../../../app/components';
+import { BalanceFormView } from './balance-form-view';
 
 export function BalancesAddView ({ accounts, onAdd, errors }) {
   const initialPayload = {
     date: new Date(),
-    accountId: '',
+    accountId: accounts[0]?.id || '',
     amount: 0
   };
   const { payload, bind, reset } = usePayload(initialPayload);
@@ -14,23 +15,13 @@ export function BalancesAddView ({ accounts, onAdd, errors }) {
   };
 
   return (
-    <Form onSubmit={onSubmit}>
-      <InputDate {...bind('date')}/>
-      <select {...bind('accountId')}>
-        <option value=""> --Please choose an account-- </option>
-        {accounts.map(AccountOption)}
-      </select>
-      <input
-        {...bind('amount')}
-        type="number"
-        step="0.01"
-      />
+    <BalanceFormView
+      onSubmit={onSubmit}
+      accounts={accounts}
+      bind={bind}
+      errors={errors}
+    >
       <button type="submit">Add</button>
-      <p>{errors.escaped}</p>
-    </Form>
+    </BalanceFormView>
   );
-}
-
-function AccountOption ({ id, name }) {
-  return <option key={id} value={id}>{name}</option>;
 }

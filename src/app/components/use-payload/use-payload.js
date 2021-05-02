@@ -18,7 +18,7 @@ export function usePayload (initialValue = {}) {
     return {
       value: payload[key],
       onChange: arg => {
-        const value = arg.target ? arg.target.value : arg;
+        const value = arg?.target ? arg.target.value : arg;
         update({ [key]: value });
       }
     };

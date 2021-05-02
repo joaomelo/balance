@@ -1,4 +1,5 @@
-import { Form, usePayload } from '../../../app/components';
+import { usePayload } from '../../../app/components';
+import { BalanceFormView } from './balance-form-view';
 
 export function BalanceEditView ({ balance, accounts, releaseEdit, onEdit, errorsEdit }) {
   const { accountId, date, amount } = balance;
@@ -20,30 +21,17 @@ export function BalanceEditView ({ balance, accounts, releaseEdit, onEdit, error
 
   return (
     <tr>
-      <td colSpan="2">
-        <Form onSubmit={onSubmit}>
-          <input {...bind('date')} type="date"/>
-          <select {...bind('accountId')}>
-            {accounts.map(AccountOption)}
-          </select>
-          <input
-            {...bind('amount')}
-            type="number"
-            step="0.01"
-          />
+      <td colSpan="3">
+        <BalanceFormView
+          onSubmit={onSubmit}
+          accounts={accounts}
+          bind={bind}
+          errors={errorsEdit}
+        >
           <button type="submit">sav</button>
-          <p>{errorsEdit.escaped}</p>
-        </Form>
-      </td>
-      <td>
-        <button onClick={exit}>
-          can
-        </button>
+          <button onClick={exit}>can</button>
+        </BalanceFormView>
       </td>
     </tr>
   );
-}
-
-function AccountOption ({ id, name }) {
-  return <option key={id} value={id}>{name}</option>;
 }
