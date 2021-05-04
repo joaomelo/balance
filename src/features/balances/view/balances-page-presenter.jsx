@@ -1,13 +1,13 @@
 import { useCase } from '../../../app/components';
-import { useGetter } from '../../../app/store';
+import { useSelector } from '../../../app/store';
 import { createErrorReport } from '../../../app/error';
 import { setBalanceCase, delBalanceCase } from '../cases';
 import { BalancesPageView } from './balances-page-view';
 
 export function BalancesPagePresenter ({ dependencies }) {
   const { balancesStore, accountsStore } = dependencies;
-  const accounts = useGetter(accountsStore, 'activeItems', []);
-  const balances = useGetter(balancesStore, 'activeItems', []);
+  const accounts = useSelector(accountsStore, 'activeItems', []);
+  const balances = useSelector(balancesStore, 'activeItems', []);
 
   const [onAdd, isAdding, errorAdd] = useCase(setBalanceCase, dependencies);
   const errorsAdd = createErrorReport(errorAdd);

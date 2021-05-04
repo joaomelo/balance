@@ -1,23 +1,24 @@
 import { BehaviorSubject } from 'rxjs';
 
-export function createService (config) {
-  const { state, selectors, actions } = config;
-
+export function createService ({ state, selectors, actions }) {
   const service = {
-    state: {
-      ...state
-    }
+    state: {},
+    selectors: {},
+    actions: {}
   };
 
-  injectBehaviour(service);
-  injectCallers(service, 'selectors', selectors);
-  injectCallers(service, 'actions', actions);
+  injectStateManagement(service, state);
+  injectReactivity(service);
+  injectMethods(service, 'selectors', selectors);
+  injectMethods(service, 'actions', actions);
 
   return service;
 }
 
-function injectBehaviour (service) {
-  const subject = new BehaviorSubject(service);
+function injectStateManagement (service, initialState) {
+  service.state = {
+    ...initialState
+  };
 
   service.update = newState => {
     const oldState = { ...service.state };
@@ -25,9 +26,14 @@ function injectBehaviour (service) {
       ...oldState,
       ...newState
     };
-
-    subject.next(service);
+    service.invalidate();
   };
+}
+
+function injectReactivity (service) {
+  const subject = new BehaviorSubject(service);
+
+  service.invalidate = () => subject.next(service);
 
   service.subscribe = observer => {
     const subscription = subject.subscribe(observer);
@@ -35,7 +41,7 @@ function injectBehaviour (service) {
   };
 }
 
-function injectCallers (service, group, callers = {}) {
+function injectMethods (service, group, callers = {}) {
   Object.entries(callers).forEach(([key, caller]) => {
     service[group][key] = (...args) => caller(service, ...args);
   });

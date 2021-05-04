@@ -1,12 +1,12 @@
 import { useCase } from '../../../app/components';
-import { useGetter } from '../../../app/store';
+import { useSelector } from '../../../app/store';
 import { createErrorReport } from '../../../app/error';
 import { setAccountCase, delAccountCase } from '../cases';
 import { AccountsPageView } from './accounts-page-view';
 
 export function AccountsPagePresenter ({ dependencies }) {
   const { accountsStore } = dependencies;
-  const accounts = useGetter(accountsStore, 'activeItems', []);
+  const accounts = useSelector(accountsStore, 'activeItems', []);
 
   const [onAdd, isAdding, errorAdd] = useCase(setAccountCase, dependencies);
   const errorsAdd = createErrorReport(errorAdd);
