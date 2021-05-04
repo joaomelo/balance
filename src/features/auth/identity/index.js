@@ -1,1 +1,0 @@
-export { createIdentityProvider } from './factory';

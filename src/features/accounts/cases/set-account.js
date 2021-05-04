@@ -4,7 +4,7 @@ import { validateAccount } from '../body';
 export async function setAccountCase (accountData, dependencies) {
   const {
     accountsRepository,
-    authStore,
+    identityService,
     accountsStore
   } = dependencies;
 
@@ -14,7 +14,7 @@ export async function setAccountCase (accountData, dependencies) {
 
   const account = {
     id: createUuid(),
-    user: authStore.getters.userId,
+    user: identityService.getters.userId,
     ...accountData
   };
 

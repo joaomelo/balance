@@ -7,8 +7,8 @@ import { AccountsPagePresenter } from '../accounts';
 import { BalancesPagePresenter } from '../balances';
 
 export function Root ({ dependencies }) {
-  const { authStore } = dependencies;
-  const isSignedIn = useGetter(authStore, 'isSignedIn');
+  const { identityService } = dependencies;
+  const isSignedIn = useGetter(identityService, 'isSignedIn');
 
   return (
     <>

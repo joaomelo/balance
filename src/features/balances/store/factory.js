@@ -1,9 +1,9 @@
-import { createEntityStore, createUserFilter } from '../../../app/store';
+import { createCollectionStore, createUserFilter } from '../../../app/store';
 
-export function createBalancesStore (balancesRepository, authStore) {
-  return createEntityStore({
+export function createBalancesRepository (balancesRepository, identityService) {
+  return createCollectionStore({
     repository: balancesRepository,
-    filters: [createUserFilter(authStore)],
-    authStore
+    filters: [createUserFilter(identityService)],
+    identityService
   });
 }

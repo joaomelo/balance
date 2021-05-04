@@ -1,4 +1,4 @@
-import { createBaseStore } from '../../../app/store';
+import { store } from '../../../app/store';
 
 export function createAuthStore (identityProvider) {
   const state = {
@@ -17,12 +17,12 @@ export function createAuthStore (identityProvider) {
     }
   };
 
-  const authStore = createBaseStore({ state, getters });
+  const identityService = store({ state, getters });
 
   identityProvider.subscribe(user => {
     state.user = user;
-    authStore.invalidate();
+    identityService.invalidate();
   });
 
-  return authStore;
+  return identityService;
 }

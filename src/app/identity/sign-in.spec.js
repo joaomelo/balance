@@ -1,9 +1,9 @@
 import { credentials } from '../../../../tests/fixtures';
 import { initFirebaseSuiteFromEnv } from '../../../app/firebase';
 import { CredentialsUnrecognizedError } from './errors';
-import { createIdentityProvider } from './factory';
+import { createIdentityService } from './factory';
 
-describe('createIdentityProvider factory function', () => {
+describe('createIdentityService factory function', () => {
   let identityProvider;
   const config = {
     ...initFirebaseSuiteFromEnv(),
@@ -11,7 +11,7 @@ describe('createIdentityProvider factory function', () => {
   };
 
   beforeAll(async () => {
-    identityProvider = await createIdentityProvider(config);
+    identityProvider = await createIdentityService(config);
   });
 
   test('signs in a existing user with proper credentials', async () => {

@@ -4,7 +4,7 @@ import { validateBalance } from '../body';
 export function setBalanceCase (balanceData, dependencies) {
   const {
     balancesRepository,
-    authStore,
+    identityService,
     balancesStore,
     accountsStore
   } = dependencies;
@@ -16,7 +16,7 @@ export function setBalanceCase (balanceData, dependencies) {
 
   const balance = {
     id: createUuid(),
-    user: authStore.getters.userId,
+    user: identityService.getters.userId,
     ...balanceData
   };
 

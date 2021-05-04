@@ -3,7 +3,7 @@ import { plugEmulator } from './emulator';
 import { signIn } from './sign-in';
 import { subscribe } from './subscribe';
 
-export async function createIdentityProvider (config) {
+export async function createIdentityService (config) {
   const firebaseAuth = await initFireauth(config);
   const identityProvider = adaptFirebaseAuth(firebaseAuth);
   return identityProvider;

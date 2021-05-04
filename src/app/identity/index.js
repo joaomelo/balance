@@ -1,0 +1,1 @@
+export { createIdentityService } from './factory';

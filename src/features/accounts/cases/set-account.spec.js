@@ -7,7 +7,7 @@ describe('add account use case', () => {
     add: jest.fn()
   };
 
-  const authStore = {
+  const identityService = {
     getters: {
       userId: '4271ef61-2cf9-4729-a4db-4d0067c737cf'
     }
@@ -21,7 +21,7 @@ describe('add account use case', () => {
 
   const dependencies = {
     accountsRepository,
-    authStore,
+    identityService,
     accountsStore
   };
 
@@ -33,7 +33,7 @@ describe('add account use case', () => {
     expect(accountsRepository.set)
       .toHaveBeenCalledWith(expect.objectContaining({
         id: expect.any(String),
-        user: authStore.getters.userId,
+        user: identityService.getters.userId,
         name: accountData.name
       }));
   });

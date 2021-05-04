@@ -1,5 +1,5 @@
 import { initFirebaseSuiteFromEnv } from '../../../app/firebase';
-import { createIdentityProvider } from './factory';
+import { createIdentityService } from './factory';
 
 describe('identity provider factory module', () => {
   test('correctly connect to emulator', async () => {
@@ -8,7 +8,7 @@ describe('identity provider factory module', () => {
       authEmulatorHost: process.env.FIREAUTH_EMULATOR_HOST
     };
 
-    const identityProvider = await createIdentityProvider(config);
+    const identityProvider = await createIdentityService(config);
 
     expect(identityProvider).toBeDefined();
   });
