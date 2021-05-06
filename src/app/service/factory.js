@@ -21,6 +21,7 @@ function injectStateManagement (service, initialState) {
       ...oldState,
       ...newState
     };
+
     mute || service.invalidate();
   };
 }

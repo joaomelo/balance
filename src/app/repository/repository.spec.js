@@ -11,7 +11,7 @@ describe('repository service module', () => {
     testRepository = repositoryServiceFactory('test');
   });
 
-  test('repository spec has the expected shape', () => {
+  test('repository service has the expected shape', () => {
     expect(testRepository).toEqual(expect.objectContaining({
       state: expect.any(Object),
       itemById: expect.any(Function),
@@ -19,11 +19,12 @@ describe('repository service module', () => {
       activeItems: expect.any(Function),
       set: expect.any(Function),
       del: expect.any(Function),
-      igniteQuery: expect.any(Function)
+      igniteQuery: expect.any(Function),
+      douseQuery: expect.any(Function)
     }));
   });
 
-  test('repository service can set values', async () => {
+  test('can set values', async () => {
     const item = { id: 'test-id', name: 'test name' };
     await testRepository.set(item);
 
@@ -32,7 +33,7 @@ describe('repository service module', () => {
     expect(record).toEqual(expect.objectContaining(item));
   });
 
-  test('repository service can logically delete values', async () => {
+  test('can logically delete values', async () => {
     const item = { id: 'test-id', name: 'test name' };
 
     await testRepository.set(item);
@@ -47,5 +48,40 @@ describe('repository service module', () => {
     expect(delDoc.data()).toMatchObject({
       _deleted: true
     });
+  });
+
+  test('keeps service items updated with collection changes', async () => {
+    const spy = jest.spyOn(testRepository, 'update');
+
+    const item = { id: 'test-id', name: 'test name' };
+    const newItem = { id: 'test-id', name: 'new name' };
+    const filter = () => ({ field: 'id', operator: '==', value: 'test-id' });
+
+    await testRepository.set(item);
+    testRepository.igniteQuery([filter]);
+    await testRepository.set(newItem);
+
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({
+      items: expect.objectContaining({
+        'test-id': expect.objectContaining(newItem)
+      })
+    }));
+    spy.mockRestore();
+  });
+
+  test('querying can be turned off', async () => {
+    const spy = jest.spyOn(testRepository, 'update');
+
+    const item = { id: 'test-id', name: 'test name' };
+    const newItem = { id: 'test-id', name: 'new name' };
+    const filter = () => ({ field: 'id', operator: '==', value: 'test-id' });
+
+    await testRepository.set(item);
+    testRepository.igniteQuery([filter]);
+    testRepository.douseQuery();
+    await testRepository.set(newItem);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    spy.mockRestore();
   });
 });

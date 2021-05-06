@@ -3,7 +3,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /test/{testId} {
       allow delete: if false;
-      allow create, read, update: if testId == 'test-id'
+      allow create, update: if testId == 'test-id'
+      allow read: if resource.data.id == 'test-id'
     }
 
     match /accounts/{accountId} {

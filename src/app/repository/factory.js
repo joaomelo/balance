@@ -26,9 +26,24 @@ export function createRepositoryService (firestore, name, service = {}) {
   const actions = {
     set: (service, items) => set(collection, items),
     del: (service, ids) => del(collection, ids),
-    igniteQuery: ({ update }, filters) => igniteQuery(collection, update, filters),
+    igniteQuery: ({ state, update, douseQuery }, filters) => {
+      douseQuery();
+
+      const updateItems = items => update({ items: indexAsObject(items) });
+      const newQueryUnsub = igniteQuery(updateItems, collection, filters);
+
+      update({ queryUnsub: newQueryUnsub }, { mute: true });
+    },
+    douseQuery: ({ state }) => state.queryUnsub(),
     ...service.actions
   };
 
   return createService({ state, selectors, actions });
+}
+
+function indexAsObject (items) {
+  return items.reduce((acc, item) => {
+    acc[item.id] = { ...item };
+    return acc;
+  }, {});
 }
