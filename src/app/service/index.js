@@ -1,2 +1,2 @@
-export * from './service';
-export * from './use-getter';
+export * from './factory';
+export * from './use-selector';

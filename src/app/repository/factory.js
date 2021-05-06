@@ -3,28 +3,31 @@ import { set } from './set';
 import { del } from './del';
 import { igniteQuery } from './query';
 
-export async function createRepositoryServiceFactory (firestore) {
-  return (name, config) => createRepositoryService(name, config, firestore);
+export function createRepositoryServiceFactory (firestore) {
+  return (name, service) => createRepositoryService(firestore, name, service);
 }
 
-export function createRepositoryService (name, config, firestore) {
+export function createRepositoryService (firestore, name, service = {}) {
   const collection = firestore.collection(name);
 
   const state = {
-    items: {}
+    items: {},
+    queryUnsub: () => null,
+    ...service.state
   };
 
   const selectors = {
-    allItems: ({ state }) => Object.values(state.items),
-    activeItems: ({ selectors }) => selectors.allItems().filter(i => !i._deleted),
     itemById: ({ state }, id) => state.items[id],
-    ...config.selectors
+    allItems: ({ state }) => Object.values(state.items),
+    activeItems: ({ allItems }) => allItems().filter(i => !i._deleted),
+    ...service.selectors
   };
 
   const actions = {
-    set: (service, items) => set(items, collection, firestore),
-    del: (service, ids) => del(ids, collection, firestore),
-    igniteQuery: (service, filters) => igniteQuery(service, filters, collection, firestore)
+    set: (service, items) => set(collection, items),
+    del: (service, ids) => del(collection, ids),
+    igniteQuery: ({ update }, filters) => igniteQuery(collection, update, filters),
+    ...service.actions
   };
 
   return createService({ state, selectors, actions });

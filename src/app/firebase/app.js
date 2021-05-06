@@ -4,8 +4,8 @@ import 'firebase/firestore';
 import { initFirestore } from './firestore';
 import { initFireauth } from './fireauth';
 
-export async function initFirebaseSuiteFromEnv () {
-  await initFirebaseSuite(createFirebaseConfigFromEnv());
+export function initFirebaseSuiteFromEnv () {
+  return initFirebaseSuite(createFirebaseConfigFromEnv());
 }
 
 export async function initFirebaseSuite (config) {

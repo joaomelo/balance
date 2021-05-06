@@ -1,16 +1,11 @@
 import { BehaviorSubject } from 'rxjs';
 
 export function createService ({ state, selectors, actions }) {
-  const service = {
-    state: {},
-    selectors: {},
-    actions: {}
-  };
+  const service = {};
 
   injectStateManagement(service, state);
   injectReactivity(service);
-  injectMethods(service, 'selectors', selectors);
-  injectMethods(service, 'actions', actions);
+  injectMethods(service, { ...selectors, ...actions });
 
   return service;
 }
@@ -20,13 +15,13 @@ function injectStateManagement (service, initialState) {
     ...initialState
   };
 
-  service.update = newState => {
+  service.update = (newState, { mute = false } = {}) => {
     const oldState = { ...service.state };
     service.state = {
       ...oldState,
       ...newState
     };
-    service.invalidate();
+    mute || service.invalidate();
   };
 }
 
@@ -41,8 +36,11 @@ function injectReactivity (service) {
   };
 }
 
-function injectMethods (service, group, callers = {}) {
-  Object.entries(callers).forEach(([key, caller]) => {
-    service[group][key] = (...args) => caller(service, ...args);
+function injectMethods (service, fns = {}) {
+  const reserved = ['state', 'update', 'invalidate', 'subscribe'];
+
+  Object.entries(fns).forEach(([key, fn]) => {
+    if (reserved.includes(key)) throw new Error(`"${key}" is a reserved name for service methods`);
+    service[key] = (...args) => fn(service, ...args);
   });
 }

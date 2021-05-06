@@ -1,4 +1,4 @@
-export async function del (ids, collection, firestore) {
+export async function del (collection, ids) {
   if (!ids) {
     throw new Error('ids must be defined');
   };
@@ -13,7 +13,7 @@ export async function del (ids, collection, firestore) {
 
   const idsToDel = Array.isArray(ids) ? ids : [ids];
 
-  const batch = firestore.batch();
+  const batch = collection.firestore.batch();
   idsToDel.forEach(id => {
     const docRef = collection.doc(id);
     batch.update(docRef, {

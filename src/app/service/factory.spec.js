@@ -26,7 +26,7 @@ describe('base service mechanism', () => {
     });
   });
 
-  test('state subscription and updates trigger services observers', () => {
+  test('state reactivity is triggered on subscription and updates', () => {
     const observer = jest.fn();
     const service = createService({ state: { hello: 'world' } });
 
@@ -37,6 +37,16 @@ describe('base service mechanism', () => {
     expect(observer).toHaveBeenCalledWith(service);
   });
 
+  test('state update reactivity can be muted', () => {
+    const observer = jest.fn();
+    const service = createService({ state: { hello: 'world' } });
+
+    service.subscribe(observer);
+    service.update({ hi: 'there' }, { mute: true });
+
+    expect(observer).toHaveBeenCalledTimes(1);
+  });
+
   test('selectors can derive from state or other selectors', () => {
     const service = createService({
       state: {
@@ -44,12 +54,12 @@ describe('base service mechanism', () => {
       },
       selectors: {
         double: ({ state }) => state.amount * 2,
-        doubleTimes: ({ selectors }, times) => selectors.double() * times
+        doubleTimes: ({ double }, times) => double() * times
       }
     });
 
-    expect(service.selectors.double()).toBe(20);
-    expect(service.selectors.doubleTimes(2)).toBe(40);
+    expect(service.double()).toBe(20);
+    expect(service.doubleTimes(2)).toBe(40);
   });
 
   test('actions can mutate state', () => {
@@ -62,7 +72,7 @@ describe('base service mechanism', () => {
       }
     });
 
-    service.actions.discount(5);
+    service.discount(5);
 
     expect(service.state.amount).toBe(5);
   });

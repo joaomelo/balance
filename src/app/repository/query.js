@@ -1,3 +1,20 @@
+export function igniteQuery (collection, update, unsub, filters) {
+  // const firebase = ...
+  // const query = mountQuery(collection, filters);
+
+  // unsub() // da pra genrencia o unsub aqui????? sem precisar do service???
+  // // cuidado pra ao usar uma variavel de modulo, pq varios repositorios vao
+  // // acabar compartilhando a variavel
+  // // so expoe no sevrice o que os modules vai usar!
+
+  // const newUnsub = const queryUnsubscription = query.onSnapshot(snapshot => {
+  //   const items = convertSnapshotToItems(snapshot, firebase);
+  //   update({ items });
+  // });
+
+  // update({ unsub: newUnsub}, { mute: true });
+}
+
 export function connectRepositoryService (repositoryService, config) {
   const { filters, identityService } = config;
   let unsubscribe = () => null;
@@ -19,24 +36,6 @@ export function connectRepositoryService (repositoryService, config) {
   });
 
   return baseStore;
-}
-
-export async function query (filters, collection, firebase) {
-  const query = mountQuery(filters, collection);
-
-  const snapshot = await query.get();
-  const items = convertSnapshotToItems(snapshot, firebase);
-
-  return items;
-};
-
-export function subscribe (filters, observer, collection, firebase) {
-  const query = mountQuery(filters, collection);
-
-  return query.onSnapshot(snapshot => {
-    const items = convertSnapshotToItems(snapshot, firebase);
-    observer(items);
-  });
 }
 
 function mountQuery (filters = [], collection) {
