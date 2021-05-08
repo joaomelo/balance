@@ -1,4 +1,4 @@
-import { useCase } from '../../../app/components';
+import { useAction } from '../../../app/components';
 import { useSelector } from '../../../app/store';
 import { createErrorReport } from '../../../app/error';
 import { setBalanceCase, delBalanceCase } from '../cases';
@@ -9,13 +9,13 @@ export function BalancesPagePresenter ({ dependencies }) {
   const accounts = useSelector(accountsStore, 'activeItems', []);
   const balances = useSelector(balancesStore, 'activeItems', []);
 
-  const [onAdd, isAdding, errorAdd] = useCase(setBalanceCase, dependencies);
+  const [onAdd, isAdding, errorAdd] = useAction(setBalanceCase, dependencies);
   const errorsAdd = createErrorReport(errorAdd);
 
-  const [onEdit, isEditing, errorEdit] = useCase(setBalanceCase, dependencies);
+  const [onEdit, isEditing, errorEdit] = useAction(setBalanceCase, dependencies);
   const errorsEdit = createErrorReport(errorEdit);
 
-  const [onDel, isDeleting] = useCase(delBalanceCase, dependencies);
+  const [onDel, isDeleting] = useAction(delBalanceCase, dependencies);
 
   return (
     <BalancesPageView

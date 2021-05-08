@@ -1,20 +1,18 @@
-import { useCase } from '../../../app/components';
-import { useSelector } from '../../../app/store';
+import { useSelector, useAction } from '../../../app/service';
 import { createErrorReport } from '../../../app/error';
-import { setAccountCase, delAccountCase } from '../cases';
 import { AccountsPageView } from './accounts-page-view';
 
 export function AccountsPagePresenter ({ dependencies }) {
-  const { accountsStore } = dependencies;
-  const accounts = useSelector(accountsStore, 'activeItems', []);
+  const { accountsService, identityService } = dependencies;
+  const accounts = useSelector(accountsService, 'activeItems');
 
-  const [onAdd, isAdding, errorAdd] = useCase(setAccountCase, dependencies);
+  const [onAdd, isAdding, errorAdd] = useAction(accountsService, 'setAccountCase', identityService);
   const errorsAdd = createErrorReport(errorAdd);
 
-  const [onEdit, isEditing, errorEdit] = useCase(setAccountCase, dependencies);
+  const [onEdit, isEditing, errorEdit] = useAction(accountsService, 'setAccountCase', identityService);
   const errorsEdit = createErrorReport(errorEdit);
 
-  const [onDel, isDeleting] = useCase(delAccountCase, dependencies);
+  const [onDel, isDeleting] = useAction(accountsService, 'delAccountCase');
 
   return (
     <AccountsPageView

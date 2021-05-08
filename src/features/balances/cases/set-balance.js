@@ -3,7 +3,7 @@ import { validateBalance } from '../body';
 
 export function setBalanceCase (balanceData, dependencies) {
   const {
-    balancesRepository,
+    balancesService,
     identityService,
     balancesStore,
     accountsStore
@@ -20,5 +20,5 @@ export function setBalanceCase (balanceData, dependencies) {
     ...balanceData
   };
 
-  return balancesRepository.set(balance);
+  return balancesService.set(balance);
 }

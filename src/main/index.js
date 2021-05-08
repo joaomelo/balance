@@ -5,24 +5,27 @@ import { initFirebaseSuiteFromEnv } from '../app/firebase';
 import { createRepositoryServiceFactory } from '../app/repository';
 import { createIdentityService } from '../app/identity';
 import { syncRepositoryWithIdentity } from '../features/sync-repo-identity';
+import { authServiceConfig } from '../features/auth';
+import { accountsServiceConfig } from '../features/accounts';
+import { balancesServiceConfig } from '../features/balances';
 import { mountRoot } from '../features/root';
 
 async function main () {
   const { firestore, fireauth } = await initFirebaseSuiteFromEnv();
 
-  const identityService = createIdentityService(fireauth);
+  const authService = createIdentityService(fireauth, authServiceConfig);
 
   const createRepositoryService = await createRepositoryServiceFactory(firestore);
-  const accountsRepository = createRepositoryService('accounts');
-  const balancesRepository = createRepositoryService('balances');
+  const accountsService = createRepositoryService('accounts', accountsServiceConfig);
+  const balancesService = createRepositoryService('balances', balancesServiceConfig);
 
-  syncRepositoryWithIdentity(identityService, accountsRepository);
-  syncRepositoryWithIdentity(identityService, balancesRepository);
+  syncRepositoryWithIdentity(authService, accountsService);
+  syncRepositoryWithIdentity(authService, balancesService);
 
   const dependencies = {
-    identityService,
-    accountsRepository,
-    balancesRepository
+    authService,
+    accountsService,
+    balancesService
   };
 
   // dependencies exposed globally to facilitate tests and debug

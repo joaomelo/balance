@@ -1,9 +1,9 @@
 import { accounts } from '../../../../tests/fixtures';
 import { NameInvalidError, NameNonUniqueError } from '../body';
-import { setAccountCase } from './add';
+import { setAccount } from './add';
 
 describe('add account use case', () => {
-  const accountsRepository = {
+  const accountsService = {
     add: jest.fn()
   };
 
@@ -20,7 +20,7 @@ describe('add account use case', () => {
   };
 
   const dependencies = {
-    accountsRepository,
+    accountsService,
     identityService,
     accountsStore
   };
@@ -28,9 +28,9 @@ describe('add account use case', () => {
   test('add account to repository with correct data shape', async () => {
     const accountData = { name: 'new account' };
 
-    await setAccountCase(accountData, dependencies);
+    await setAccount(accountData, dependencies);
 
-    expect(accountsRepository.set)
+    expect(accountsService.set)
       .toHaveBeenCalledWith(expect.objectContaining({
         id: expect.any(String),
         user: identityService.getters.userId,
@@ -41,7 +41,7 @@ describe('add account use case', () => {
   test('throws if empty account name', async () => {
     const accountData = { name: '' };
 
-    await expect(setAccountCase(accountData, dependencies))
+    await expect(setAccount(accountData, dependencies))
       .rejects
       .toThrow(NameInvalidError);
   });
@@ -50,7 +50,7 @@ describe('add account use case', () => {
     const name = accounts[0].name;
     const accountData = { name };
 
-    await expect(setAccountCase(accountData, dependencies))
+    await expect(setAccount(accountData, dependencies))
       .rejects
       .toThrow(NameNonUniqueError);
   });
