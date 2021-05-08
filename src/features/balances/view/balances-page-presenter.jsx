@@ -1,21 +1,19 @@
-import { useAction } from '../../../app/components';
-import { useSelector } from '../../../app/store';
+import { useSelector, useAction } from '../../../app/service';
 import { createErrorReport } from '../../../app/error';
-import { setBalanceCase, delBalanceCase } from '../cases';
 import { BalancesPageView } from './balances-page-view';
 
 export function BalancesPagePresenter ({ dependencies }) {
-  const { balancesStore, accountsStore } = dependencies;
-  const accounts = useSelector(accountsStore, 'activeItems', []);
-  const balances = useSelector(balancesStore, 'activeItems', []);
+  const { balancesService, accountsService, authService } = dependencies;
+  const accounts = useSelector(accountsService, 'activeItems');
+  const balances = useSelector(balancesService, 'activeItems');
 
-  const [onAdd, isAdding, errorAdd] = useAction(setBalanceCase, dependencies);
+  const [onAdd, isAdding, errorAdd] = useAction(balancesService, 'setBalanceCase', accountsService, authService);
   const errorsAdd = createErrorReport(errorAdd);
 
-  const [onEdit, isEditing, errorEdit] = useAction(setBalanceCase, dependencies);
+  const [onEdit, isEditing, errorEdit] = useAction(balancesService, 'setBalanceCase', accountsService, authService);
   const errorsEdit = createErrorReport(errorEdit);
 
-  const [onDel, isDeleting] = useAction(delBalanceCase, dependencies);
+  const [onDel, isDeleting] = useAction(balancesService, 'delBalanceCase');
 
   return (
     <BalancesPageView

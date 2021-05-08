@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useService (service, selector, ...args) {
+export function useSelector (service, selector, ...args) {
   const [value, setValue] = useState(service[selector](...args));
 
   const subscribe = () => service.subscribe(() => setValue(service[selector](...args)));

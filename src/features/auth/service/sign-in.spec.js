@@ -3,15 +3,15 @@ import { signInCase } from './sign-in';
 
 describe('sign-in use case', () => {
   const createUser = ({ email }) => ({ id: 'id', email });
-  const identityProvider = { signIn: jest.fn(credentials => createUser(credentials)) };
+  const authService = { signIn: jest.fn(credentials => createUser(credentials)) };
 
   test('happy path', async () => {
     const email = 'test@email.com';
     const credentials = { email, password: 'password' };
 
-    await signInCase(credentials, { identityProvider });
+    await signInCase(authService, credentials);
 
-    expect(identityProvider.signIn).toHaveBeenCalledWith(credentials);
+    expect(authService.signIn).toHaveBeenCalledWith(credentials);
   });
 
   test('throws if invalid email', async () => {
@@ -20,7 +20,7 @@ describe('sign-in use case', () => {
       password: 'password'
     };
 
-    await expect(signInCase(credentials, { identityProvider }))
+    await expect(signInCase(authService, credentials))
       .rejects
       .toThrow(EmailInvalidError);
   });
@@ -30,7 +30,7 @@ describe('sign-in use case', () => {
       password: 'password'
     };
 
-    await expect(signInCase(credentials, { identityProvider }))
+    await expect(signInCase(authService, credentials))
       .rejects
       .toThrow(EmailInvalidError);
   });
@@ -41,7 +41,7 @@ describe('sign-in use case', () => {
       password: 'bad'
     };
 
-    await expect(signInCase(credentials, { identityProvider }))
+    await expect(signInCase(authService, credentials))
       .rejects
       .toThrow(PasswordInvalidError);
   });
@@ -51,7 +51,7 @@ describe('sign-in use case', () => {
       email: 'test@email.com'
     };
 
-    await expect(signInCase(credentials, { identityProvider }))
+    await expect(signInCase(authService, credentials))
       .rejects
       .toThrow(PasswordInvalidError);
   });

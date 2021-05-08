@@ -1,1 +1,1 @@
-export { syncRepositoryWithIdentity } from './sync';
+export { syncRepositoryWithAuth } from './sync';

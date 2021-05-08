@@ -1,7 +1,7 @@
 import { CredentialsUnrecognizedError } from './errors';
 import { extractUser } from './extract-user';
 
-export async function signIn (credentials, fireauth) {
+export async function signIn (fireauth, credentials) {
   try {
     const { email, password } = credentials;
     const userCredential = await fireauth.signInWithEmailAndPassword(email, password);

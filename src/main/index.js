@@ -4,7 +4,7 @@ import 'regenerator-runtime/runtime';
 import { initFirebaseSuiteFromEnv } from '../app/firebase';
 import { createRepositoryServiceFactory } from '../app/repository';
 import { createIdentityService } from '../app/identity';
-import { syncRepositoryWithIdentity } from '../features/sync-repo-identity';
+import { syncRepositoryWithAuth } from '../features/sync-repo-identity';
 import { authServiceConfig } from '../features/auth';
 import { accountsServiceConfig } from '../features/accounts';
 import { balancesServiceConfig } from '../features/balances';
@@ -19,8 +19,8 @@ async function main () {
   const accountsService = createRepositoryService('accounts', accountsServiceConfig);
   const balancesService = createRepositoryService('balances', balancesServiceConfig);
 
-  syncRepositoryWithIdentity(authService, accountsService);
-  syncRepositoryWithIdentity(authService, balancesService);
+  syncRepositoryWithAuth(authService, accountsService);
+  syncRepositoryWithAuth(authService, balancesService);
 
   const dependencies = {
     authService,

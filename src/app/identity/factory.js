@@ -2,7 +2,7 @@ import { createService } from '../service';
 import { subscribe } from './subscribe';
 import { signIn } from './sign-in';
 
-export async function createIdentityService (fireauth, service = {}) {
+export function createIdentityService (fireauth, service = {}) {
   const state = {
     user: null,
     ...service.state
@@ -16,7 +16,7 @@ export async function createIdentityService (fireauth, service = {}) {
   };
 
   const actions = {
-    signIn: credentials => signIn(fireauth, credentials),
+    signIn: (service, credentials) => signIn(fireauth, credentials),
     ...service.actions
   };
 

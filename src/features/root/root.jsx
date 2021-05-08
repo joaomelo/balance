@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Link, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import { useSelector } from '../../app/store';
+import { useSelector } from '../../app/service';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
 import { SignInPagePresenter } from '../auth';
@@ -7,8 +7,8 @@ import { AccountsPagePresenter } from '../accounts';
 import { BalancesPagePresenter } from '../balances';
 
 export function Root ({ dependencies }) {
-  const { identityService } = dependencies;
-  const isSignedIn = useSelector(identityService, 'isSignedIn');
+  const { authService } = dependencies;
+  const isSignedIn = useSelector(authService, 'isSignedIn');
 
   return (
     <>

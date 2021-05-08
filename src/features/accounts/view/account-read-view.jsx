@@ -9,7 +9,7 @@ export function AccountReadView ({ account, onDel, claimEdit }) {
         </button>
       </td>
       <td>
-        <button onClick={() => onDel({ id })}>
+        <button onClick={() => onDel(id)}>
           del
         </button>
       </td>

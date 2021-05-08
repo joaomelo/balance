@@ -1,21 +1,18 @@
-import { credentials } from '../../../../tests/fixtures';
-import { initFirebaseSuiteFromEnv } from '../../../app/firebase';
+import { credentials } from '../../../tests/fixtures';
+import { initFirebaseSuiteFromEnv } from '../firebase';
 import { CredentialsUnrecognizedError } from './errors';
 import { createIdentityService } from './factory';
 
 describe('createIdentityService factory function', () => {
-  let identityProvider;
-  const config = {
-    ...initFirebaseSuiteFromEnv(),
-    authEmulatorHost: process.env.FIREAUTH_EMULATOR_HOST
-  };
+  let identityService;
 
   beforeAll(async () => {
-    identityProvider = await createIdentityService(config);
+    const { fireauth } = await initFirebaseSuiteFromEnv();
+    identityService = createIdentityService(fireauth);
   });
 
   test('signs in a existing user with proper credentials', async () => {
-    const user = await identityProvider.signIn(credentials[0]);
+    const user = await identityService.signIn(credentials[0]);
 
     expect(user).toEqual(expect.objectContaining({
       id: expect.any(String),
@@ -29,7 +26,7 @@ describe('createIdentityService factory function', () => {
       password: 'password'
     };
 
-    await expect(identityProvider.signIn(badCredentials))
+    await expect(identityService.signIn(badCredentials))
       .rejects
       .toThrow(CredentialsUnrecognizedError);
   });
@@ -40,7 +37,7 @@ describe('createIdentityService factory function', () => {
       password: 'iAmNotAPassword'
     };
 
-    await expect(identityProvider.signIn(badCredentials))
+    await expect(identityService.signIn(badCredentials))
       .rejects
       .toThrow(CredentialsUnrecognizedError);
   });

@@ -1,39 +1,32 @@
 import { accounts } from '../../../../tests/fixtures';
 import { NameInvalidError, NameNonUniqueError } from '../body';
-import { setAccount } from './add';
+import { setAccountCase } from './set-account';
 
 describe('add account use case', () => {
-  const accountsService = {
-    add: jest.fn()
-  };
+  let accountsService, authService;
 
-  const identityService = {
-    getters: {
-      userId: '4271ef61-2cf9-4729-a4db-4d0067c737cf'
-    }
-  };
+  beforeAll(() => {
+    const set = jest.fn(account => accountsService.items.push(account));
+    accountsService = {
+      items: [],
+      activeItems () { return this.items; },
+      set
+    };
 
-  const accountsStore = {
-    getters: {
-      allItems: accounts
-    }
-  };
-
-  const dependencies = {
-    accountsService,
-    identityService,
-    accountsStore
-  };
+    authService = {
+      userId: () => '4271ef61-2cf9-4729-a4db-4d0067c737cf'
+    };
+  });
 
   test('add account to repository with correct data shape', async () => {
     const accountData = { name: 'new account' };
 
-    await setAccount(accountData, dependencies);
+    await setAccountCase(accountsService, authService, accountData);
 
     expect(accountsService.set)
       .toHaveBeenCalledWith(expect.objectContaining({
         id: expect.any(String),
-        user: identityService.getters.userId,
+        user: authService.userId(),
         name: accountData.name
       }));
   });
@@ -41,7 +34,7 @@ describe('add account use case', () => {
   test('throws if empty account name', async () => {
     const accountData = { name: '' };
 
-    await expect(setAccount(accountData, dependencies))
+    await expect(setAccountCase(accountsService, authService, accountData))
       .rejects
       .toThrow(NameInvalidError);
   });
@@ -50,7 +43,9 @@ describe('add account use case', () => {
     const name = accounts[0].name;
     const accountData = { name };
 
-    await expect(setAccount(accountData, dependencies))
+    await setAccountCase(accountsService, authService, accountData);
+
+    await expect(setAccountCase(accountsService, authService, accountData))
       .rejects
       .toThrow(NameNonUniqueError);
   });
