@@ -1,6 +1,6 @@
 import { extractUser } from './extract-user';
 
-export function subscribe (observer, fireauth) {
+export function subscribe (fireauth, observer) {
   const unsubscribe = fireauth.onAuthStateChanged(fireauthUser => {
     const user = extractUser(fireauthUser);
     observer(user);

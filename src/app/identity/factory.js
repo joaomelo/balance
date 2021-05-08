@@ -1,29 +1,26 @@
-import 'firebase/auth';
-import { plugEmulator } from './emulator';
-import { signIn } from './sign-in';
+import { createService } from '../service';
 import { subscribe } from './subscribe';
+import { signIn } from './sign-in';
 
-export async function createIdentityService (config) {
-  const firebaseAuth = await initFireauth(config);
-  const identityProvider = adaptFirebaseAuth(firebaseAuth);
-  return identityProvider;
-}
-
-async function initFireauth (config) {
-  const { app, authEmulatorHost } = config;
-
-  const fireauth = app.auth();
-  if (authEmulatorHost) {
-    await plugEmulator(fireauth, authEmulatorHost);
-  }
-
-  return fireauth;
-}
-
-function adaptFirebaseAuth (fireauth) {
-  return {
-    _fireauth: fireauth,
-    subscribe: observer => subscribe(observer, fireauth),
-    signIn: credentials => signIn(credentials, fireauth)
+export async function createIdentityService (fireauth) {
+  const state = {
+    user: null
   };
+
+  const selectors = {
+    isSignedIn: ({ state }) => !!state.user,
+    user: ({ state }) => ({ ...state.user }),
+    userId: ({ state }) => state.user.id
+  };
+
+  const actions = {
+    signIn: credentials => signIn(fireauth, credentials)
+  };
+
+  const identityService = createService({ state, selectors, actions });
+
+  const updateUser = user => identityService.update({ user });
+  subscribe(fireauth, updateUser);
+
+  return identityService;
 }
