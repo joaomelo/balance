@@ -98,7 +98,7 @@ module.exports = env => {
 };
 
 function establishEnvironment (envArgs) {
-  if (envArgs.localProd) return 'prodLocal';
+  if (envArgs.prodLocal) return 'prodLocal';
   if (envArgs.prodCi) return 'prodCi';
   return 'devLocal';
 }
@@ -106,7 +106,7 @@ function establishEnvironment (envArgs) {
 function createEnvVariablesPlugin (environment) {
   switch (environment) {
     case 'devLocal': return createPluginToLoadFromEnvDevFile();
-    // case 'prodLocal': return createPluginReducingFromEnvDevFile();
+    case 'prodLocal': return createPluginToLoadFromEnvProdFile();
     // case 'prodCi': return createPluginFromEnvInMemory();
     default: throw new Error(`unsupported environment "${environment}" for env var loading`);
   }
@@ -114,24 +114,19 @@ function createEnvVariablesPlugin (environment) {
 
 function createPluginToLoadFromEnvDevFile () {
   const envDevFile = path.resolve(process.cwd(), 'env-dev.env');
-  const dotEnvPlugin = new Dotenv({ path: envDevFile });
-
-  console.info(`attempting to inject env vars from "${envDevFile}" file using webpack plugin`);
-
-  return dotEnvPlugin;
+  return createPluginToLoadFromEnvFile(envDevFile);
 }
 
-// function createPluginReducingFromEnvDevFile () {
-//   console.info(`attempting to inject env vars reducing from "${envDevFile}" file using webpack plugin`);
-//   const dotEnvPlugin = new Dotenv({ path: envDevFile });
+function createPluginToLoadFromEnvProdFile () {
+  const envProdFile = path.resolve(process.cwd(), 'env-prod.env');
+  return createPluginToLoadFromEnvFile(envProdFile);
+}
 
-//   // the removal of emulator env variable is relevant to the productions app
-//   // since firebase node sdk automatically attempts connection to emulator host
-//   // if variable is set
-//   delete dotEnvPlugin.definitions['process.env.FIRESTORE_EMULATOR_HOST'];
-
-//   return dotEnvPlugin;
-// }
+function createPluginToLoadFromEnvFile (file) {
+  const dotEnvPlugin = new Dotenv({ path: file });
+  console.info(`attempting to inject env vars from "${file}" file using webpack plugin`);
+  return dotEnvPlugin;
+}
 
 // function createPluginFromEnvInMemory () {
 //   console.info('attempting to inject env vars from memory using webpack plugin');
