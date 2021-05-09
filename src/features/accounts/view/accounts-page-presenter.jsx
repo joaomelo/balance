@@ -3,7 +3,7 @@ import { createErrorReport } from '../../../app/error';
 import { AccountsPageView } from './accounts-page-view';
 
 export function AccountsPagePresenter ({ dependencies }) {
-  const { accountsService, authService } = dependencies;
+  const { accountsService, balancesService, authService } = dependencies;
   const accounts = useSelector(accountsService, 'activeItems');
 
   const [onAdd, isAdding, errorAdd] = useAction(accountsService, 'setAccountCase', authService);
@@ -12,7 +12,7 @@ export function AccountsPagePresenter ({ dependencies }) {
   const [onEdit, isEditing, errorEdit] = useAction(accountsService, 'setAccountCase', authService);
   const errorsEdit = createErrorReport(errorEdit);
 
-  const [onDel, isDeleting] = useAction(accountsService, 'delAccountCase');
+  const [onDel, isDeleting] = useAction(accountsService, 'delAccountCase', balancesService);
 
   return (
     <AccountsPageView

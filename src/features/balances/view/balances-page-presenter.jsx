@@ -13,7 +13,7 @@ export function BalancesPagePresenter ({ dependencies }) {
   const [onEdit, isEditing, errorEdit] = useAction(balancesService, 'setBalanceCase', accountsService, authService);
   const errorsEdit = createErrorReport(errorEdit);
 
-  const [onDel, isDeleting] = useAction(balancesService, 'delBalanceCase');
+  const [onDel, isDeleting] = useAction(balancesService, 'delBalancesCase');
 
   return (
     <BalancesPageView

@@ -1,5 +1,5 @@
 export function isSameDate (a, b) {
-  return a.getTime() === b.getTime();
+  return asUtcIsoString(a) === asUtcIsoString(b);
 }
 
 export function asUtcIsoString (date) {
