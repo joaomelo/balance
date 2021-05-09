@@ -11,7 +11,7 @@ export function SignInPageView ({ onSignIn, errors, isLoading }) {
 
   return (
     <>
-      <Center x y>
+      <Center main cross>
         <div>
           <h2>Sign in</h2>
           <Form onSubmit={onSubmit}>

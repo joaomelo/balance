@@ -9,8 +9,10 @@ export function AccountsListView ({ accounts, onDel, onEdit, errorsEdit }) {
   return (
     <table>
       <thead>
-        <th>Name</th>
-        <th colSpan="2">Actions</th>
+        <tr>
+          <th>Name</th>
+          <th colSpan="2">Actions</th>
+        </tr>
       </thead>
       <tbody>
         {accounts.map(a =>

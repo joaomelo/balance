@@ -3,13 +3,13 @@ import { createErrorReport } from '../../../app/error';
 import { AccountsPageView } from './accounts-page-view';
 
 export function AccountsPagePresenter ({ dependencies }) {
-  const { accountsService, identityService } = dependencies;
+  const { accountsService, authService } = dependencies;
   const accounts = useSelector(accountsService, 'activeItems');
 
-  const [onAdd, isAdding, errorAdd] = useAction(accountsService, 'setAccountCase', identityService);
+  const [onAdd, isAdding, errorAdd] = useAction(accountsService, 'setAccountCase', authService);
   const errorsAdd = createErrorReport(errorAdd);
 
-  const [onEdit, isEditing, errorEdit] = useAction(accountsService, 'setAccountCase', identityService);
+  const [onEdit, isEditing, errorEdit] = useAction(accountsService, 'setAccountCase', authService);
   const errorsEdit = createErrorReport(errorEdit);
 
   const [onDel, isDeleting] = useAction(accountsService, 'delAccountCase');

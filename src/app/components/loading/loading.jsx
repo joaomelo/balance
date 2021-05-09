@@ -7,7 +7,7 @@ export function Loading ({ isLoading }) {
 
   return injectModal(
     <Backdrop>
-      <Center x y>
+      <Center main cross>
         <Spinner />
       </Center>
     </Backdrop>

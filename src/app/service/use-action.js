@@ -11,18 +11,17 @@ export function useAction (service, action, ...dependencies) {
   const act = async (...payloads) => {
     if (isActing) return;
 
-    let success = true;
-
     setIsActing(true);
     setError(null);
 
+    let success;
     try {
       const args = [...dependencies, ...payloads];
-      console.log({ args, dependencies, payloads });
       await service[action](...args);
+      success = true;
     } catch (error) {
-      console.error(error);
       success = false;
+      console.error(error);
       isMounted.current && setError(error);
     } finally {
       isMounted.current && setIsActing(false);

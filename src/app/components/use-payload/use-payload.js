@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export function usePayload (initialValue = {}) {
   const [payload, setPayload] = useState(initialValue);
 
+  // isMounted prevents state updates after the component unmount
+  const isMounted = useRef(true);
+  useEffect(() => () => { isMounted.current = false; }, []);
+
   const update = partial => {
-    setPayload(state => ({
+    isMounted.current && setPayload(state => ({
       ...state,
       ...partial
     }));
   };
 
   const reset = () => {
-    setPayload(initialValue);
+    isMounted.current && setPayload(initialValue);
   };
 
   const bind = key => {

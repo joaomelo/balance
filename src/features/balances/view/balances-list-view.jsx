@@ -9,10 +9,12 @@ export function BalancesListView ({ accounts, balances, onDel, onEdit, errorsEdi
   return (
     <table>
       <thead>
-        <th>Account</th>
-        <th>Date</th>
-        <th>Amount</th>
-        <th colSpan="2">Actions</th>
+        <tr>
+          <th>Account</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th colSpan="2">Actions</th>
+        </tr>
       </thead>
       <tbody>
         {balances.map(b =>
