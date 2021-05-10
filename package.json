@@ -11,12 +11,12 @@
     "dev:local:server": "rimraf dist/* && webpack serve --config webpack.config.js --env devLocal",
     "dev:local:test": "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
     "prod:local:build": "rimraf dist/* && webpack --config webpack.config.js --env prodLocal",
+    "prod:local:lint": "eslint --ext .js,.jsx src/",
     "prod:local:test": "firebase emulators:exec -- \"jest --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-local.js\"",
     "prod:local:deploy": "npm run base:lint && npm run base:build -- --env prodLocal && npm run test:local:integration && firebase deploy",
     "prod:ci:build": "rimraf dist/* && webpack --config webpack.config.js --env prodCi",
     "prod:ci:tests": "firebase emulators:exec -- \"jest --setupTestFrameworkScriptFile=./tests/config/prod-ci.js\"",
-    "prod:ci:deploy": "npm run base:lint && npm run base:build -- --env prodCi && npm run test:ci:integration && firebase deploy",
-    "lint": "eslint --ext .js,.jsx src/"
+    "prod:ci:deploy": "npm run base:lint && npm run base:build -- --env prodCi && npm run test:ci:integration && firebase deploy"
   },
   "repository": {
     "type": "git",
