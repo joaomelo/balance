@@ -2,13 +2,18 @@ import { initFirebaseSuiteFromEnv } from '../firebase';
 import { createRepositoryServiceFactory } from './factory';
 
 describe('repository service module', () => {
-  let firestore, testRepository;
+  let app, firestore, testRepository;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const suite = await initFirebaseSuiteFromEnv();
+    app = suite.app;
     firestore = suite.firestore;
     const repositoryServiceFactory = createRepositoryServiceFactory(firestore);
     testRepository = repositoryServiceFactory('test');
+  });
+
+  afterAll(() => {
+    return app.delete();
   });
 
   test('repository service has the expected shape', () => {

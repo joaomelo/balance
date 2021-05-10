@@ -50,5 +50,5 @@ jobs:
   #       with:
   #         args: deploy
   #       env:
-  #         PROJECT_ID: arc-prod-41999
+  #         APP_ENV_PROJECT_ID: arc-prod-41999
   #         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

@@ -4,11 +4,17 @@ import { CredentialsUnrecognizedError } from './errors';
 import { createIdentityService } from './factory';
 
 describe('createIdentityService factory function', () => {
-  let identityService;
+  let app, fireauth, identityService;
 
-  beforeAll(async () => {
-    const { fireauth } = await initFirebaseSuiteFromEnv();
+  beforeEach(async () => {
+    const suite = await initFirebaseSuiteFromEnv();
+    app = suite.app;
+    fireauth = suite.fireauth;
     identityService = createIdentityService(fireauth);
+  });
+
+  afterAll(() => {
+    return app.delete();
   });
 
   test('signs in a existing user with proper credentials', async () => {

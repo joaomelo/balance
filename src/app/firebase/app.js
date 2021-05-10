@@ -29,13 +29,13 @@ export async function initFirebaseSuite (config) {
 
 function createFirebaseConfigFromEnv () {
   return {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSender_id: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
-    authEmulator: process.env.FIREAUTH_EMULATOR_HOST,
-    firestoreEmulator: process.env.FIRESTORE_EMULATOR_HOST
+    apiKey: process.env.APP_ENV_API_KEY,
+    authDomain: process.env.APP_ENV_AUTH_DOMAIN,
+    projectId: process.env.APP_ENV_PROJECT_ID,
+    storageBucket: process.env.APP_ENV_STORAGE_BUCKET,
+    messagingSender_id: process.env.APP_ENV_MESSAGING_SENDER_ID,
+    appId: process.env.APP_ENV_APP_ID,
+    authEmulator: process.env.APP_ENV_FIREAUTH_EMULATOR_HOST,
+    firestoreEmulator: process.env.APP_ENV_FIRESTORE_EMULATOR_HOST
   };
 }
