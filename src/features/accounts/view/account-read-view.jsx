@@ -1,8 +1,12 @@
+import { asUtcIsoString } from '../../../app/helpers';
+
 export function AccountReadView ({ account, onDel, claimEdit }) {
-  const { id, name } = account;
+  const { id, name, date, amount } = account;
   return (
     <tr>
       <td>{name}</td>
+      <td>{date ? asUtcIsoString(date) : '-'}</td>
+      <td>{amount || '-'}</td>
       <td>
         <button onClick={() => claimEdit(id)}>
           edt

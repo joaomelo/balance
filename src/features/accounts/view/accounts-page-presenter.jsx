@@ -4,7 +4,7 @@ import { AccountsPageView } from './accounts-page-view';
 
 export function AccountsPagePresenter ({ dependencies }) {
   const { accountsService, balancesService, authService } = dependencies;
-  const accounts = useSelector(accountsService, 'activeItems');
+  const accounts = useSelector(accountsService, 'accountsWithLatestBalance', balancesService);
 
   const [onAdd, isAdding, errorAdd] = useAction(accountsService, 'setAccountCase', authService);
   const errorsAdd = createErrorReport(errorAdd);

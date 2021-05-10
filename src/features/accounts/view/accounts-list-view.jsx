@@ -11,6 +11,8 @@ export function AccountsListView ({ accounts, onDel, onEdit, errorsEdit }) {
       <thead>
         <tr>
           <th>Name</th>
+          <th>Date</th>
+          <th>Amount</th>
           <th colSpan="2">Actions</th>
         </tr>
       </thead>

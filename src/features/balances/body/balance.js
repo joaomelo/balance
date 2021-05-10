@@ -17,20 +17,10 @@ export function validateBalance (balance, balances, accounts) {
   }
 
   const collidingDate = b => {
-    // console.log({
-    //   b,
-    //   isDate: isSameDate(b.date, date),
-    //   is: b.id !== id &&
-    //   b.accountId === accountId &&
-    //   isSameDate(b.date, date)
-    // });
-
     return b.id !== id &&
     b.accountId === accountId &&
     isSameDate(b.date, date);
   };
-
-  // console.log({ balance, balances });
 
   if (balances.find(collidingDate)) {
     throw new DateCollidingError();
