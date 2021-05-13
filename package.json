@@ -14,9 +14,10 @@
     "prod:local:test": "firebase emulators:exec -- \"jest --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-local.js\"",
     "prod:local:build": "rimraf dist/* && webpack --config webpack.config.js --env prodLocal",
     "prod:local:deploy": "npm run prod:local:lint && npm run prod:local:test && npm run prod:local:build && firebase deploy",
+    "prod:ci:lint": "npm run prod:local:lint",
+    "prod:ci:test": "firebase emulators:exec -- \"jest --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-ci.js\"",
     "prod:ci:build": "rimraf dist/* && webpack --config webpack.config.js --env prodCi",
-    "prod:ci:tests": "firebase emulators:exec -- \"jest --setupTestFrameworkScriptFile=./tests/config/prod-ci.js\"",
-    "prod:ci:deploy": "npm run base:lint && npm run base:build -- --env prodCi && npm run test:ci:integration && firebase deploy"
+    "prod:ci:deploy": "npm run prod:ci:lint && npm run prod:ci:test && npm run prod:ci:build && firebase deploy"
   },
   "repository": {
     "type": "git",

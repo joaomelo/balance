@@ -24,31 +24,42 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: sed -n 3p ./package.json
   
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12
-  #     - run: npm ci
-  #     - run: npm run prod:test
-
-  # publish:
-  #   needs: [bump, test]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         ref: master
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12
-  #     - run: npm ci
-  #     - run: npm run prod:build
-  #     - uses: w9jds/firebase-action@master
-  #       with:
-  #         args: deploy
-  #       env:
-  #         APP_ENV_PROJECT_ID: arc-prod-41999
-  #         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  deploy:
+    needs: [bump]
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV_API_KEY: ${{ secrets.APP_ENV_API_KEY }}
+      APP_ENV_AUTH_DOMAIN: ${{ secrets.APP_ENV_AUTH_DOMAIN }}
+      APP_ENV_PROJECT_ID: ${{ secrets.APP_ENV_PROJECT_ID }}
+      APP_ENV_STORAGE_BUCKET: ${{ secrets.APP_ENV_STORAGE_BUCKET }}
+      APP_ENV_MESSAGING_SENDER_ID: ${{ secrets.APP_ENV_MESSAGING_SENDER_ID }}
+      APP_ENV_APP_ID: ${{ secrets.APP_ENV_APP_ID }}
+      APP_ENV_FIREAUTH_EMULATOR_HOST: ${{ secrets.APP_ENV_FIREAUTH_EMULATOR_HOST }}
+      APP_ENV_FIRESTORE_EMULATOR_HOST: ${{ secrets.APP_ENV_FIRESTORE_EMULATOR_HOST }}
+      FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }} 
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - uses: "actions/setup-node@v2"
+        with:
+          node-version: '14'
+      - uses: actions/cache@v2
+        id: cache-npm
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - run: npm install -g firebase-tools@9.10.2          
+      - run: firebase use --add $FIREBASE_PROJECT
+      - uses: actions/cache@v2
+        id: cache-emulators
+        with:
+          path: /home/runner/.cache/firebase/emulators
+          key: ${{ runner.os }}-firebase-cli-v9.10.2
+      - run: npm ci
+      - run: npm run prod:ci:deploy
+      - run: npm i -g codecov
+      - run: codecov

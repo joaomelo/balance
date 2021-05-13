@@ -3,5 +3,5 @@ import {
   loadEnvFromFile
 } from './common';
 
-loadEnvFromFile('env-dev.env');
+loadEnvFromFile('.env');
 disableFireauthConsoleWarning();

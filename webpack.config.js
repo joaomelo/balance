@@ -1,7 +1,8 @@
 const path = require('path');
+const { DefinePlugin } = require('webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const Dotenv = require('dotenv-webpack');
+const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -104,36 +105,43 @@ function establishEnvironment (envArgs) {
 }
 
 function createEnvVariablesPlugin (environment) {
-  switch (environment) {
-    case 'devLocal': return createPluginToLoadFromEnvDevFile();
-    case 'prodLocal': return createPluginToLoadFromEnvProdFile();
-    // case 'prodCi': return createPluginFromEnvInMemory();
-    default: throw new Error(`unsupported environment "${environment}" for env var loading`);
+  if (environment === 'devLocal' || environment === 'prodLocal') {
+    pushEnvVarsToMemory('.env');
   }
+
+  const filter = environment === 'devLocal'
+    ? key => key.includes('APP_ENV_')
+    : key => key.includes('APP_ENV_') && !key.includes('EMULATOR');
+
+  const appEnvVars = pullEnvVarsFromMemory(filter);
+  console.log(appEnvVars);
+  return createDefinePluginForEnvVars(appEnvVars);
 };
 
-function createPluginToLoadFromEnvDevFile () {
-  const envDevFile = path.resolve(process.cwd(), 'env-dev.env');
-  return createPluginToLoadFromEnvFile(envDevFile);
+function pushEnvVarsToMemory (file) {
+  const envFile = path.resolve(process.cwd(), file);
+  dotenv.config({ path: envFile });
 }
 
-function createPluginToLoadFromEnvProdFile () {
-  const envProdFile = path.resolve(process.cwd(), 'env-prod.env');
-  return createPluginToLoadFromEnvFile(envProdFile);
+function pullEnvVarsFromMemory (filter) {
+  return Object
+    .keys(process.env)
+    .reduce((acc, key) => {
+      if (filter(key)) {
+        acc[key] = process.env[key];
+      }
+      return acc;
+    }, {});
 }
 
-function createPluginToLoadFromEnvFile (file) {
-  const dotEnvPlugin = new Dotenv({ path: file });
-  console.info(`attempting to inject env vars from "${file}" file using webpack plugin`);
+function createDefinePluginForEnvVars (envVars) {
+  const constants = Object.entries(envVars).reduce((acc, [key, value]) => {
+    acc[`process.env.${key}`] = JSON.stringify(value);
+    return acc;
+  }, {});
+
+  console.log(constants);
+
+  const dotEnvPlugin = new DefinePlugin(constants);
   return dotEnvPlugin;
 }
-
-// function createPluginFromEnvInMemory () {
-//   console.info('attempting to inject env vars from memory using webpack plugin');
-//   const dotEnvPlugin = new webpack.DefinePlugin({
-//     'process.env.SCALE_SERP_KEY': JSON.stringify(process.env.SCALE_SERP_KEY),
-//     'process.env.SEND_GRID_KEY': JSON.stringify(process.env.SEND_GRID_KEY),
-//     'process.env.DEFAULT_FROM_EMAIL': JSON.stringify(process.env.DEFAULT_FROM_EMAIL)
-//   });
-//   return dotEnvPlugin;
-// }
