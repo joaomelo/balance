@@ -109,13 +109,14 @@ function createEnvVariablesPlugin (environment) {
     pushEnvVarsToMemory('.env');
   }
 
-  const filter = environment === 'devLocal'
-    ? key => key.includes('APP_ENV_')
-    : key => key.includes('APP_ENV_') && !key.includes('EMULATOR');
+  const appEnvVars = pullEnvVarsFromMemory();
+  if (environment !== 'devLocal') {
+    nullifyEmulatorsEnvVars(appEnvVars);
+  }
 
-  const appEnvVars = pullEnvVarsFromMemory(filter);
-  console.log(appEnvVars);
-  return createDefinePluginForEnvVars(appEnvVars);
+  const envVarsStringified = stringifyEnvVars(appEnvVars);
+
+  return new DefinePlugin(envVarsStringified);
 };
 
 function pushEnvVarsToMemory (file) {
@@ -127,21 +128,27 @@ function pullEnvVarsFromMemory (filter) {
   return Object
     .keys(process.env)
     .reduce((acc, key) => {
-      if (filter(key)) {
+      if (key.includes('APP_ENV_')) {
         acc[key] = process.env[key];
       }
       return acc;
     }, {});
 }
 
-function createDefinePluginForEnvVars (envVars) {
-  const constants = Object.entries(envVars).reduce((acc, [key, value]) => {
+function nullifyEmulatorsEnvVars (envVars) {
+  Object
+    .keys(envVars)
+    .reduce((acc, key) => {
+      if (key.includes('EMULATOR')) {
+        acc[key] = null;
+      }
+      return acc;
+    }, envVars);
+}
+
+function stringifyEnvVars (envVars) {
+  return Object.entries(envVars).reduce((acc, [key, value]) => {
     acc[`process.env.${key}`] = JSON.stringify(value);
     return acc;
   }, {});
-
-  console.log(constants);
-
-  const dotEnvPlugin = new DefinePlugin(constants);
-  return dotEnvPlugin;
 }
