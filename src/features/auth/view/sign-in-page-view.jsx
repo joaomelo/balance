@@ -1,3 +1,4 @@
+import { appName, appVersion } from '../../../app/helpers';
 import { Loading, Center, Form, usePayload } from '../../../app/components';
 
 export function SignInPageView ({ onSignIn, errors, isLoading }) {
@@ -13,6 +14,7 @@ export function SignInPageView ({ onSignIn, errors, isLoading }) {
     <>
       <Center main cross>
         <div>
+          <h1>{appName().toUpperCase()} - <small>v{appVersion()}</small></h1>
           <h2>Sign in</h2>
           <Form onSubmit={onSubmit}>
             <Email
