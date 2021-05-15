@@ -1,6 +1,6 @@
 {
   "name": "balance",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "Balance is a personal finance tracking software based only on account balances.",
   "main": "dist/index.html",
   "scripts": {
