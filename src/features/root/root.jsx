@@ -5,6 +5,7 @@ import { NotFound } from '../not-found';
 import { SignInPagePresenter } from '../auth';
 import { AccountsPagePresenter } from '../accounts';
 import { BalancesPagePresenter } from '../balances';
+import { HistoryPagePresenter } from '../history';
 
 export function Root ({ dependencies }) {
   const { authService } = dependencies;
@@ -62,6 +63,9 @@ function InPages ({ dependencies }) {
         <Route path={`${path}/balances`}>
           <BalancesPagePresenter dependencies={dependencies}/>
         </Route>
+        <Route path={`${path}/history`}>
+          <HistoryPagePresenter dependencies={dependencies}/>
+        </Route>
         <Redirect to={defaultInRoute} />
       </Switch>
     </>
@@ -75,6 +79,8 @@ function NavBar () {
         <Link to="/i/accounts" >Accounts</Link>
         <span> | </span>
         <Link to="/i/balances" >Balances</Link>
+        <span> | </span>
+        <Link to="/i/history" >History</Link>
       </nav>
       <hr />
     </>
