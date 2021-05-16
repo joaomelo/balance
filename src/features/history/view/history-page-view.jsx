@@ -1,15 +1,22 @@
-import { LineChart } from '../../../app/components';
+import { sortBy } from 'lodash-es';
+
+import { DateChart } from '../../../app/components';
 
 export function HistoryPageView ({ accounts, balances }) {
-  const dataSets = accounts.map(a => ({
-    account: a.name,
-    balances: balances.filter(b => b.accountId === a.id)
+  const sortedAccounts = sortBy(accounts, ['name']);
+  const sortedBalances = sortBy(balances, ['date']);
+
+  const datasets = sortedAccounts.map(a => ({
+    label: a.name,
+    data: sortedBalances
+      .filter(b => b.accountId === a.id)
+      .map(b => ({ x: b.date, y: b.amount }))
   }));
 
   return (
     <>
       <h2>History</h2>
-      <LineChart dataSets={dataSets}/>
+      <DateChart datasets={datasets}/>
     </>
   );
 }

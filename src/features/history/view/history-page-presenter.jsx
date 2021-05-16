@@ -1,7 +1,11 @@
+import { useSelector } from '../../../app/service';
 import { HistoryPageView } from './history-page-view';
-import { accounts, balances } from '../../../../tests/fixtures';
 
-export function HistoryPagePresenter () {
+export function HistoryPagePresenter ({ dependencies }) {
+  const { balancesService, accountsService } = dependencies;
+  const accounts = useSelector(accountsService, 'activeItems');
+  const balances = useSelector(balancesService, 'activeItems');
+
   return (
     <HistoryPageView
       accounts={accounts}
