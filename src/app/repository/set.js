@@ -1,3 +1,6 @@
+export function createSet (collection) {
+  return items => set(collection, items);
+}
 export async function set (collection, items) {
   if (!items || typeof items !== 'object') {
     throw new Error('Set supports only non-empty arrays or a single object');
@@ -20,6 +23,8 @@ export async function set (collection, items) {
     batch.set(docRef, record);
   });
   await batch.commit();
+
+  console.log(1);
 }
 
 function convertItemToRecord (item) {

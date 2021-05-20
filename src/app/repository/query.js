@@ -1,38 +1,51 @@
 import firebase from 'firebase/app';
+import { store, select } from '../store';
 
-export function igniteQuery (updateItems, collection, filters) {
-  const query = mountQuery(collection, filters);
+export function queryStore (query) {
+  let queryUnsub = () => null;
+  const items = store({}, queryUnsub);
 
+  const updateItems = itemsArray => {
+    const indexedItems = itemsArray.reduce((acc, item) => {
+      acc[item.id] = item;
+      return acc;
+    }, {});
+    items.update(indexedItems);
+  };
+  queryUnsub = igniteQuery(query, updateItems);
+
+  return items;
+}
+
+export function selectItemById (store, id) {
+  return select(store, current => current[id]);
+}
+
+export function selectAllItems (store) {
+  return select(store, current => Object.values(current));
+}
+
+export function selectActiveItems (store) {
+  return select(store, current => Object.values(current).filter(i => !i._deleted));
+}
+
+function igniteQuery (query, observer) {
   const unsub = query.onSnapshot(snapshot => {
-    const items = convertSnapshotToItems(snapshot);
-    updateItems(items);
+    const items = snapshot.docs.map(doc => convertDocToItem(doc.data()));
+    observer(items);
   });
 
   return unsub;
 }
 
-function mountQuery (collection, filters = []) {
-  return filters.reduce((query, filter) => {
-    const filterData = filter();
-    const { field, operator, value } = filterData;
-    return query.where(field, operator, value);
-  }, collection);
-}
-
-function convertSnapshotToItems (snapshot) {
-  return snapshot.docs.map(doc => convertDocToItem(doc));
-}
-
-function convertDocToItem (doc) {
-  const item = {};
-  const data = doc.data();
-
-  for (const field in data) {
-    const value = data[field] instanceof firebase.firestore.Timestamp
-      ? data[field].toDate()
-      : data[field];
-    item[field] = value;
-  }
-
-  return item;
+function convertDocToItem (docData) {
+  return Object
+    .entries(docData)
+    .reduce((item, [field, value]) => {
+      const parsedValue = value instanceof firebase.firestore.Timestamp
+        ? value.toDate()
+        : value;
+      item[field] = parsedValue;
+      return item;
+    }, {});
 };
