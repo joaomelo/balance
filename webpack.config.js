@@ -65,7 +65,7 @@ module.exports = env => {
             options: {
               presets: ['@babel/env'],
               envName: mode,
-              ...!isProd && { plugins: [require.resolve('react-refresh/babel')] }
+              ...!(isProd || env.isCypressCT) && { plugins: [require.resolve('react-refresh/babel')] }
             }
           }
         },
@@ -93,7 +93,7 @@ module.exports = env => {
         ]
       }),
       new HtmlWebpackPlugin({ template: path.resolve(PATHS.SRC, 'main', 'index.html') }),
-      ...isProd ? [] : [new ReactRefreshWebpackPlugin()]
+      ...(isProd || env.isCypressCT) ? [] : [new ReactRefreshWebpackPlugin()]
     ]
   };
 };
