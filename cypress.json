@@ -1,1 +1,12 @@
-{}
+{
+  "fixturesFolder": "tests/fixtures",
+  "integrationFolder": "tests/integration",
+  "pluginsFile": "tests/plugins/index.js",
+  "supportFile": "tests/support/index.js",
+  "screenshotsFolder": "tests/screenshots",
+  "videosFolder": "tests/videos",
+  "component": {
+    "componentFolder": "src",
+    "testFiles": "**/*spec.{js,jsx}"
+  }
+}

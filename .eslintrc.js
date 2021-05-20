@@ -1,17 +1,12 @@
 module.exports = {
   root: true,
   parser: '@babel/eslint-parser',
-  plugins: [
-    'jest',
-    'jest-formatting'
-  ],
   extends: [
     'standard',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:jest/recommended',
-    'plugin:jest/style',
-    'plugin:jest-formatting/recommended'
+    'plugin:cypress/recommended',
+    'plugin:chai-friendly/recommended'
   ],
   rules: {
     semi: ['error', 'always'],
@@ -32,7 +27,6 @@ module.exports = {
     }
   },
   env: {
-    browser: true,
-    'jest/globals': true
+    browser: true
   }
 };
