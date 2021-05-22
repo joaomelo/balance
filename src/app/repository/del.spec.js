@@ -13,24 +13,17 @@ describe('repository service module', () => {
     del = createDel(collection);
   });
 
-  after(() => {
-    return app.delete();
-  });
+  afterAll(() => app.delete());
 
-  it('can logically delete values', () => {
+  it('can logically delete values', async () => {
     const item = { id: 'test-id', name: 'test name' };
 
-    set(item)
-      .then(() => collection.doc('test-id').get())
-      .then(doc => {
-        const record = doc.data();
-        expect(record).to.have.property('_deleted', false);
-        return del('test-id');
-      })
-      .then(() => collection.doc('test-id').get())
-      .then(doc => {
-        const record = doc.data();
-        expect(record).to.have.property('_deleted', true);
-      });
+    await set(item);
+    const setDoc = await collection.doc('test-id').get();
+    expect(setDoc.data()).toHaveProperty('_deleted', false);
+
+    await del('test-id');
+    const delDoc = await collection.doc('test-id').get();
+    expect(delDoc.data()).toHaveProperty('_deleted', true);
   });
 });

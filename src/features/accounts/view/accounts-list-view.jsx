@@ -1,4 +1,4 @@
-import { sortBy } from 'lodash-es';
+import { sortBy } from 'lodash';
 import { useState } from 'react';
 import { AccountReadView } from './account-read-view';
 import { AccountEditView } from './account-edit-view';

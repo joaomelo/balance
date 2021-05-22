@@ -1,7 +1,7 @@
 import { initFirebaseSuiteFromEnv } from '../firebase';
 import { createSet } from './set';
 
-describe('repository service module', () => {
+describe('repository set', () => {
   let app, collection, set;
 
   beforeEach(async () => {
@@ -11,17 +11,38 @@ describe('repository service module', () => {
     set = createSet(collection);
   });
 
-  after(() => {
-    return app.delete();
-  });
+  afterAll(() => app.delete());
 
-  it('can set values', async () => {
+  it('can create new items', async () => {
     const item = { id: 'test-id', name: 'test name' };
 
     await set(item);
     const doc = await collection.doc('test-id').get();
+
+    expect(doc.data()).toMatchObject({
+      ...item,
+      _deleted: false,
+      _updated: expect.anything()
+    });
+  });
+
+  it('can update values', async () => {
+    const item = { id: 'test-id', name: 'test name' };
+    await set(item);
+    const doc = await collection.doc('test-id').get();
     const record = doc.data();
 
-    expect(record).to.deep.equal(item);
+    const newItem = { id: 'test-id', name: 'new test name' };
+    await set(newItem);
+    const newDoc = await collection.doc('test-id').get();
+    const newRecord = newDoc.data();
+
+    expect(newRecord).toMatchObject({
+      ...newItem,
+      _deleted: false,
+      _updated: expect.anything()
+    });
+    expect(newRecord._updated.nanoseconds)
+      .toBeGreaterThan(record._updated.nanoseconds);
   });
 });

@@ -1,4 +1,4 @@
-import { sortBy } from 'lodash-es';
+import { sortBy } from 'lodash';
 import { useState } from 'react';
 import { BalanceReadView } from './balance-read-view';
 import { BalanceEditView } from './balance-edit-view';

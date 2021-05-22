@@ -1,10 +1,15 @@
 import { initFirebaseSuiteFromEnv } from '../firebase';
 import { createSet } from './set';
-import { queryStore } from './query';
-// import { queryStore, selectItemById, selectAllItems, selectActiveItems } from './query';
+import { createDel } from './del';
+import {
+  queryStore,
+  selectAllItems,
+  selectActiveItems,
+  selectItemById
+} from './query';
 
 describe('repository query', () => {
-  let app, collection, query, set;
+  let app, collection, query, set, del;
 
   beforeEach(async () => {
     const suite = await initFirebaseSuiteFromEnv();
@@ -12,56 +17,53 @@ describe('repository query', () => {
     collection = suite.firestore.collection('test');
     query = collection.where('id', '==', 'test-id');
     set = createSet(collection);
+    del = createDel(collection);
   });
 
-  after(() => {
-    return app.delete();
-  });
+  afterAll(() => app.delete());
 
-  it('keeps items updated when collection changes', () => {
+  it('keeps items updated when collection changes', async () => {
     const items = queryStore(query);
-    const empty = items.current;
+    expect(items.current).toMatchObject({});
 
     const item = { id: 'test-id', name: 'test name' };
-    set(item).then(() => {
-      expect(empty).to.deep.equal({});
-      expect(items.current).to.deep.equal(item);
+    await set(item);
+    expect(items.current).toMatchObject({
+      'test-id': { ...item }
     });
   });
 
-  // test('keeps items updated when collection changes', async () => {
-  //   const items = queryStore(testQuery);
-  //   expect(items.current).to.deep.equal({});
+  it('selects an array of all items', async () => {
+    const items = queryStore(query);
+    const allItems = selectAllItems(items);
+    const item = { id: 'test-id', name: 'test name' };
+    await set(item);
 
-  //   const item = { id: 'test-id', name: 'test name' };
-  //   const newItem = { id: 'test-id', name: 'new name' };
-  //   const filter = () => ({ field: 'id', operator: '==', value: 'test-id' });
+    expect(allItems.current).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(item)
+      ])
+    );
+  });
 
-  //   await store.set(item);
-  //   store.igniteQuery([filter]);
-  //   await store.set(newItem);
+  it('selects only active items', async () => {
+    const items = queryStore(query);
+    const activeItems = selectActiveItems(items);
+    const item = { id: 'test-id', name: 'test name' };
+    await set(item);
+    await del('test-id');
 
-  //   expect(spy).toHaveBeenCalledWith(expect.objectContaining({
-  //     items: expect.objectContaining({
-  //       'test-id': expect.objectContaining(newItem)
-  //     })
-  //   }));
-  //   spy.mockRestore();
-  // });
+    expect(activeItems.current).toEqual(
+      expect.arrayContaining([])
+    );
+  });
 
-  // test('querying can be turned off', async () => {
-  //   const spy = jest.spyOn(store, 'update');
+  it('selects an item by id', async () => {
+    const items = queryStore(query);
+    const itemById = selectItemById(items, 'test-id');
+    const item = { id: 'test-id', name: 'test name' };
+    await set(item);
 
-  //   const item = { id: 'test-id', name: 'test name' };
-  //   const newItem = { id: 'test-id', name: 'new name' };
-  //   const filter = () => ({ field: 'id', operator: '==', value: 'test-id' });
-
-  //   await store.set(item);
-  //   store.igniteQuery([filter]);
-  //   store.douseQuery();
-  //   await store.set(newItem);
-
-  //   expect(spy).toHaveBeenCalledTimes(1);
-  //   spy.mockRestore();
-  // });
+    expect(itemById.current).toMatchObject(item);
+  });
 });

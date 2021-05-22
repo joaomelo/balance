@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'lodash';
 import { Base } from './base';
 
 export function store (state, onDouse) {

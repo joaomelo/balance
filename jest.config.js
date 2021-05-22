@@ -1,8 +1,5 @@
 module.exports = {
-  testEnvironment: 'jsdom',
-  transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!lodash-es)'
-  ],
+  testEnvironment: './tests/config/environment.js',
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.js', 'src/**/*.jsx'],
   coverageDirectory: 'tests/coverage',

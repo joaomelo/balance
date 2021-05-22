@@ -23,16 +23,13 @@ export async function set (collection, items) {
     batch.set(docRef, record);
   });
   await batch.commit();
-
-  console.log(1);
 }
 
 function convertItemToRecord (item) {
   const now = new Date();
   return {
+    ...item,
     _deleted: false,
-    _created: now,
-    ...item, // if editing, this oder allow only "updated" to override original property.
     _updated: now
   };
 }
