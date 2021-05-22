@@ -7,15 +7,12 @@ export function store (state, onDouse) {
 
 export class Store extends Base {
   constructor (state, onDouse) {
-    const clonedState = cloneDeep(state);
-    super(clonedState);
-
+    super(cloneDeep(state));
     this.onDouse = onDouse || (() => null);
   }
 
   update (state) {
-    const updatedState = cloneDeep(state);
-    this.subject.next(updatedState);
+    this.subject.next(cloneDeep(state));
   };
 
   douse () {

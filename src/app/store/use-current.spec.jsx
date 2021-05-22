@@ -1,4 +1,5 @@
-import { mount } from '@cypress/react';
+import '@testing-library/jest-dom/extend-expect';
+import { render, screen, act } from '@testing-library/react';
 import { store } from './store';
 import { useCurrent } from './use-current';
 
@@ -8,10 +9,10 @@ describe('useCurrent hook', () => {
       'uuid-1': 'task 1',
       'uuid-2': 'task 2'
     });
-    mount(<TaskList tasksStore={tasksStore} />);
+    render(<TaskList tasksStore={tasksStore} />);
 
-    cy.contains('task 1').should('exist');
-    cy.contains('task 2').should('exist');
+    expect(screen.getByText('task 1')).toBeInTheDocument();
+    expect(screen.getByText('task 2')).toBeInTheDocument();
   });
 
   it('hook keeps on par with store current value', () => {
@@ -19,21 +20,19 @@ describe('useCurrent hook', () => {
       'uuid-1': 'task 1',
       'uuid-2': 'task 2'
     });
-    mount(<TaskList tasksStore={tasksStore} />);
+    render(<TaskList tasksStore={tasksStore} />);
 
-    tasksStore.update({
+    act(() => tasksStore.update({
       'uuid-1': 'task 3',
       'uuid-2': 'task 4'
-    });
+    }));
 
-    cy.contains('task 1').should('not.exist');
-    cy.contains('task 2').should('not.exist');
-    cy.contains('task 3').should('exist');
-    cy.contains('task 4').should('exist');
+    expect(screen.getByText('task 3')).toBeInTheDocument();
+    expect(screen.getByText('task 4')).toBeInTheDocument();
   });
 });
 
-export function TaskList ({ tasksStore }) {
+function TaskList ({ tasksStore }) {
   const tasks = useCurrent(tasksStore);
   return (
     <ul>

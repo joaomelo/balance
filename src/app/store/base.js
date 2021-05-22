@@ -1,6 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 
 export class Base {
+  subject = null;
+
   constructor (state = null) {
     this.subject = new BehaviorSubject(state);
   }

@@ -10,7 +10,7 @@ describe('selectors', () => {
     });
     const item = select(items, items => items['uuid-1']);
 
-    expect(item.current).to.deep.equal({ name: 'first item' });
+    expect(item.current).toMatchObject({ name: 'first item' });
   });
 
   it('selectors can derive state from another selector', () => {
@@ -18,10 +18,10 @@ describe('selectors', () => {
     const doubleSelector = select(number, value => value * 2);
     const doubleDoubleSelector = select(doubleSelector, value => value * 2);
 
-    expect(doubleDoubleSelector.current).to.equal(40);
+    expect(doubleDoubleSelector.current).toBe(40);
 
     number.update(20);
-    expect(doubleDoubleSelector.current).to.equal(80);
+    expect(doubleDoubleSelector.current).toBe(80);
   });
 
   it('selectors can derive from multiple sources', () => {
@@ -34,7 +34,7 @@ describe('selectors', () => {
       };
     });
 
-    expect(options.current).to.deep.equal({
+    expect(options.current).toMatchObject({
       dark: true,
       email: 'some@emai.com'
     });
@@ -64,7 +64,7 @@ describe('selectors', () => {
     };
     const studentsWithCityName = select([studentsStore, citiesStore], project);
 
-    expect(studentsWithCityName.current).to.deep.equal([
+    expect(studentsWithCityName.current).toMatchObject([
       { name: 'pedro', city: 'brasilia' },
       { name: 'mary', city: 'san diego' },
       { name: 'paul', city: 'san diego' }
@@ -75,7 +75,7 @@ describe('selectors', () => {
       'uuid-2': { name: 'san diego - ca' }
     });
 
-    expect(studentsWithCityName.current).to.deep.equal([
+    expect(studentsWithCityName.current).toMatchObject([
       { name: 'pedro', city: 'brasilia - df' },
       { name: 'mary', city: 'san diego - ca' },
       { name: 'paul', city: 'san diego - ca' }
