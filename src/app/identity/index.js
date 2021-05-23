@@ -1,1 +1,2 @@
-export { createIdentityService } from './factory';
+export * from './mutations';
+export * from './store';

@@ -1,20 +1,20 @@
 import firebase from 'firebase/app';
 import { store, select } from '../store';
 
-export function queryStore (query) {
+export function storeQuery (query) {
   let queryUnsub = () => null;
-  const items = store({}, queryUnsub);
+  const itemsStore = store({}, queryUnsub);
 
   const updateItems = itemsArray => {
     const indexedItems = itemsArray.reduce((acc, item) => {
       acc[item.id] = item;
       return acc;
     }, {});
-    items.update(indexedItems);
+    itemsStore.update(indexedItems);
   };
   queryUnsub = igniteQuery(query, updateItems);
 
-  return items;
+  return itemsStore;
 }
 
 export function selectItemById (store, id) {

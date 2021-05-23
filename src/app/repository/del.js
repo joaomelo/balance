@@ -2,7 +2,7 @@ export function createDel (collection) {
   return ids => del(collection, ids);
 }
 
-export async function del (collection, ids) {
+async function del (collection, ids) {
   if (!ids) {
     throw new Error('ids must be defined');
   };

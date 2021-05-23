@@ -2,13 +2,13 @@ import { initFirebaseSuiteFromEnv } from '../firebase';
 import { createSet } from './set';
 import { createDel } from './del';
 import {
-  queryStore,
+  storeQuery,
   selectAllItems,
   selectActiveItems,
   selectItemById
 } from './query';
 
-describe('repository query', () => {
+describe('query store', () => {
   let app, collection, query, set, del;
 
   beforeEach(async () => {
@@ -23,7 +23,7 @@ describe('repository query', () => {
   afterAll(() => app.delete());
 
   it('keeps items updated when collection changes', async () => {
-    const items = queryStore(query);
+    const items = storeQuery(query);
     expect(items.current).toMatchObject({});
 
     const item = { id: 'test-id', name: 'test name' };
@@ -34,7 +34,7 @@ describe('repository query', () => {
   });
 
   it('selects an array of all items', async () => {
-    const items = queryStore(query);
+    const items = storeQuery(query);
     const allItems = selectAllItems(items);
     const item = { id: 'test-id', name: 'test name' };
     await set(item);
@@ -47,7 +47,7 @@ describe('repository query', () => {
   });
 
   it('selects only active items', async () => {
-    const items = queryStore(query);
+    const items = storeQuery(query);
     const activeItems = selectActiveItems(items);
     const item = { id: 'test-id', name: 'test name' };
     await set(item);
@@ -59,7 +59,7 @@ describe('repository query', () => {
   });
 
   it('selects an item by id', async () => {
-    const items = queryStore(query);
+    const items = storeQuery(query);
     const itemById = selectItemById(items, 'test-id');
     const item = { id: 'test-id', name: 'test name' };
     await set(item);

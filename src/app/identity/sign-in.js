@@ -1,11 +1,13 @@
 import { CredentialsUnrecognizedError } from './errors';
-import { extractUser } from './extract-user';
 
-export async function signIn (fireauth, credentials) {
+export function createSignIn (fireauth) {
+  return credentials => signIn(fireauth, credentials);
+}
+
+async function signIn (fireauth, credentials) {
   try {
     const { email, password } = credentials;
-    const userCredential = await fireauth.signInWithEmailAndPassword(email, password);
-    return extractUser(userCredential.user);
+    await fireauth.signInWithEmailAndPassword(email, password);
   } catch (error) {
     switch (error.code) {
       case 'auth/user-not-found':
