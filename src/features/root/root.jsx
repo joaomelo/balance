@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Link, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import { useSelector } from '../../app/service';
+import { useQuery } from '../../app/hooks';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
 import { SignInPagePresenter } from '../auth';
@@ -8,8 +8,8 @@ import { BalancesPagePresenter } from '../balances';
 import { HistoryPagePresenter } from '../history';
 
 export function Root ({ dependencies }) {
-  const { authService } = dependencies;
-  const isSignedIn = useSelector(authService, 'isSignedIn');
+  const { isSignedInSelector } = dependencies;
+  const isSignedIn = useQuery(isSignedInSelector);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { createDel } from './del';
 import { createSet } from './set';
 
-export function createIdentityCommands (collection) {
+export function createRepositoryCommands (collection) {
   return {
     set: createSet(collection),
     del: createDel(collection)

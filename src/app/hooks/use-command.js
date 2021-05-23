@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-export function useAction (service, action, ...dependencies) {
+export function useCommand (command, dependencies = {}) {
   const [isActing, setIsActing] = useState(false);
   const [error, setError] = useState(null);
 
@@ -8,7 +8,7 @@ export function useAction (service, action, ...dependencies) {
   const isMounted = useRef(true);
   useEffect(() => () => { isMounted.current = false; }, []);
 
-  const act = async (...payloads) => {
+  const act = async payload => {
     if (isActing) return;
 
     setIsActing(true);
@@ -16,8 +16,7 @@ export function useAction (service, action, ...dependencies) {
 
     let success;
     try {
-      const args = [...dependencies, ...payloads];
-      await service[action](...args);
+      await command(dependencies, payload);
       success = true;
     } catch (error) {
       success = false;

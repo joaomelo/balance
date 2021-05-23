@@ -1,7 +1,7 @@
 import { credentials } from '../../../tests/fixtures';
 import { initFirebaseSuiteFromEnv } from '../firebase';
 import { queryUser, selectUserId, selectIsSignedIn } from './query';
-import { createCommands } from './commands';
+import { createIdentityCommands } from './commands';
 
 describe('user query and selectors', () => {
   let app, fireauth, commands;
@@ -10,7 +10,7 @@ describe('user query and selectors', () => {
     const suite = await initFirebaseSuiteFromEnv();
     app = suite.app;
     fireauth = suite.fireauth;
-    commands = createCommands(fireauth);
+    commands = createIdentityCommands(fireauth);
   });
 
   afterAll(() => app.delete());

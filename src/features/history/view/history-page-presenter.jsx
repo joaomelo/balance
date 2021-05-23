@@ -1,15 +1,16 @@
-import { useSelector } from '../../../app/service';
+// import { useStore } from '../../../app/service';
 import { HistoryPageView } from './history-page-view';
 
 export function HistoryPagePresenter ({ dependencies }) {
-  const { balancesService, accountsService } = dependencies;
-  const accounts = useSelector(accountsService, 'activeItems');
-  const balances = useSelector(balancesService, 'activeItems');
+  // const { balancesService, accountsService } = dependencies;
+  // const accounts = useStore(accountsService, 'activeItems');
+  // const balances = useStore(balancesService, 'activeItems');
 
   return (
-    <HistoryPageView
-      accounts={accounts}
-      balances={balances}
-    />
+    <HistoryPageView />
+    // <HistoryPageView
+    //   accounts={accounts}
+    //   balances={balances}
+    // />
   );
 }

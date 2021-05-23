@@ -1,6 +1,6 @@
-import { Loading } from '../../../app/components';
-import { BalancesAddView } from './balance-add-view';
-import { BalancesListView } from './balances-list-view';
+// import { Loading } from '../../../app/components';
+// import { BalancesAddView } from './balance-add-view';
+// import { BalancesListView } from './balances-list-view';
 
 export function BalancesPageView ({
   balances,
@@ -15,7 +15,7 @@ export function BalancesPageView ({
   return (
     <>
       <h2>Balances</h2>
-      <BalancesAddView
+      {/* <BalancesAddView
         accounts={accounts}
         onAdd={onAdd}
         errors={errorsAdd}
@@ -27,7 +27,7 @@ export function BalancesPageView ({
         onEdit={onEdit}
         errorsEdit={errorsEdit}
       />
-      <Loading isLoading={isLoading} />
+      <Loading isLoading={isLoading} /> */}
     </>
   );
 }

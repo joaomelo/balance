@@ -2,30 +2,35 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import { initFirebaseSuiteFromEnv } from '../app/firebase';
-import { createCommands, storeQuery } from '../app/repository';
-import { createIdentityService } from '../app/identity';
-import { syncRepositoryWithAuth } from '../features/sync-repo-identity';
-import { authServiceConfig } from '../features/auth';
-import { accountsServiceConfig } from '../features/accounts';
-import { balancesServiceConfig } from '../features/balances';
+import { createIdentityCommands, queryUser, selectUserId, selectIsSignedIn } from '../app/identity';
+import { createRepositoryCommands, queryRepoWithUser } from '../app/repository';
 import { mountRoot } from '../features/root';
 
 async function main () {
   const { firestore, fireauth } = await initFirebaseSuiteFromEnv();
 
-  const authService = createIdentityService(fireauth, authServiceConfig);
+  const identityCommands = createIdentityCommands(fireauth);
+  const userQuery = queryUser(fireauth);
+  const userIdSelector = selectUserId(userQuery);
+  const isSignedInSelector = selectIsSignedIn(userQuery);
 
-  const createRepositoryService = await createCommands(firestore);
-  const accountsService = createRepositoryService('accounts', accountsServiceConfig);
-  const balancesService = createRepositoryService('balances', balancesServiceConfig);
+  const accountsCollection = firestore.collection('accounts');
+  const accountsCommands = createRepositoryCommands(accountsCollection);
+  const accountsQuery = queryRepoWithUser(userIdSelector, accountsCollection);
 
-  syncRepositoryWithAuth(authService, accountsService);
-  syncRepositoryWithAuth(authService, balancesService);
+  const balancesCollection = firestore.collection('balances');
+  const balancesCommands = createRepositoryCommands(balancesCollection);
+  const balancesQuery = queryRepoWithUser(userIdSelector, balancesCollection);
 
   const dependencies = {
-    authService,
-    accountsService,
-    balancesService
+    identityCommands,
+    userQuery,
+    userIdSelector,
+    isSignedInSelector,
+    accountsCommands,
+    accountsQuery,
+    balancesCommands,
+    balancesQuery
   };
 
   // dependencies exposed globally to facilitate tests and debug
