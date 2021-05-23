@@ -2,7 +2,12 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import { initFirebaseSuiteFromEnv } from '../app/firebase';
-import { createIdentityCommands, queryUser, selectUserId, selectIsSignedIn } from '../app/identity';
+import {
+  createIdentityCommands,
+  queryUser,
+  selectUserId,
+  selectIsSignedIn
+} from '../app/identity';
 import { createRepositoryCommands, queryRepoWithUser } from '../app/repository';
 import { mountRoot } from '../features/root';
 
