@@ -1,6 +1,6 @@
 import { createSignIn } from './sign-in';
 
-export function createMutations (fireauth) {
+export function createCommands (fireauth) {
   return {
     signIn: createSignIn(fireauth),
     signOut: () => fireauth.signOut()

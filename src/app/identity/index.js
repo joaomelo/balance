@@ -1,2 +1,2 @@
-export * from './mutations';
-export * from './store';
+export * from './commands';
+export * from './query';

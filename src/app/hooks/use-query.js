@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useCurrent (source) {
+export function useQuery (source) {
   const [value, setValue] = useState(source.current);
 
   const subscribe = () => source.subscribe(() => setValue(source.current));

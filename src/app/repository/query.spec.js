@@ -2,20 +2,20 @@ import { initFirebaseSuiteFromEnv } from '../firebase';
 import { createSet } from './set';
 import { createDel } from './del';
 import {
-  storeQuery,
+  queryRepository,
   selectAllItems,
   selectActiveItems,
   selectItemById
 } from './query';
 
-describe('query store', () => {
-  let app, collection, query, set, del;
+describe('query query', () => {
+  let app, collection, driver, set, del;
 
   beforeEach(async () => {
     const suite = await initFirebaseSuiteFromEnv();
     app = suite.app;
     collection = suite.firestore.collection('test');
-    query = collection.where('id', '==', 'test-id');
+    driver = collection.where('id', '==', 'test-id');
     set = createSet(collection);
     del = createDel(collection);
   });
@@ -23,18 +23,18 @@ describe('query store', () => {
   afterAll(() => app.delete());
 
   it('keeps items updated when collection changes', async () => {
-    const items = storeQuery(query);
-    expect(items.current).toMatchObject({});
+    const itemsQuery = queryRepository(driver);
+    expect(itemsQuery.current).toMatchObject({});
 
     const item = { id: 'test-id', name: 'test name' };
     await set(item);
-    expect(items.current).toMatchObject({
+    expect(itemsQuery.current).toMatchObject({
       'test-id': { ...item }
     });
   });
 
   it('selects an array of all items', async () => {
-    const items = storeQuery(query);
+    const items = queryRepository(driver);
     const allItems = selectAllItems(items);
     const item = { id: 'test-id', name: 'test name' };
     await set(item);
@@ -47,7 +47,7 @@ describe('query store', () => {
   });
 
   it('selects only active items', async () => {
-    const items = storeQuery(query);
+    const items = queryRepository(driver);
     const activeItems = selectActiveItems(items);
     const item = { id: 'test-id', name: 'test name' };
     await set(item);
@@ -59,7 +59,7 @@ describe('query store', () => {
   });
 
   it('selects an item by id', async () => {
-    const items = storeQuery(query);
+    const items = queryRepository(driver);
     const itemById = selectItemById(items, 'test-id');
     const item = { id: 'test-id', name: 'test name' };
     await set(item);

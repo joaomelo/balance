@@ -2,7 +2,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import { initFirebaseSuiteFromEnv } from '../app/firebase';
-import { createMutations, storeQuery } from '../app/repository';
+import { createCommands, storeQuery } from '../app/repository';
 import { createIdentityService } from '../app/identity';
 import { syncRepositoryWithAuth } from '../features/sync-repo-identity';
 import { authServiceConfig } from '../features/auth';
@@ -15,7 +15,7 @@ async function main () {
 
   const authService = createIdentityService(fireauth, authServiceConfig);
 
-  const createRepositoryService = await createMutations(firestore);
+  const createRepositoryService = await createCommands(firestore);
   const accountsService = createRepositoryService('accounts', accountsServiceConfig);
   const balancesService = createRepositoryService('balances', balancesServiceConfig);
 

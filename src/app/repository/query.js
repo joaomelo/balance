@@ -1,42 +1,36 @@
 import firebase from 'firebase/app';
-import { store, select } from '../store';
+import { query, select } from '../query';
 
-export function storeQuery (query) {
-  let queryUnsub = () => null;
-  const itemsStore = store({}, queryUnsub);
+export function queryRepository (driver) {
+  let repoUnsub = () => null;
+  const itemsQuery = query({}, repoUnsub);
 
-  const updateItems = itemsArray => {
-    const indexedItems = itemsArray.reduce((acc, item) => {
-      acc[item.id] = item;
-      return acc;
-    }, {});
-    itemsStore.update(indexedItems);
-  };
-  queryUnsub = igniteQuery(query, updateItems);
+  repoUnsub = driver.onSnapshot(snapshot => updateItems(itemsQuery, snapshot));
 
-  return itemsStore;
+  return itemsQuery;
 }
 
-export function selectItemById (store, id) {
-  return select(store, current => current[id]);
+export function selectItemById (query, id) {
+  return select(query, current => current[id]);
 }
 
-export function selectAllItems (store) {
-  return select(store, current => Object.values(current));
+export function selectAllItems (query) {
+  return select(query, current => Object.values(current));
 }
 
-export function selectActiveItems (store) {
-  return select(store, current => Object.values(current).filter(i => !i._deleted));
+export function selectActiveItems (query) {
+  return select(query, current => Object.values(current).filter(i => !i._deleted));
 }
 
-function igniteQuery (query, observer) {
-  const unsub = query.onSnapshot(snapshot => {
-    const items = snapshot.docs.map(doc => convertDocToItem(doc.data()));
-    observer(items);
-  });
+function updateItems (query, snapshot) {
+  const items = snapshot.docs.reduce((acc, doc) => {
+    const item = convertDocToItem(doc.data());
+    acc[item.id] = item;
+    return acc;
+  }, {});
 
-  return unsub;
-}
+  query.update(items);
+};
 
 function convertDocToItem (docData) {
   return Object

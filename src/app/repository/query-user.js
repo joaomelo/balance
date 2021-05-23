@@ -1,19 +1,19 @@
-import { store } from '../store';
-import { storeQuery } from './query';
+import { query } from '../query';
+import { queryRepository } from './query';
 
-export function storeQueryWithUser (userStore, query) {
-  let itemsStore = store({});
+export function queryRepoWithUser (userIdSelector, driver) {
+  let itemsQuery = query({});
 
-  userStore.subscribe(({ userId }) => {
-    itemsStore.douse();
+  userIdSelector.subscribe(userId => {
+    itemsQuery.douse();
 
     if (userId) {
-      const queryWithUser = query.where('user', '==', userId);
-      itemsStore = storeQuery(queryWithUser);
+      const driverWithUser = driver.where('user', '==', userId);
+      itemsQuery = queryRepository(driverWithUser);
     } else {
-      itemsStore = store({});
+      itemsQuery = query({});
     }
   });
 
-  return itemsStore;
+  return itemsQuery;
 }

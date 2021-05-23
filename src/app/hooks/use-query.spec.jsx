@@ -1,28 +1,28 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, act } from '@testing-library/react';
-import { store } from './store';
-import { useCurrent } from './use-current';
+import { query } from '../query';
+import { useQuery } from './use-query';
 
-describe('useCurrent hook', () => {
-  it('store current value is extracted by the hook', () => {
-    const tasksStore = store({
+describe('useQuery hook', () => {
+  it('query current value is extracted by the hook', () => {
+    const tasksQuery = query({
       'uuid-1': 'task 1',
       'uuid-2': 'task 2'
     });
-    render(<TaskList tasksStore={tasksStore} />);
+    render(<TaskList tasksQuery={tasksQuery} />);
 
     expect(screen.getByText('task 1')).toBeInTheDocument();
     expect(screen.getByText('task 2')).toBeInTheDocument();
   });
 
-  it('hook keeps on par with store current value', () => {
-    const tasksStore = store({
+  it('hook keeps on par with query current value', () => {
+    const tasksQuery = query({
       'uuid-1': 'task 1',
       'uuid-2': 'task 2'
     });
-    render(<TaskList tasksStore={tasksStore} />);
+    render(<TaskList tasksQuery={tasksQuery} />);
 
-    act(() => tasksStore.update({
+    act(() => tasksQuery.update({
       'uuid-1': 'task 3',
       'uuid-2': 'task 4'
     }));
@@ -32,8 +32,8 @@ describe('useCurrent hook', () => {
   });
 });
 
-function TaskList ({ tasksStore }) {
-  const tasks = useCurrent(tasksStore);
+function TaskList ({ tasksQuery }) {
+  const tasks = useQuery(tasksQuery);
   return (
     <ul>
       {
