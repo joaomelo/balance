@@ -1,5 +1,5 @@
 import { appName, appVersion } from '../../../app/helpers';
-import { Loading, Center, Form } from '../../../app/components';
+import { Loading, Center, Form, ErrorMessage } from '../../../app/components';
 import { usePayload } from '../../../app/hooks';
 
 export function SignInPageView ({ onSignIn, errors, isLoading }) {
@@ -26,7 +26,7 @@ export function SignInPageView ({ onSignIn, errors, isLoading }) {
               {...bind('password')}
               error={errors.password}
             />
-            <p>{errors.escaped}</p>
+            <ErrorMessage code={errors.escaped}/>
             <Button />
           </Form>
         </div>
@@ -45,7 +45,7 @@ function Email ({ value, onChange, error }) {
         value={value}
         onChange={onChange}
       />
-      <p>{error}</p>
+      <ErrorMessage code={error}/>
     </div>
   );
 }
@@ -60,14 +60,17 @@ function Password ({ value, onChange, error }) {
         value={value}
         onChange={onChange}
       />
-      <p>{error}</p>
+      <ErrorMessage code={error}/>
     </div>
   );
 }
 
 function Button () {
   return (
-    <button type="submit">
+    <button
+      id="buttonSignIn"
+      type="submit"
+    >
       Sign in
     </button>
   );
