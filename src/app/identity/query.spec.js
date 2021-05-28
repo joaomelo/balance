@@ -1,16 +1,16 @@
 import { credentials } from '../../../tests/fixtures';
 import { initFirebaseSuiteFromEnv } from '../firebase';
 import { queryUser, selectUserId, selectIsSignedIn } from './query';
-import { createIdentityCommands } from './commands';
+import { createIdentityMutations } from './mutations';
 
 describe('user query and selectors', () => {
-  let app, fireauth, commands;
+  let app, fireauth, mutations;
 
   beforeEach(async () => {
     const suite = await initFirebaseSuiteFromEnv();
     app = suite.app;
     fireauth = suite.fireauth;
-    commands = createIdentityCommands(fireauth);
+    mutations = createIdentityMutations(fireauth);
   });
 
   afterAll(() => app.delete());
@@ -25,12 +25,12 @@ describe('user query and selectors', () => {
     expect(isSignedInSelector.current).toBeFalsy();
   });
 
-  test('correctly update state after commands', async () => {
+  test('correctly update state after mutations', async () => {
     const userQuery = queryUser(fireauth);
     const userIdSelector = selectUserId(userQuery);
     const isSignedInSelector = selectIsSignedIn(userQuery);
 
-    await commands.signIn(credentials[0]);
+    await mutations.signIn(credentials[0]);
 
     expect(userQuery.current).toMatchObject({
       id: expect.any(String),
@@ -39,7 +39,7 @@ describe('user query and selectors', () => {
     expect(userIdSelector.current).toEqual(expect.any(String));
     expect(isSignedInSelector.current).toBeTruthy();
 
-    await commands.signOut();
+    await mutations.signOut();
 
     expect(userQuery.current).toBeNull();
     expect(userIdSelector.current).toBeNull();

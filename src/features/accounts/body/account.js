@@ -1,6 +1,6 @@
 import { AppError } from '../../../app/error';
 
-export function validateAccount (account, accounts) {
+export function validateAccount (accounts, account) {
   const { id, name } = account;
 
   if (typeof name !== 'string' || name.length < 3 || name.length > 64) {

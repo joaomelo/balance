@@ -2,15 +2,15 @@ import { EmailInvalidError, PasswordInvalidError } from '../body';
 import { signInCommand } from './sign-in';
 
 describe('sign-in command', () => {
-  const identityCommands = { signIn: jest.fn() };
+  const identityMutations = { signIn: jest.fn() };
 
   test('happy path', async () => {
     const email = 'test@email.com';
     const credentials = { email, password: 'password' };
 
-    await signInCommand({ identityCommands }, credentials);
+    await signInCommand({ identityMutations }, credentials);
 
-    expect(identityCommands.signIn).toHaveBeenCalledWith(credentials);
+    expect(identityMutations.signIn).toHaveBeenCalledWith(credentials);
   });
 
   test('throws if invalid email', async () => {
@@ -19,7 +19,7 @@ describe('sign-in command', () => {
       password: 'password'
     };
 
-    await expect(signInCommand({ identityCommands }, credentials))
+    await expect(signInCommand({ identityMutations }, credentials))
       .rejects
       .toThrow(EmailInvalidError);
   });
@@ -29,7 +29,7 @@ describe('sign-in command', () => {
       password: 'password'
     };
 
-    await expect(signInCommand({ identityCommands }, credentials))
+    await expect(signInCommand({ identityMutations }, credentials))
       .rejects
       .toThrow(EmailInvalidError);
   });
@@ -40,7 +40,7 @@ describe('sign-in command', () => {
       password: 'bad'
     };
 
-    await expect(signInCommand({ identityCommands }, credentials))
+    await expect(signInCommand({ identityMutations }, credentials))
       .rejects
       .toThrow(PasswordInvalidError);
   });
@@ -50,7 +50,7 @@ describe('sign-in command', () => {
       email: 'test@email.com'
     };
 
-    await expect(signInCommand({ identityCommands }, credentials))
+    await expect(signInCommand({ identityMutations }, credentials))
       .rejects
       .toThrow(PasswordInvalidError);
   });

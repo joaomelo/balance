@@ -1,8 +1,8 @@
 import { validateCredentials } from '../body';
 
 export async function signInCommand (dependencies, credentials) {
-  const { identityCommands } = dependencies;
+  const { identityMutations } = dependencies;
 
   validateCredentials(credentials);
-  await identityCommands.signIn(credentials);
+  await identityMutations.signIn(credentials);
 }

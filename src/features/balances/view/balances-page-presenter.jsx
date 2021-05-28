@@ -1,11 +1,11 @@
-// import { useStore, useCommand } from '../../../app/hooks';
+// import { useQuery, useCommand } from '../../../app/hooks';
 // import { createErrorReport } from '../../../app/error';
 import { BalancesPageView } from './balances-page-view';
 
 export function BalancesPagePresenter ({ dependencies }) {
   // const { balancesService, accountsService, authService } = dependencies;
-  // const accounts = useStore(accountsService, 'activeItems');
-  // const balances = useStore(balancesService, 'activeItems');
+  // const accounts = useQuery(accountsService, 'activeItems');
+  // const balances = useQuery(balancesService, 'activeItems');
 
   // const [onAdd, isAdding, errorAdd] = useCommand(balancesService, 'setBalanceCase', accountsService, authService);
   // const errorsAdd = createErrorReport(errorAdd);

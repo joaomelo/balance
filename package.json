@@ -27,6 +27,7 @@
   "license": "GPL-3.0",
   "homepage": "https://github.com/joaomelo/balance",
   "dependencies": {
+    "@reach/dialog": "^0.15.0",
     "axios": "^0.21.1",
     "chart.js": "^3.2.1",
     "chartjs-adapter-luxon": "^1.0.0",

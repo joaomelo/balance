@@ -49,4 +49,8 @@ export const ResetStyles = css`
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-normal);
   }
+
+  dialog::backdrop {
+    background: black;
+  }
 `;

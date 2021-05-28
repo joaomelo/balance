@@ -1,6 +1,6 @@
-// import { Loading } from '../../../app/components';
-// import { AccountAddView } from './account-add-view';
-// import { AccountsListView } from './accounts-list-view';
+import { Loading } from '../../../app/components';
+import { AccountAddView } from './account-add-view';
+import { AccountsListView } from './accounts-list-view';
 
 export function AccountsPageView ({
   accounts,
@@ -14,7 +14,7 @@ export function AccountsPageView ({
   return (
     <>
       <h2>Accounts</h2>
-      {/* <AccountAddView
+      <AccountAddView
         onAdd={onAdd}
         errors={errorsAdd}
       />
@@ -24,7 +24,7 @@ export function AccountsPageView ({
         onEdit={onEdit}
         errorsEdit={errorsEdit}
       />
-      <Loading isLoading={isLoading} /> */}
+      <Loading isLoading={isLoading} />
     </>
   );
 }

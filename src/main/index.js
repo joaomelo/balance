@@ -3,39 +3,54 @@ import 'regenerator-runtime/runtime';
 
 import { initFirebaseSuiteFromEnv } from '../app/firebase';
 import {
-  createIdentityCommands,
+  createIdentityMutations,
   queryUser,
   selectUserId,
   selectIsSignedIn
 } from '../app/identity';
-import { createRepositoryCommands, queryRepoWithUser } from '../app/repository';
+import {
+  createRepositoryMutations,
+  queryRepoWithUser,
+  selectActiveItems
+} from '../app/repository';
 import { mountRoot } from '../features/root';
+import { selectAccountsWithBalances } from '../features/accounts';
 
 async function main () {
   const { firestore, fireauth } = await initFirebaseSuiteFromEnv();
 
-  const identityCommands = createIdentityCommands(fireauth);
+  const identityMutations = createIdentityMutations(fireauth);
   const userQuery = queryUser(fireauth);
   const userIdSelector = selectUserId(userQuery);
   const isSignedInSelector = selectIsSignedIn(userQuery);
 
   const accountsCollection = firestore.collection('accounts');
-  const accountsCommands = createRepositoryCommands(accountsCollection);
-  const accountsQuery = queryRepoWithUser(userIdSelector, accountsCollection);
+  const accountsMutations = createRepositoryMutations(accountsCollection);
+  const accountsQuery = queryRepoWithUser(userIdSelector, accountsCollection.orderBy('name'));
+  const activeAccountsSelector = selectActiveItems(accountsQuery);
 
   const balancesCollection = firestore.collection('balances');
-  const balancesCommands = createRepositoryCommands(balancesCollection);
-  const balancesQuery = queryRepoWithUser(userIdSelector, balancesCollection);
+  const balancesMutations = createRepositoryMutations(balancesCollection);
+  const balancesQuery = queryRepoWithUser(userIdSelector, balancesCollection.orderBy('date', 'desc'));
+  const activeBalancesSelector = selectActiveItems(balancesQuery);
+
+  const accountsWithBalancesSelector = selectAccountsWithBalances(
+    activeAccountsSelector,
+    activeBalancesSelector
+  );
 
   const dependencies = {
-    identityCommands,
+    identityMutations,
     userQuery,
     userIdSelector,
     isSignedInSelector,
-    accountsCommands,
+    accountsMutations,
     accountsQuery,
-    balancesCommands,
-    balancesQuery
+    activeAccountsSelector,
+    balancesMutations,
+    balancesQuery,
+    activeBalancesSelector,
+    accountsWithBalancesSelector
   };
 
   // dependencies exposed globally to facilitate tests and debug

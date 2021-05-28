@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-export function useCommand (command, dependencies = {}) {
+export function useCommand (dependencies, command) {
   const [isActing, setIsActing] = useState(false);
   const [error, setError] = useState(null);
 

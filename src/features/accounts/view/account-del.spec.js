@@ -1,7 +1,7 @@
 import { balances } from '../../../../tests/fixtures';
-import { delAccountCase } from './del-account';
+import { delAccountCommand } from './del-account';
 
-describe('del account use case', () => {
+describe('del account command', () => {
   let accountsService, balancesService;
 
   beforeAll(() => {
@@ -18,7 +18,7 @@ describe('del account use case', () => {
     const accountId = '8a502ea4-2532-409a-8082-d4e88aaadd03';
     const balancesIds = balances.filter(b => b.accountId === accountId).map(b => b.id);
 
-    await delAccountCase(accountsService, balancesService, accountId);
+    await delAccountCommand(accountsService, balancesService, accountId);
 
     expect(accountsService.del).toHaveBeenCalledWith(accountId);
     expect(balancesService.delBalancesCase).toHaveBeenCalledWith(balancesIds);

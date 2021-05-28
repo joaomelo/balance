@@ -1,6 +1,6 @@
 import { accounts } from '../../../../tests/fixtures';
 import { NameInvalidError, NameNonUniqueError } from '../body';
-import { setAccountCase } from './set-account';
+import { setAccountCommand } from './set-account';
 
 describe('add account use case', () => {
   let accountsService, authService;
@@ -21,7 +21,7 @@ describe('add account use case', () => {
   test('add account to repository with correct data shape', async () => {
     const accountData = { name: 'new account' };
 
-    await setAccountCase(accountsService, authService, accountData);
+    await setAccountCommand(accountsService, authService, accountData);
 
     expect(accountsService.set)
       .toHaveBeenCalledWith(expect.objectContaining({
@@ -34,7 +34,7 @@ describe('add account use case', () => {
   test('throws if empty account name', async () => {
     const accountData = { name: '' };
 
-    await expect(setAccountCase(accountsService, authService, accountData))
+    await expect(setAccountCommand(accountsService, authService, accountData))
       .rejects
       .toThrow(NameInvalidError);
   });
@@ -43,9 +43,9 @@ describe('add account use case', () => {
     const name = accounts[0].name;
     const accountData = { name };
 
-    await setAccountCase(accountsService, authService, accountData);
+    await setAccountCommand(accountsService, authService, accountData);
 
-    await expect(setAccountCase(accountsService, authService, accountData))
+    await expect(setAccountCommand(accountsService, authService, accountData))
       .rejects
       .toThrow(NameNonUniqueError);
   });

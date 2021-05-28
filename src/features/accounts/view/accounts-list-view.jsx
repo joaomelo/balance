@@ -1,4 +1,3 @@
-import { sortBy } from 'lodash';
 import { useState } from 'react';
 import { AccountReadView } from './account-read-view';
 import { AccountEditView } from './account-edit-view';
@@ -6,8 +5,6 @@ import { AccountEditView } from './account-edit-view';
 export function AccountsListView ({ accounts, onDel, onEdit, errorsEdit }) {
   const [idOnEdit, claimEdit] = useState(null);
   const releaseEdit = () => claimEdit(null);
-
-  const sortedAccounts = sortBy(accounts, ['name']);
 
   return (
     <table>
@@ -20,7 +17,7 @@ export function AccountsListView ({ accounts, onDel, onEdit, errorsEdit }) {
         </tr>
       </thead>
       <tbody>
-        {sortedAccounts.map(a =>
+        {accounts.map(a =>
           <AccountView
             key={a.id}
             account={a}
