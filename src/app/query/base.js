@@ -2,6 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export class Base {
   subject = null;
+  onDouse = () => null;
 
   constructor (state = null) {
     this.subject = new BehaviorSubject(state);
@@ -15,4 +16,9 @@ export class Base {
     const subscription = this.subject.subscribe(observer);
     return () => subscription.unsubscribe();
   };
+
+  douse () {
+    this.subject.complete();
+    this.onDouse();
+  }
 }
