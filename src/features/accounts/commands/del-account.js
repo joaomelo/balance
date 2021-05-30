@@ -6,10 +6,12 @@ export async function delAccountCommand (dependencies, payload) {
   } = dependencies;
 
   const { id } = payload;
+  await accountsMutations.del(id);
+
   const balancesIds = activeBalancesSelector
     .current
     .filter(b => b.accountId === id);
-
-  await accountsMutations.del(id);
-  await balancesMutations.del(balancesIds);
+  if (balancesIds.length > 0) {
+    await balancesMutations.del(balancesIds);
+  }
 }

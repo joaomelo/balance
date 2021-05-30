@@ -1,4 +1,4 @@
-import { asUtcIsoString } from '../../../app/helpers';
+import { asUtcIsoString, camelCase } from '../../../app/helpers';
 
 export function AccountReadView ({ account, onDel, claimEdit }) {
   const { id, name, date, amount } = account;
@@ -13,7 +13,10 @@ export function AccountReadView ({ account, onDel, claimEdit }) {
         </button>
       </td>
       <td>
-        <button onClick={() => onDel(id)}>
+        <button
+          id={camelCase('button', 'del', name)}
+          onClick={() => onDel({ id })}
+        >
           del
         </button>
       </td>
