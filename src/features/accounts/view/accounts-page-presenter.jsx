@@ -4,11 +4,8 @@ import { setAccountCommand, delAccountCommand } from '../commands';
 import { AccountsPageView } from './accounts-page-view';
 
 export function AccountsPagePresenter ({ dependencies }) {
-  // const { accountsWithBalancesSelector } = dependencies;
-  // const accounts = useQuery(accountsWithBalancesSelector);
-
-  const { accountsQuery } = dependencies;
-  const accounts = useQuery(accountsQuery);
+  const { accountsWithBalancesSelector } = dependencies;
+  const accounts = useQuery(accountsWithBalancesSelector);
 
   const [onAdd, isAdding, errorAdd] = useCommand(dependencies, setAccountCommand);
   const errorsAdd = createErrorReport(errorAdd);
