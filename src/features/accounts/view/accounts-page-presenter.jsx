@@ -1,4 +1,5 @@
-import { useQuery, useCommand } from '../../../app/hooks';
+import { useCommand } from '../../../app/components';
+import { useQuery } from '../../../app/query';
 import { createErrorReport } from '../../../app/error';
 import { setAccountCommand, delAccountCommand } from '../commands';
 import { AccountsPageView } from './accounts-page-view';

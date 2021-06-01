@@ -1,4 +1,4 @@
-import { useCommand } from '../../../app/hooks';
+import { useCommand } from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
 import { signInCommand } from '../commands';
 import { SignInPageView } from './sign-in-page-view';

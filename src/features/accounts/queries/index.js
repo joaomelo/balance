@@ -1,1 +1,1 @@
-export * from './accounts-queries';
+export * from './accounts-with-balances';

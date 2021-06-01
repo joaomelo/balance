@@ -1,13 +1,9 @@
-import { useState } from 'react';
-import { Form, ModalDialog, ErrorMessage } from '../../../app/components';
-import { usePayload } from '../../../app/hooks';
+import { Form, ErrorMessage, useModal, usePayload } from '../../../app/components';
 
 export function AccountAddView ({ onAdd, errors }) {
   const { payload, reset, bind } = usePayload({ name: '' });
 
-  const [isOpen, setIsOpen] = useState(false);
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
+  const { open, close, modalProps, Modal } = useModal();
 
   const onSubmit = async () => {
     const success = await onAdd(payload);
@@ -25,9 +21,8 @@ export function AccountAddView ({ onAdd, errors }) {
       >
         Add
       </button>
-      <ModalDialog
-        isOpen={isOpen}
-        onClose={close}
+      <Modal
+        {...modalProps}
         aria-label="Add account"
       >
         <Form onSubmit={onSubmit}>
@@ -49,7 +44,7 @@ export function AccountAddView ({ onAdd, errors }) {
             Save
           </button>
         </Form>
-      </ModalDialog>
+      </Modal>
     </>
   );
 }

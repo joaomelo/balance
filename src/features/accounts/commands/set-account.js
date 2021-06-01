@@ -8,8 +8,9 @@ export async function setAccountCommand (dependencies, payload) {
     userIdSelector
   } = dependencies;
 
-  const accounts = activeAccountsSelector.current;
-  validateAccount(accounts, payload);
+  validateAccount({
+    accounts: activeAccountsSelector.current
+  }, payload);
 
   const account = {
     id: createUuid(),

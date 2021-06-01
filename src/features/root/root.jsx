@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Link, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import { useQuery } from '../../app/hooks';
+import { useQuery } from '../../app/query';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
 import { SignInPagePresenter } from '../auth';

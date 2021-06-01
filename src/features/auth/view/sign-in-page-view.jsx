@@ -1,6 +1,5 @@
 import { appName, appVersion } from '../../../app/helpers';
-import { Loading, Center, Form, ErrorMessage } from '../../../app/components';
-import { usePayload } from '../../../app/hooks';
+import { Loading, Center, Form, ErrorMessage, usePayload } from '../../../app/components';
 
 export function SignInPageView ({ onSignIn, errors, isLoading }) {
   const initialPayload = { email: '', password: '' };

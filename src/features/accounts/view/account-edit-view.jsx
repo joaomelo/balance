@@ -1,5 +1,4 @@
-import { Form } from '../../../app/components';
-import { usePayload } from '../../../app/hooks';
+import { Form, usePayload } from '../../../app/components';
 
 export function AccountEditView ({ account, releaseEdit, onEdit, errorsEdit }) {
   const { name } = account;

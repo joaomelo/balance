@@ -15,6 +15,7 @@ import {
 } from '../app/repository';
 import { mountRoot } from '../features/root';
 import { selectAccountsWithBalances } from '../features/accounts';
+import { selectBalancesWithAccount } from '../features/balances';
 
 async function main () {
   const { firestore, fireauth } = await initFirebaseSuiteFromEnv();
@@ -38,6 +39,10 @@ async function main () {
     activeAccountsSelector,
     activeBalancesSelector
   );
+  const balancesWithAccountSelector = selectBalancesWithAccount(
+    activeBalancesSelector,
+    activeAccountsSelector
+  );
 
   const dependencies = {
     identityMutations,
@@ -47,10 +52,11 @@ async function main () {
     accountsMutations,
     accountsQuery,
     activeAccountsSelector,
+    accountsWithBalancesSelector,
     balancesMutations,
     balancesQuery,
     activeBalancesSelector,
-    accountsWithBalancesSelector
+    balancesWithAccountSelector
   };
 
   // dependencies exposed globally to facilitate tests and debug

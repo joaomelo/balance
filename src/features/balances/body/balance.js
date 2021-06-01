@@ -1,8 +1,9 @@
 import { isSameDate } from '../../../app/helpers';
 import { AppError } from '../../../app/error';
 
-export function validateBalance (balance, balances, accounts) {
-  const { id, amount, date, accountId } = balance;
+export function validateBalance (context, balanceData) {
+  const { accounts, balances } = context;
+  const { id, amount, date, accountId } = balanceData;
 
   if (!date) {
     throw new DateRequiredError();
