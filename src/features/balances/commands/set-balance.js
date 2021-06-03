@@ -3,7 +3,7 @@ import { validateBalance } from '../body';
 
 export async function setBalanceCommand (dependencies, payload) {
   const {
-    balanceMutations,
+    balancesMutations,
     activeAccountsSelector,
     activeBalancesSelector,
     userIdSelector
@@ -20,5 +20,5 @@ export async function setBalanceCommand (dependencies, payload) {
     ...payload
   };
 
-  await balanceMutations.set(balance);
+  await balancesMutations.set(balance);
 }

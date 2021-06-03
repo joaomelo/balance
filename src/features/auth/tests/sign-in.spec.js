@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
-import { baseUrl, signIn } from '../../../../tests/macros';
-import { credentials } from '../../../../tests/fixtures';
+import { baseUrl, credentials } from '../../../../tests/fixtures';
+import { signInMacro } from './macros';
 
 describe('sign in', () => {
   let browser, page;
@@ -22,7 +22,7 @@ describe('sign in', () => {
   });
 
   it('signs in when correct credentials are provided', async () => {
-    await signIn(page);
+    await signInMacro(page);
 
     expect(page.url()).toMatch('/accounts');
   });

@@ -1,7 +1,6 @@
-import { credentials } from '../fixtures';
-import { baseUrl } from './base';
+import { baseUrl, credentials } from '../../../../tests/fixtures';
 
-export async function signIn (page) {
+export async function signInMacro (page) {
   const { email, password } = credentials[0];
 
   await page.goto(baseUrl);

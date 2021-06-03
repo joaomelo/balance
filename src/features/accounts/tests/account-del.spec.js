@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-import { signIn } from '../../../../tests/macros';
+import { signInMacro } from '../../auth/tests';
 import { camelCase } from '../../../app/helpers';
 
 describe('del account', () => {
@@ -25,7 +25,7 @@ describe('del account', () => {
     const name = 'savings';
     const accountFilter = `tbody td >> text=${name}`;
 
-    await signIn(page);
+    await signInMacro(page);
     await page.click('#buttonAdd');
     await page.fill('#inputName', name);
     await page.click('#buttonSave');

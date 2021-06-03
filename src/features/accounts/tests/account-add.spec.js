@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
-import { signIn } from '../../../../tests/macros';
+import { signInMacro } from '../../auth/tests';
+import { addAccountMacro } from './macros';
 
 describe('add account', () => {
   let browser, page;
@@ -23,17 +24,15 @@ describe('add account', () => {
   test('add account to repository with correct data shape', async () => {
     const name = 'savings';
 
-    await signIn(page);
-    await page.click('#buttonAdd');
-    await page.fill('#inputName', name);
-    await page.click('#buttonSave');
+    await signInMacro(page);
+    await addAccountMacro(page, name);
 
     const firstListContent = await page.textContent('tbody td');
     expect(firstListContent).toBe(name);
   });
 
   test('show error if empty account name', async () => {
-    await signIn(page);
+    await signInMacro(page);
     await page.click('#buttonAdd');
     await page.click('#buttonSave');
 
@@ -44,7 +43,7 @@ describe('add account', () => {
   test('show error if another account with the same name already exists', async () => {
     const name = 'savings';
 
-    await signIn(page);
+    await signInMacro(page);
     await page.click('#buttonAdd');
     await page.fill('#inputName', name);
     await page.click('#buttonSave');

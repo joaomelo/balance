@@ -2,7 +2,6 @@ import { Form, ErrorMessage, useModal, usePayload } from '../../../app/component
 
 export function AccountAddView ({ onAdd, errors }) {
   const { payload, reset, bind } = usePayload({ name: '' });
-
   const { open, close, modalProps, Modal } = useModal();
 
   const onSubmit = async () => {
@@ -16,30 +15,30 @@ export function AccountAddView ({ onAdd, errors }) {
   return (
     <>
       <button
-        id="buttonAdd"
+        id='buttonAdd'
         onClick={open}
       >
         Add
       </button>
       <Modal
         {...modalProps}
-        aria-label="Add account"
+        aria-label='Add account'
       >
         <Form onSubmit={onSubmit}>
           <input
-            id="inputName"
+            id='inputName'
             {...bind('name')}
           />
           <ErrorMessage code={errors.escaped}/>
           <button
-            type="button"
+            type='button'
             onClick={close}
           >
             Cancel
           </button>
           <button
-            id="buttonSave"
-            type="submit"
+            id='buttonSave'
+            type='submit'
           >
             Save
           </button>
