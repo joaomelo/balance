@@ -3,6 +3,8 @@ export function isSameDate (a, b) {
 }
 
 export function asUtcIsoString (date) {
+  if (!(date instanceof Date)) return '';
+
   const y = date.getUTCFullYear();
   const m = `${date.getUTCMonth() + 1}`.padStart(2, '0');
   const d = `${date.getUTCDate()}`.padStart(2, '0');

@@ -5,8 +5,15 @@ export function InputDate ({ value, onChange }) {
 
   const handleChange = e => {
     const date = new Date(e.target.value);
-    onChange(date);
+    const isValid = !isNaN(date);
+    onChange(isValid ? date : null);
   };
 
-  return <input value={strValue} onChange={handleChange} type="date"/>;
+  return (
+    <input
+      value={strValue}
+      onChange={handleChange}
+      type="date"
+    />
+  );
 }

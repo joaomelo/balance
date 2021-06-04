@@ -47,20 +47,20 @@ describe('add balance', () => {
     expect(errorCode).toBe('BALANCES/ACCOUNT_INVALID');
   });
 
-  test('show error if invalid date', async () => {
-    await signInMacro(page);
-    const name = 'savings';
-    await addAccountMacro(page, name);
+  // test('show error if invalid date', async () => {
+  //   await signInMacro(page);
+  //   const name = 'savings';
+  //   await addAccountMacro(page, name);
 
-    await page.click('a >> text=Balances');
-    await page.click('#buttonAdd');
-    await page.press('#inputDate', 'Delete');
-    await page.fill('#inputAmount', '500');
-    await page.click('#buttonSave');
+  //   await page.click('a >> text=Balances');
+  //   await page.click('#buttonAdd');
+  //   await page.press('#inputDate', 'Delete');
+  //   await page.fill('#inputAmount', '500');
+  //   await page.click('#buttonSave');
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('BALANCES/DATE_REQUIRED');
-  });
+  //   const errorCode = await page.getAttribute('[data-error]', 'data-error');
+  //   expect(errorCode).toBe('BALANCES/DATE_REQUIRED');
+  // });
 
   // test('show error if another account with the same name already exists', async () => {
   //   const name = 'savings';
