@@ -3,6 +3,7 @@ export * from './date-chart';
 export * from './error-message';
 export * from './forms';
 export * from './input-date';
+export * from './input-amount';
 export * from './layout';
 export * from './loading';
 export * from './modal';

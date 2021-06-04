@@ -28,26 +28,6 @@ export function validateBalance (context, balanceData) {
   }
 }
 
-export class DateRequiredError extends AppError {
-  constructor () {
-    super({
-      code: 'BALANCES/DATE_REQUIRED',
-      isOperational: true
-    });
-    Error.captureStackTrace(this, DateRequiredError);
-  }
-}
-
-export class AmountRequiredError extends AppError {
-  constructor () {
-    super({
-      code: 'BALANCES/AMOUNT_REQUIRED',
-      isOperational: true
-    });
-    Error.captureStackTrace(this, AmountRequiredError);
-  }
-}
-
 export class AccountInvalidError extends AppError {
   constructor () {
     super({
@@ -58,6 +38,16 @@ export class AccountInvalidError extends AppError {
   }
 }
 
+export class DateRequiredError extends AppError {
+  constructor () {
+    super({
+      code: 'BALANCES/DATE_REQUIRED',
+      isOperational: true
+    });
+    Error.captureStackTrace(this, DateRequiredError);
+  }
+}
+
 export class DateCollidingError extends AppError {
   constructor () {
     super({
@@ -65,5 +55,15 @@ export class DateCollidingError extends AppError {
       isOperational: true
     });
     Error.captureStackTrace(this, DateCollidingError);
+  }
+}
+
+export class AmountRequiredError extends AppError {
+  constructor () {
+    super({
+      code: 'BALANCES/AMOUNT_REQUIRED',
+      isOperational: true
+    });
+    Error.captureStackTrace(this, AmountRequiredError);
   }
 }

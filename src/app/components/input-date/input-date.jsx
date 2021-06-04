@@ -1,12 +1,11 @@
 import { asUtcIsoString } from '../../helpers';
 
-export function InputDate ({ value, onChange }) {
+export function InputDate ({ value, onChange, ...rest }) {
   const strValue = asUtcIsoString(value);
 
   const handleChange = e => {
     const date = new Date(e.target.value);
-    const isValid = !isNaN(date);
-    onChange(isValid ? date : null);
+    onChange(isNaN(date) ? null : date);
   };
 
   return (
@@ -14,6 +13,7 @@ export function InputDate ({ value, onChange }) {
       value={strValue}
       onChange={handleChange}
       type="date"
+      {...rest}
     />
   );
 }

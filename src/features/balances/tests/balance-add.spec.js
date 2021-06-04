@@ -47,34 +47,50 @@ describe('add balance', () => {
     expect(errorCode).toBe('BALANCES/ACCOUNT_INVALID');
   });
 
-  // test('show error if invalid date', async () => {
-  //   await signInMacro(page);
-  //   const name = 'savings';
-  //   await addAccountMacro(page, name);
+  test('show error if no amount', async () => {
+    await signInMacro(page);
+    const name = 'savings';
+    await addAccountMacro(page, name);
 
-  //   await page.click('a >> text=Balances');
-  //   await page.click('#buttonAdd');
-  //   await page.press('#inputDate', 'Delete');
-  //   await page.fill('#inputAmount', '500');
-  //   await page.click('#buttonSave');
+    await page.click('a >> text=Balances');
+    await page.click('#buttonAdd');
+    await page.fill('#inputAmount', '');
+    await page.click('#buttonSave');
 
-  //   const errorCode = await page.getAttribute('[data-error]', 'data-error');
-  //   expect(errorCode).toBe('BALANCES/DATE_REQUIRED');
-  // });
+    const errorCode = await page.getAttribute('[data-error]', 'data-error');
+    expect(errorCode).toBe('BALANCES/AMOUNT_REQUIRED');
+  });
 
-  // test('show error if another account with the same name already exists', async () => {
-  //   const name = 'savings';
+  test('show error if invalid date', async () => {
+    await signInMacro(page);
+    const name = 'savings';
+    await addAccountMacro(page, name);
 
-  //   await signInMacro(page);
-  //   await page.click('#buttonAdd');
-  //   await page.fill('#inputName', name);
-  //   await page.click('#buttonSave');
+    await page.click('a >> text=Balances');
+    await page.click('#buttonAdd');
+    await page.press('#inputDate', 'Delete');
+    await page.fill('#inputAmount', '500');
+    await page.click('#buttonSave');
 
-  //   await page.click('#buttonAdd');
-  //   await page.fill('#inputName', name);
-  //   await page.click('#buttonSave');
+    const errorCode = await page.getAttribute('[data-error]', 'data-error');
+    expect(errorCode).toBe('BALANCES/DATE_REQUIRED');
+  });
 
-  //   const errorCode = await page.getAttribute('[data-error]', 'data-error');
-  //   expect(errorCode).toBe('ACCOUNTS/NON_UNIQUE_NAME');
-  // });
+  test('show error if attempt to add same date to the same account more than once', async () => {
+    await signInMacro(page);
+    const name = 'savings';
+    await addAccountMacro(page, name);
+
+    await page.click('a >> text=Balances');
+    await page.click('#buttonAdd');
+    await page.fill('#inputAmount', '100');
+    await page.click('#buttonSave');
+
+    await page.click('#buttonAdd');
+    await page.fill('#inputAmount', '500');
+    await page.click('#buttonSave');
+
+    const errorCode = await page.getAttribute('[data-error]', 'data-error');
+    expect(errorCode).toBe('BALANCES/DATE_COLLIDING');
+  });
 });

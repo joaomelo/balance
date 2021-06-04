@@ -5,7 +5,11 @@ export function Form ({ onSubmit, children, ...props }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} {...props}>
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      {...props}
+    >
       { children }
     </form>
   );

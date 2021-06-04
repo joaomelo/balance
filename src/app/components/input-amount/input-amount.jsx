@@ -1,6 +1,6 @@
 export function InputAmount ({ value, onChange, ...rest }) {
   const handleChange = e => {
-    const amount = parseFloat(e.target.value) || null;
+    const amount = parseFloat(e.target.value) || '';
     onChange(amount);
   };
 
@@ -8,9 +8,9 @@ export function InputAmount ({ value, onChange, ...rest }) {
     <input
       value={value}
       onChange={handleChange}
-      {...rest}
       type="number"
       step="0.01"
+      {...rest}
     />
   );
 }
