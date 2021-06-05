@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { AccountReadView } from './account-read-view';
-import { AccountEditView } from './account-edit-view';
+import { AccountView } from './account-view';
 
-export function AccountsListView ({ accounts, onDel, onEdit, errorsEdit }) {
-  const [idOnEdit, claimEdit] = useState(null);
-  const releaseEdit = () => claimEdit(null);
-
+export function AccountsListView ({
+  accounts,
+  onDel,
+  onEdit,
+  errorEdit
+}) {
   return (
     <table>
       <thead>
@@ -22,20 +22,10 @@ export function AccountsListView ({ accounts, onDel, onEdit, errorsEdit }) {
             key={a.id}
             account={a}
             onDel={onDel}
-            onEdit={onEdit}
-            errorsEdit={errorsEdit}
-            idOnEdit={idOnEdit}
-            claimEdit={claimEdit}
-            releaseEdit={releaseEdit}
+            onClaimEdit={id => console.log({ edit: id })}
           />
         )}
       </tbody>
     </table>
   );
-}
-
-function AccountView ({ idOnEdit, ...props }) {
-  return idOnEdit === props.account.id
-    ? <AccountEditView {...props} />
-    : <AccountReadView {...props} />;
 }

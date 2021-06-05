@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from '../../accounts/tests';
+import { addBalanceMacro } from './macros';
 
 describe('add balance', () => {
   let browser, page;
@@ -26,10 +27,7 @@ describe('add balance', () => {
     const name = 'savings';
     await addAccountMacro(page, name);
 
-    await page.click('a >> text=Balances');
-    await page.click('#buttonAdd');
-    await page.fill('#inputAmount', '500');
-    await page.click('#buttonSave');
+    await addBalanceMacro(page);
 
     const firstListContent = await page.textContent('tbody td');
     expect(firstListContent).toBe(name);
@@ -38,10 +36,7 @@ describe('add balance', () => {
   test('show error if no account', async () => {
     await signInMacro(page);
 
-    await page.click('a >> text=Balances');
-    await page.click('#buttonAdd');
-    await page.fill('#inputAmount', '500');
-    await page.click('#buttonSave');
+    await addBalanceMacro(page);
 
     const errorCode = await page.getAttribute('[data-error]', 'data-error');
     expect(errorCode).toBe('BALANCES/ACCOUNT_INVALID');
@@ -53,7 +48,7 @@ describe('add balance', () => {
     await addAccountMacro(page, name);
 
     await page.click('a >> text=Balances');
-    await page.click('#buttonAdd');
+    await page.click('#buttonAddBalance');
     await page.fill('#inputAmount', '');
     await page.click('#buttonSave');
 
@@ -67,7 +62,7 @@ describe('add balance', () => {
     await addAccountMacro(page, name);
 
     await page.click('a >> text=Balances');
-    await page.click('#buttonAdd');
+    await page.click('#buttonAddBalance');
     await page.press('#inputDate', 'Delete');
     await page.fill('#inputAmount', '500');
     await page.click('#buttonSave');
@@ -81,14 +76,8 @@ describe('add balance', () => {
     const name = 'savings';
     await addAccountMacro(page, name);
 
-    await page.click('a >> text=Balances');
-    await page.click('#buttonAdd');
-    await page.fill('#inputAmount', '100');
-    await page.click('#buttonSave');
-
-    await page.click('#buttonAdd');
-    await page.fill('#inputAmount', '500');
-    await page.click('#buttonSave');
+    await addBalanceMacro(page);
+    await addBalanceMacro(page);
 
     const errorCode = await page.getAttribute('[data-error]', 'data-error');
     expect(errorCode).toBe('BALANCES/DATE_COLLIDING');

@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
-import { signInMacro } from '../../auth/tests';
 import { camelCase } from '../../../app/helpers';
+import { signInMacro } from '../../auth/tests';
+import { addAccountMacro } from './macros';
 
 describe('del account', () => {
   let browser, page;
@@ -26,9 +27,7 @@ describe('del account', () => {
     const accountFilter = `tbody td >> text=${name}`;
 
     await signInMacro(page);
-    await page.click('#buttonAdd');
-    await page.fill('#inputName', name);
-    await page.click('#buttonSave');
+    await addAccountMacro(page, name);
     const addedAccount = await page.$(accountFilter);
     expect(addedAccount).toBeDefined();
 

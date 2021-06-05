@@ -6,26 +6,28 @@ export function BalancesPageView ({
   balances,
   accounts,
   onAdd,
-  errorsAdd,
+  errorAdd,
   onEdit,
-  errorsEdit,
+  errorEdit,
   onDel,
   isLoading
 }) {
+  // import { createErrorReport } from '../../../app/error';
+  // const errorsEdit = createErrorReport(errorEdit);
+
   return (
     <>
       <h2>Balances</h2>
       <BalanceAddView
         accounts={accounts}
         onAdd={onAdd}
-        errors={errorsAdd}
+        errors={errorAdd}
       />
       <BalancesListView
-        accounts={accounts}
         balances={balances}
         onDel={onDel}
         onEdit={onEdit}
-        errorsEdit={errorsEdit}
+        errorEdit={errorEdit}
       />
       <Loading isLoading={isLoading} />
     </>

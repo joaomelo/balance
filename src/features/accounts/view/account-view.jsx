@@ -1,6 +1,10 @@
 import { asUtcIsoString, camelCase } from '../../../app/helpers';
 
-export function AccountReadView ({ account, onDel, claimEdit }) {
+export function AccountView ({
+  account,
+  onDel,
+  onClaimEdit
+}) {
   const { id, name, date, amount } = account;
   return (
     <tr>
@@ -8,7 +12,7 @@ export function AccountReadView ({ account, onDel, claimEdit }) {
       <td>{date ? asUtcIsoString(date) : '-'}</td>
       <td>{amount || '-'}</td>
       <td>
-        <button onClick={() => claimEdit(id)}>
+        <button onClick={() => onClaimEdit(id)}>
           edt
         </button>
       </td>

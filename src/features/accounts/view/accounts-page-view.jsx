@@ -5,24 +5,27 @@ import { AccountsListView } from './accounts-list-view';
 export function AccountsPageView ({
   accounts,
   onAdd,
-  errorsAdd,
+  errorAdd,
   onEdit,
-  errorsEdit,
+  errorEdit,
   onDel,
   isLoading
 }) {
+  // import { createErrorReport } from '../../../app/error';
+  // const errorsEdit = createErrorReport(errorEdit);
+
   return (
     <>
       <h2>Accounts</h2>
       <AccountAddView
         onAdd={onAdd}
-        errors={errorsAdd}
+        errors={errorAdd}
       />
       <AccountsListView
         accounts={accounts}
         onDel={onDel}
         onEdit={onEdit}
-        errorsEdit={errorsEdit}
+        errorEdit={errorEdit}
       />
       <Loading isLoading={isLoading} />
     </>

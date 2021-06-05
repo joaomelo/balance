@@ -1,11 +1,27 @@
 import styled from 'styled-components';
-import { Form, ErrorMessage, InputDate, InputAmount, InputOptions } from '../../../app/components';
+import { usePayload, Form, ErrorMessage, InputDate, InputAmount, InputOptions } from '../../../app/components';
+import { createErrorReport } from '../../../app/error';
 
-export function BalanceFormView (props) {
-  const { accounts, onSubmit, bind, errors } = props;
+export function BalanceFormView ({
+  initialPayload,
+  accounts,
+  error,
+  onSubmit,
+  onClose
+}) {
+  const { payload, bind, reset } = usePayload(initialPayload);
+  const handleSubmit = async () => {
+    const success = await onSubmit(payload);
+    if (success) {
+      reset();
+      onClose();
+    }
+  };
+
+  const errorReport = createErrorReport(error);
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={handleSubmit}>
       <InputOptions
         id='inputAccount'
         options={accounts}
@@ -21,11 +37,11 @@ export function BalanceFormView (props) {
         id='inputAmount'
         {...bind('amount')}
       />
-      <ErrorMessage code={errors.escaped}/>
+      <ErrorMessage code={errorReport.escaped}/>
       <button
         id='buttonCancel'
         type='button'
-        onClick={close}
+        onClick={onClose}
       >
         Cancel
       </button>

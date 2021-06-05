@@ -33,7 +33,7 @@ describe('add account', () => {
 
   test('show error if empty account name', async () => {
     await signInMacro(page);
-    await page.click('#buttonAdd');
+    await page.click('#buttonAddAccount');
     await page.click('#buttonSave');
 
     const errorCode = await page.getAttribute('[data-error]', 'data-error');
@@ -42,15 +42,10 @@ describe('add account', () => {
 
   test('show error if another account with the same name already exists', async () => {
     const name = 'savings';
-
     await signInMacro(page);
-    await page.click('#buttonAdd');
-    await page.fill('#inputName', name);
-    await page.click('#buttonSave');
 
-    await page.click('#buttonAdd');
-    await page.fill('#inputName', name);
-    await page.click('#buttonSave');
+    await addAccountMacro(page, name);
+    await addAccountMacro(page, name);
 
     const errorCode = await page.getAttribute('[data-error]', 'data-error');
     expect(errorCode).toBe('ACCOUNTS/NON_UNIQUE_NAME');

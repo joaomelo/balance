@@ -1,48 +1,27 @@
-import { Form, ErrorMessage, useModal, usePayload } from '../../../app/components';
+import { useModal } from '../../../app/components';
+import { AccountFormView } from './account-form-view';
 
-export function AccountAddView ({ onAdd, errors }) {
-  const { payload, reset, bind } = usePayload({ name: '' });
+export function AccountAddView ({ onAdd, error }) {
+  const initialPayload = { name: '' };
   const { open, close, modalProps, Modal } = useModal();
-
-  const onSubmit = async () => {
-    const success = await onAdd(payload);
-    if (success) {
-      reset();
-      close();
-    }
-  };
 
   return (
     <>
       <button
-        id='buttonAdd'
+        id='buttonAddAccount'
         onClick={open}
       >
         Add
       </button>
       <Modal
         {...modalProps}
-        aria-label='Add account'
       >
-        <Form onSubmit={onSubmit}>
-          <input
-            id='inputName'
-            {...bind('name')}
-          />
-          <ErrorMessage code={errors.escaped}/>
-          <button
-            type='button'
-            onClick={close}
-          >
-            Cancel
-          </button>
-          <button
-            id='buttonSave'
-            type='submit'
-          >
-            Save
-          </button>
-        </Form>
+        <AccountFormView
+          initialPayload={initialPayload}
+          error={error}
+          onSubmit={onAdd}
+          onClose={close}
+        />
       </Modal>
     </>
   );
