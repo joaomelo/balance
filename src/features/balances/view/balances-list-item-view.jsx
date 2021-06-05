@@ -1,6 +1,6 @@
 import { asUtcIsoString, camelCase } from '../../../app/helpers';
 
-export function BalanceView ({
+export function BalancesListItemView ({
   balance,
   onDel,
   onClaimEdit

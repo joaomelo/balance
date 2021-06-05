@@ -1,4 +1,4 @@
-import { AccountView } from './account-view';
+import { AccountsListItemView } from './accounts-list-item-view';
 
 export function AccountsListView ({
   accounts,
@@ -18,7 +18,7 @@ export function AccountsListView ({
       </thead>
       <tbody>
         {accounts.map(a =>
-          <AccountView
+          <AccountsListItemView
             key={a.id}
             account={a}
             onDel={onDel}

@@ -1,4 +1,4 @@
-import { BalanceView } from './balance-view';
+import { BalancesListItemView } from './balances-list-item-view';
 
 export function BalancesListView ({
   balances,
@@ -18,7 +18,7 @@ export function BalancesListView ({
       </thead>
       <tbody>
         {balances.map(b =>
-          <BalanceView
+          <BalancesListItemView
             key={b.id}
             balance={b}
             onDel={onDel}

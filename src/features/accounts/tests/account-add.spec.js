@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from './macros';
 
@@ -27,7 +28,7 @@ describe('add account', () => {
     await signInMacro(page);
     await addAccountMacro(page, name);
 
-    const firstListContent = await page.textContent('tbody td');
+    const firstListContent = await page.textContent(`#${camelCase('cell', 'name', name)}`);
     expect(firstListContent).toBe(name);
   });
 
