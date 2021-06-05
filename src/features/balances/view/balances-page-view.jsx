@@ -21,7 +21,7 @@ export function BalancesPageView ({
       <BalanceAddView
         accounts={accounts}
         onAdd={onAdd}
-        errors={errorAdd}
+        error={errorAdd}
       />
       <BalancesListView
         balances={balances}

@@ -19,7 +19,7 @@ export function AccountsPageView ({
       <h2>Accounts</h2>
       <AccountAddView
         onAdd={onAdd}
-        errors={errorAdd}
+        error={errorAdd}
       />
       <AccountsListView
         accounts={accounts}
