@@ -25,6 +25,7 @@ export function BalancesPageView ({
       />
       <BalancesListView
         balances={balances}
+        accounts={accounts}
         onDel={onDel}
         onEdit={onEdit}
         errorEdit={errorEdit}

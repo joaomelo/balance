@@ -22,7 +22,10 @@ export function AccountsListItemView ({
         {amount || '-'}
       </td>
       <td>
-        <button onClick={() => onClaimEdit(id)}>
+        <button
+          id={camelCase('button', 'edit', name)}
+          onClick={() => onClaimEdit(id)}
+        >
           edt
         </button>
       </td>

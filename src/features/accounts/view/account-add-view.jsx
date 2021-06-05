@@ -13,9 +13,7 @@ export function AccountAddView ({ onAdd, error }) {
       >
         Add
       </button>
-      <Modal
-        {...modalProps}
-      >
+      <Modal {...modalProps}>
         <AccountFormView
           initialPayload={initialPayload}
           error={error}

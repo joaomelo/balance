@@ -4,7 +4,7 @@ import { signInMacro } from '../../auth/tests';
 import { addBalanceMacro } from '../../balances/tests';
 import { goToAccountsMacro, addAccountMacro } from './macros';
 
-describe('add account', () => {
+describe('list accounts', () => {
   let browser, page;
 
   beforeAll(async () => {

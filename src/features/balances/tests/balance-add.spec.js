@@ -24,6 +24,7 @@ describe('add balance', () => {
 
   test('add balance to repository with correct data shape', async () => {
     await signInMacro(page);
+
     const name = 'savings';
     await addAccountMacro(page, name);
 

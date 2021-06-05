@@ -11,9 +11,6 @@ export function AccountsPageView ({
   onDel,
   isLoading
 }) {
-  // import { createErrorReport } from '../../../app/error';
-  // const errorsEdit = createErrorReport(errorEdit);
-
   return (
     <>
       <h2>Accounts</h2>

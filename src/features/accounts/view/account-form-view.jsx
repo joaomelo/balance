@@ -20,23 +20,23 @@ export function AccountFormView ({
 
   return (
     <Form onSubmit={handleSubmit}>
-    <input
-      id='inputName'
-      {...bind('name')}
-    />
-    <ErrorMessage code={errorReport.escaped}/>
-    <button
-      type='button'
-      onClick={onClose}
-    >
-      Cancel
-    </button>
-    <button
-      id='buttonSave'
-      type='submit'
-    >
-      Save
-    </button>
-  </Form>
+      <input
+        id='inputName'
+        {...bind('name')}
+      />
+      <ErrorMessage code={errorReport.escaped}/>
+      <button
+        type='button'
+        onClick={onClose}
+      >
+        Cancel
+      </button>
+      <button
+        id='buttonSave'
+        type='submit'
+      >
+        Save
+      </button>
+    </Form>
   );
 }

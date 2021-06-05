@@ -8,20 +8,29 @@ export function BalancesListItemView ({
   const { id, accountName, date, amount } = balance;
   const isoDate = asUtcIsoString(date);
   return (
-    <tr>
-      <td>{accountName}</td>
-      <td>{isoDate}</td>
-      <td>{amount}</td>
+    <tr id={camelCase('row', 'balance', accountName, isoDate)}>
+      <td id={camelCase('cell', 'name', accountName, isoDate)}>
+        {accountName}
+      </td>
+      <td id={camelCase('cell', 'date', accountName, isoDate)}>
+        {isoDate}
+      </td>
+      <td id={camelCase('cell', 'amount', accountName, isoDate)}>
+        {amount}
+      </td>
       <td>
-        <button onClick={() => onClaimEdit(id)}>
+        <button
+          id={camelCase('button', 'edit', accountName, isoDate)}
+          onClick={() => onClaimEdit(id)}
+        >
           edt
         </button>
       </td>
       <td>
         <button
           id={camelCase('button', 'del', accountName, isoDate)}
-          onClick={() => onDel({ id })
-        }>
+          onClick={() => onDel({ id })}
+        >
           del
         </button>
       </td>
