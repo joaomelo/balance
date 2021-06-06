@@ -1,7 +1,8 @@
 import { chromium } from 'playwright';
-import { camelCase } from '../../../app/helpers';
+import { camelCase, asUtcIsoString } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
-import { addAccountMacro } from './macros';
+import { addBalanceMacro, goToBalancesMacro } from '../../balances/tests';
+import { addAccountMacro, goToAccountsMacro } from './macros';
 
 describe('del account', () => {
   let browser, page;
@@ -22,22 +23,31 @@ describe('del account', () => {
     await page.close();
   });
 
-  test('del account', async () => {
-    const name = 'savings';
-    const accountFilter = `tbody td >> text=${name}`;
-
+  test('del account and respective balances', async () => {
     await signInMacro(page);
-    await addAccountMacro(page, name);
-    const addedAccount = await page.$(accountFilter);
-    expect(addedAccount).toBeDefined();
 
+    const name = 'savings';
+    await addAccountMacro(page, name);
+
+    const accountNameFilter = `#${camelCase('cell', 'name', name)}`;
+    const accountName = await page.textContent(accountNameFilter);
+    expect(accountName).toBe(name);
+
+    await addBalanceMacro(page);
+
+    const todayIso = asUtcIsoString(new Date());
+    const balanceNameFilter = `#${camelCase('cell', 'name', name, todayIso)}`;
+    const balanceName = await page.textContent(balanceNameFilter);
+    expect(balanceName).toBe(name);
+
+    await goToAccountsMacro(page);
     await page.click(`#${camelCase('button', 'del', name)}`);
 
-    const deletedAccount = await page.$(accountFilter);
-    expect(deletedAccount).toBeNull();
-  });
+    const accountNameCell = await page.$(accountNameFilter);
+    expect(accountNameCell).toBeNull();
 
-  test.skip('del account and respective balances', async () => {
-    expect(false).toBe(true);
+    await goToBalancesMacro(page);
+    const balanceNameCell = await page.$(balanceNameFilter);
+    expect(balanceNameCell).toBeNull();
   });
 });
