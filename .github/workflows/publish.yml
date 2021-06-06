@@ -53,7 +53,7 @@ jobs:
         with:
           path: /home/runner/.cache/firebase/emulators
           key: ${{ runner.os }}-firebase-cli-v9.10.2
-      - run: npm ci
+      - run: npm i
       - run: npm run prod:ci:deploy
       - run: npm i -g codecov
       - run: codecov
