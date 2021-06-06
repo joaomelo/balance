@@ -1,22 +1,19 @@
 {
   "name": "balance",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "description": "Balance is a personal finance tracking software based only on account balances.",
   "main": "dist/index.html",
   "scripts": {
     "start": "npm run dev:local",
     "test": "npm run dev:local:test",
-
     "dev:local": "concurrently -c \"bgMagenta.bold,bgGreen.bold\" \"firebase emulators:start\" \"npm:dev:local:server\"",
     "dev:local:server": "rimraf dist/* && webpack serve --config webpack.config.js --env devLocal",
     "dev:local:test": "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
-
     "prod:local:lint": "eslint --ext .js,.jsx src/",
     "prod:local:test": "concurrently -k -s \"first\" \"npm:dev:local:server\" \"npm:prod:local:test:exec\"",
     "prod:local:test:exec": "firebase emulators:exec -- \"wait-on http://localhost:8181 && jest --forceExit --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-local.js\"",
     "prod:local:build": "rimraf dist/* && webpack --config webpack.config.js --env prodLocal",
     "prod:local:deploy": "npm run prod:local:lint && npm run prod:local:test && npm run prod:local:build && firebase deploy",
-
     "prod:ci:test": "concurrently -k -s \"first\" \"npm:dev:local:server\" \"npm:prod:ci:test:exec\"",
     "prod:ci:test:exec": "firebase emulators:exec -- \"wait-on http://localhost:8181 && jest --forceExit --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-ci.js\"",
     "prod:ci:build": "rimraf dist/* && webpack --config webpack.config.js --env prodCi",
