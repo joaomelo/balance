@@ -101,20 +101,18 @@ module.exports = env => {
 function establishEnvironment (envArgs) {
   if (envArgs.prodLocal) return 'prodLocal';
   if (envArgs.prodCi) return 'prodCi';
+  if (envArgs.devCi) return 'devCi';
   return 'devLocal';
 }
 
 function createEnvVariablesPlugin (environment) {
-  if (environment === 'devLocal' || environment === 'prodLocal') {
+  if (environment.toLowerCase().includes('local')) {
     pushEnvVarsToMemory('.env');
   }
 
   const appEnvVars = pullEnvVarsFromMemory();
-  if (environment !== 'devLocal') {
-    nullifyEmulatorsEnvVars(appEnvVars);
-  }
-
-  const envVarsStringified = stringifyEnvVars(appEnvVars);
+  const envVarsWithEmulatorsTreated = treatEmulatorsEnvVars(environment, appEnvVars);
+  const envVarsStringified = stringifyEnvVars(envVarsWithEmulatorsTreated);
 
   return new DefinePlugin(envVarsStringified);
 };
@@ -135,15 +133,17 @@ function pullEnvVarsFromMemory (filter) {
     }, {});
 }
 
-function nullifyEmulatorsEnvVars (envVars) {
-  Object
-    .keys(envVars)
-    .reduce((acc, key) => {
-      if (key.includes('EMULATOR')) {
-        acc[key] = null;
-      }
+function treatEmulatorsEnvVars (environment, envVars) {
+  if (environment.toLowerCase().includes('dev')) {
+    return envVars;
+  }
+
+  return Object
+    .entries(envVars)
+    .reduce((acc, [key, value]) => {
+      acc[key] = key.includes('EMULATOR') ? null : value;
       return acc;
-    }, envVars);
+    }, {});
 }
 
 function stringifyEnvVars (envVars) {
