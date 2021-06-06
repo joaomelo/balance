@@ -1,4 +1,4 @@
-import randomColor from 'randomColor';
+import randomColor from 'randomcolor';
 
 export function colorizeDatasets (datasets) {
   return datasets.map(d => {
