@@ -4,9 +4,11 @@ import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
 import { colorizeDatasets } from './colors';
 
-export function DateChart ({ datasets }) {
+export function DateChart ({ datasets, id }) {
+  const chartId = id || 'date-chart';
+
   useEffect(() => {
-    const chart = new Chart('date-chart', {
+    const chart = new Chart(chartId, {
       type: 'line',
       data: {
         datasets: colorizeDatasets(datasets)
@@ -34,7 +36,7 @@ export function DateChart ({ datasets }) {
 
   return (
     <ChartWrapper>
-      <canvas id="date-chart"/>
+      <canvas id={chartId}/>
     </ChartWrapper>
   );
 }
