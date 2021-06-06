@@ -6,18 +6,21 @@
   "scripts": {
     "start": "npm run dev:local",
     "test": "npm run dev:local:test",
-    "dev:local": "concurrently -c \"bgMagenta.bold,bgGreen.bold\" \"npm:dev:local:firebase\" \"npm:dev:local:server\"",
-    "dev:local:firebase": "firebase emulators:start",
+
+    "dev:local": "concurrently -c \"bgMagenta.bold,bgGreen.bold\" \"firebase emulators:start\" \"npm:dev:local:server\"",
     "dev:local:server": "rimraf dist/* && webpack serve --config webpack.config.js --env devLocal",
     "dev:local:test": "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
+
     "prod:local:lint": "eslint --ext .js,.jsx src/",
-    "prod:local:test": "firebase emulators:exec -- \"jest --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-local.js\"",
+    "prod:local:test": "concurrently -k -s \"first\" \"npm:dev:local:server\" \"npm:prod:local:test:exec\"",
+    "prod:local:test:exec": "firebase emulators:exec -- \"wait-on http://localhost:8181 && jest --forceExit --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-local.js\"",
     "prod:local:build": "rimraf dist/* && webpack --config webpack.config.js --env prodLocal",
     "prod:local:deploy": "npm run prod:local:lint && npm run prod:local:test && npm run prod:local:build && firebase deploy",
-    "prod:ci:lint": "npm run prod:local:lint",
-    "prod:ci:test": "firebase emulators:exec -- \"jest --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-ci.js\"",
+
+    "prod:ci:test": "concurrently -k -s \"first\" \"npm:dev:local:server\" \"npm:prod:ci:test:exec\"",
+    "prod:ci:test:exec": "firebase emulators:exec -- \"wait-on http://localhost:8181 && jest --forceExit --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-ci.js\"",
     "prod:ci:build": "rimraf dist/* && webpack --config webpack.config.js --env prodCi",
-    "prod:ci:deploy": "npm run prod:ci:lint && npm run prod:ci:test && npm run prod:ci:build && firebase deploy"
+    "prod:ci:deploy": "npm run prod:local:lint && npm run prod:ci:test && npm run prod:ci:build && firebase deploy"
   },
   "repository": {
     "type": "git",
@@ -84,6 +87,7 @@
     "react-refresh": "^0.9.0",
     "rimraf": "^3.0.2",
     "style-loader": "^2.0.0",
+    "wait-on": "^5.3.0",
     "webpack": "^5.27.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
