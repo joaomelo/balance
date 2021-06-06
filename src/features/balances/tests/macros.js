@@ -1,5 +1,5 @@
 export async function goToBalancesMacro (page) {
-  await page.click('a >> text=Balances')
+  await page.click('a >> text=Balances');
 }
 
 export async function addBalanceMacro (page) {
