@@ -10,7 +10,9 @@ export async function delAccountCommand (dependencies, payload) {
 
   const balancesIds = activeBalancesSelector
     .current
-    .filter(b => b.accountId === id);
+    .filter(b => b.accountId === id)
+    .map(b => b.id);
+
   if (balancesIds.length > 0) {
     await balancesMutations.del(balancesIds);
   }

@@ -20,10 +20,15 @@ async function del (collection, ids) {
   const batch = collection.firestore.batch();
   idsToDel.forEach(id => {
     const docRef = collection.doc(id);
-    batch.update(docRef, {
-      _deleted: true,
-      _updated: new Date()
-    });
+    batch.set(
+      docRef,
+      {
+        _deleted: true,
+        _updated: new Date()
+      },
+      { merge: true }
+    );
   });
+
   await batch.commit();
 }
