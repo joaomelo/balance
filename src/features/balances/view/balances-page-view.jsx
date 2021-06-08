@@ -16,7 +16,7 @@ export function BalancesPageView ({
   // const errorsEdit = createErrorReport(errorEdit);
 
   return (
-    <>
+    <div>
       <h2>Balances</h2>
       <BalanceAddView
         accounts={accounts}
@@ -31,6 +31,6 @@ export function BalancesPageView ({
         errorEdit={errorEdit}
       />
       <Loading isLoading={isLoading} />
-    </>
+    </div>
   );
 }

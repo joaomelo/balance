@@ -1,11 +1,9 @@
-import { BrowserRouter as Router, Link, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { useQuery } from '../../app/query';
 import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
 import { SignInPagePresenter } from '../auth';
-import { AccountsPagePresenter } from '../accounts';
-import { BalancesPagePresenter } from '../balances';
-import { HistoryPagePresenter } from '../history';
+import { InPagesLayout } from './in-pages-layout';
 
 export function Root ({ dependencies }) {
   const { isSignedInSelector } = dependencies;
@@ -22,7 +20,7 @@ export function Root ({ dependencies }) {
           </Route>
           <Route path="/i">
             { !isSignedIn && <Redirect to="/o" /> }
-            <InPages dependencies={dependencies} />
+            <InPagesLayout dependencies={dependencies} />
           </Route>
           <Route path="/not-found">
             <NotFound />
@@ -46,43 +44,5 @@ function OutPages ({ dependencies }) {
       </Route>
       <Redirect to={defaultOutRoute} />
     </Switch>
-  );
-}
-
-function InPages ({ dependencies }) {
-  const { path } = useRouteMatch();
-  const defaultInRoute = `${path}/accounts`;
-
-  return (
-    <>
-      <NavBar />
-      <Switch>
-        <Route path={`${path}/accounts`}>
-          <AccountsPagePresenter dependencies={dependencies}/>
-        </Route>
-        <Route path={`${path}/balances`}>
-          <BalancesPagePresenter dependencies={dependencies}/>
-        </Route>
-        <Route path={`${path}/history`}>
-          <HistoryPagePresenter dependencies={dependencies}/>
-        </Route>
-        <Redirect to={defaultInRoute} />
-      </Switch>
-    </>
-  );
-}
-
-function NavBar () {
-  return (
-    <>
-      <nav>
-        <Link to="/i/accounts" >Accounts</Link>
-        <span> | </span>
-        <Link to="/i/balances" >Balances</Link>
-        <span> | </span>
-        <Link to="/i/history" >History</Link>
-      </nav>
-      <hr />
-    </>
   );
 }

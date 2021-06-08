@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
 import { colorizeDatasets } from './colors';
 
-export function DateChart ({ datasets, id }) {
+export function DateChart ({ datasets, id, ...rest }) {
   const chartId = id || 'date-chart';
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export function DateChart ({ datasets, id }) {
         datasets: colorizeDatasets(datasets)
       },
       options: {
-        aspectRatio: 1.5,
+        maintainAspectRatio: false,
         scales: {
           x: {
             type: 'time',
@@ -35,7 +35,7 @@ export function DateChart ({ datasets, id }) {
   });
 
   return (
-    <ChartWrapper>
+    <ChartWrapper {...rest}>
       <canvas id={chartId}/>
     </ChartWrapper>
   );
@@ -45,5 +45,4 @@ export function DateChart ({ datasets, id }) {
 // https://www.chartjs.org/docs/latest/configuration/responsive.html#important-note
 const ChartWrapper = styled.div`
   position: relative;
-  width: 100%;
 `;

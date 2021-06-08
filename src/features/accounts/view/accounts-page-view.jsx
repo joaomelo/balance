@@ -12,7 +12,7 @@ export function AccountsPageView ({
   isLoading
 }) {
   return (
-    <>
+    <div>
       <h2>Accounts</h2>
       <AccountAddView
         onAdd={onAdd}
@@ -25,6 +25,6 @@ export function AccountsPageView ({
         errorEdit={errorEdit}
       />
       <Loading isLoading={isLoading} />
-    </>
+    </div>
   );
 }
