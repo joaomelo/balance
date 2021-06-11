@@ -1,4 +1,4 @@
-export function Form ({ onSubmit, children, ...props }) {
+export function Form ({ onSubmit, ...props }) {
   const handleSubmit = async e => {
     e.preventDefault();
     onSubmit();
@@ -9,8 +9,6 @@ export function Form ({ onSubmit, children, ...props }) {
       onSubmit={handleSubmit}
       noValidate
       {...props}
-    >
-      { children }
-    </form>
+    />
   );
 }

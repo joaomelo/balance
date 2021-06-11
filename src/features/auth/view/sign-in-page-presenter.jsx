@@ -1,19 +1,14 @@
 import { useCommand } from '../../../app/components';
-import { createErrorReport } from '../../../app/error';
 import { signInCommand } from '../commands';
 import { SignInPageView } from './sign-in-page-view';
 
 export function SignInPagePresenter ({ dependencies }) {
   const [onSignIn, isSigning, error] = useCommand(dependencies, signInCommand);
-  const errors = createErrorReport(error, {
-    email: 'AUTH/EMAIL_INVALID',
-    password: 'AUTH/PASSWORD_INVALID'
-  });
 
   return (
     <SignInPageView
       onSignIn={onSignIn}
-      errors={errors}
+      error={error}
       isLoading={isSigning}
     />
   );
