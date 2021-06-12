@@ -28,6 +28,8 @@
   "license": "GPL-3.0",
   "homepage": "https://github.com/joaomelo/balance",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "chart.js": "^3.2.1",
     "chartjs-adapter-luxon": "^1.0.0",

@@ -63,7 +63,7 @@ async function main () {
   window.$dependencies = dependencies;
 
   mountRoot({
-    element: 'container',
+    element: 'root',
     dependencies
   });
 }

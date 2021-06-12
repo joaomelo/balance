@@ -1,22 +1,22 @@
-import { BrowserRouter as Router, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { MuiWrapper } from '../../app/styles';
 import { useQuery } from '../../app/query';
-import { GlobalStyles } from '../../app/styles';
 import { NotFound } from '../not-found';
-import { SignInPagePresenter } from '../auth';
 import { InPagesLayout } from './in-pages-layout';
+import { OutPagesLayout } from './out-pages-layout';
 
 export function Root ({ dependencies }) {
   const { isSignedInSelector } = dependencies;
   const isSignedIn = useQuery(isSignedInSelector);
 
   return (
-    <>
+    <MuiWrapper>
       <Router >
         <Switch>
           <Redirect exact from="/" to={isSignedIn ? '/i' : '/o'} />
           <Route path='/o'>
             { isSignedIn && <Redirect to="/i" /> }
-            <OutPages dependencies={dependencies} />
+            <OutPagesLayout dependencies={dependencies} />
           </Route>
           <Route path="/i">
             { !isSignedIn && <Redirect to="/o" /> }
@@ -28,21 +28,6 @@ export function Root ({ dependencies }) {
           <Redirect to='/not-found' />
         </Switch>
       </Router>
-      <GlobalStyles />
-    </>
-  );
-}
-
-function OutPages ({ dependencies }) {
-  const { path } = useRouteMatch();
-  const defaultOutRoute = `${path}/sign-in`;
-
-  return (
-    <Switch>
-      <Route path={`${path}/sign-in`}>
-        <SignInPagePresenter dependencies={dependencies}/>
-      </Route>
-      <Redirect to={defaultOutRoute} />
-    </Switch>
+    </MuiWrapper>
   );
 }
