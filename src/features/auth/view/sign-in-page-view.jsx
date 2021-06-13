@@ -11,6 +11,7 @@ import {
   Divider,
   IconButton,
   InputAdornment,
+  LinearProgress,
   TextField,
   Toolbar,
   Typography,
@@ -26,7 +27,7 @@ import {
 } from '@material-ui/icons';
 import { createErrorReport } from '../../../app/error';
 import { appName, appVersion } from '../../../app/helpers';
-import { Loading, Form, usePayload } from '../../../app/components';
+import { Form, usePayload } from '../../../app/components';
 
 export function SignInPageView ({ onSignIn, error, isLoading, t }) {
   const initialPayload = { email: '', password: '' };
@@ -42,7 +43,7 @@ export function SignInPageView ({ onSignIn, error, isLoading, t }) {
       <PlainAppBar />
       <FormWrapper onSubmit={() => onSignIn(payload)}>
           <CardHeader title="Sign In" />
-          <Divider />
+          { isLoading ? <LinearProgress /> : <Divider /> }
           <CardContent>
             <EmailField
               {...bind('email')}
@@ -64,13 +65,13 @@ export function SignInPageView ({ onSignIn, error, isLoading, t }) {
               variant="contained"
               color="primary"
               startIcon={<LaunchTwoTone />}
+              disabled={isLoading}
             >
               Sign in
             </Button>
           </CardActionsStyled>
         </FormWrapper>
       <AppVersion>v{appVersion()}</AppVersion>
-      <Loading isLoading={isLoading} />
     </PageWrapper>
   );
 }
@@ -104,11 +105,13 @@ function PlainAppBar () {
 function FormWrapper ({ onSubmit, children }) {
   return (
     <Form onSubmit={onSubmit}>
-      <Container maxWidth="xs">
-        <Card>
-          { children }
-        </Card>
-      </Container>
+      <Box mt={4}>
+        <Container maxWidth="xs">
+          <Card>
+            { children }
+          </Card>
+        </Container>
+      </Box>
     </Form>
   );
 }

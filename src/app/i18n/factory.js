@@ -4,7 +4,6 @@ import { bundleModulesMessages } from './resources';
 
 export async function initI18nProvider (modules) {
   const resources = bundleModulesMessages(modules);
-  console.log({ resources });
   await i18n
     .use(initReactI18next)
     .init({
