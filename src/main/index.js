@@ -1,6 +1,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
+import { initI18nProvider, messagesCommon } from '../app/i18n';
 import { initFirebaseSuiteFromEnv } from '../app/firebase';
 import {
   createIdentityMutations,
@@ -14,10 +15,16 @@ import {
   selectActiveItems
 } from '../app/repository';
 import { mountRoot } from '../features/root';
+import { messagesAuth } from '../features/auth';
 import { selectAccountsWithBalances } from '../features/accounts';
 import { selectBalancesWithAccount } from '../features/balances';
 
 async function main () {
+  const useI18n = await initI18nProvider([
+    messagesCommon,
+    messagesAuth
+  ]);
+
   const { firestore, fireauth } = await initFirebaseSuiteFromEnv();
 
   const identityMutations = createIdentityMutations(fireauth);
@@ -45,6 +52,7 @@ async function main () {
   );
 
   const dependencies = {
+    useI18n,
     identityMutations,
     userQuery,
     userIdSelector,

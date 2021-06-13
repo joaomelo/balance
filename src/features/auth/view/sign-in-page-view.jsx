@@ -16,6 +16,7 @@ import {
   Typography,
   styled
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import {
   EmailTwoTone,
   LaunchTwoTone,
@@ -25,9 +26,9 @@ import {
 } from '@material-ui/icons';
 import { createErrorReport } from '../../../app/error';
 import { appName, appVersion } from '../../../app/helpers';
-import { Loading, Form, ErrorMessage, usePayload } from '../../../app/components';
+import { Loading, Form, usePayload } from '../../../app/components';
 
-export function SignInPageView ({ onSignIn, error, isLoading }) {
+export function SignInPageView ({ onSignIn, error, isLoading, t }) {
   const initialPayload = { email: '', password: '' };
   const { payload, bind } = usePayload(initialPayload);
 
@@ -45,13 +46,15 @@ export function SignInPageView ({ onSignIn, error, isLoading }) {
           <CardContent>
             <EmailField
               {...bind('email')}
-              errorCode={errorReport.email}
+              error={t(errorReport.email)}
             />
             <PasswordField
               {...bind('password')}
-              errorCode={errorReport.password}
+              error={t(errorReport.password)}
             />
-            <ErrorMessage code={errorReport.escaped}/>
+            { errorReport.escaped &&
+              <Alert severity="error">{t(errorReport.escaped)}</Alert>
+            }
           </CardContent>
           <Divider />
           <CardActionsStyled>
@@ -77,9 +80,7 @@ function PageWrapper (props) {
     <Box
       display="flex"
       flexDirection="column"
-      justifyContent="center"
       alignItems="center"
-      style={{ minHeight: '100vh' }}
       {...props}
     />
   );
@@ -87,7 +88,7 @@ function PageWrapper (props) {
 
 function PlainAppBar () {
   return (
-    <AppBar>
+    <AppBar position="sticky">
       <Toolbar>
         <Typography
           component="h1"
@@ -112,7 +113,7 @@ function FormWrapper ({ onSubmit, children }) {
   );
 }
 
-function EmailField ({ errorCode, ...rest }) {
+function EmailField ({ error, ...rest }) {
   const EmailAdornment = () => (
     <InputAdornment position="start">
       <EmailTwoTone />
@@ -128,16 +129,15 @@ function EmailField ({ errorCode, ...rest }) {
       fullWidth
       margin="normal"
       required
-      error={!!errorCode}
-      helperText={errorCode}
-      inputProps={{ 'data-error': errorCode }}
+      error={!!error}
+      helperText={error}
       InputProps={{ startAdornment: <EmailAdornment /> }}
       {...rest}
     />
   );
 }
 
-function PasswordField ({ errorCode, ...rest }) {
+function PasswordField ({ error, ...rest }) {
   const [showPassword, setShowPassword] = useState(false);
   const onToggle = () => setShowPassword(state => !state);
 
@@ -164,8 +164,8 @@ function PasswordField ({ errorCode, ...rest }) {
       fullWidth
       margin="normal"
       required
-      helperText={errorCode}
-      inputProps={{ 'data-error': errorCode }}
+      error={!!error}
+      helperText={error}
       InputProps={{
         startAdornment: <PasswordInfoAdornment />,
         endAdornment: <PasswordToggleAdornment onClick={onToggle}/>

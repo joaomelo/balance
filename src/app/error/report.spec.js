@@ -53,7 +53,7 @@ describe('error report module', () => {
     expect(errors).toEqual(expect.objectContaining({
       thisField: null,
       otherField: null,
-      escaped: 'error without code'
+      escaped: 'ERROR/UNEXPECTED_ERROR'
     }));
   });
 

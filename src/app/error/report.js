@@ -23,8 +23,11 @@ function reportOnEscaped (error, schema) {
 
   const { code } = error;
   const registeredCodes = Object.values(schema).flat();
-
   if (registeredCodes.includes(code)) return null;
-  if (!code) return error.message;
+
+  // the ui can come with a generic message given we provide here
+  // a standard code for no-code errors
+  if (!code) return 'ERROR/UNEXPECTED_ERROR';
+
   return code;
 };

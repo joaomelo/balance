@@ -1,5 +1,5 @@
 import en from './messages-en';
 
-export const messagesAuth = {
+export const messagesCommon = {
   en
 };

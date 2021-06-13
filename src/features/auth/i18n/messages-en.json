@@ -1,25 +1,5 @@
 {
-  "account": "Account",
-  "disclaimer": "This app is a personal instance of ARC, and you are welcome to use it freely. But beware, it is a hobby project. I can't guarantee any service level. The most reliable way to benefit from the app is to check the open-sourced code in GitHub and, when comfortable, raise your instance.",
-  "email": "E-mail",
-  "email-new": "New e-mail",
-  "email-update": "Update e-mail",
-  "email-updated": "E-mail updated",
-  "error-credentials-unrecognized": "User's email does not exist or failed to validate password",
-  "error-email-already-in-use": "Can't create or update a user with an e-mail already in use",
-  "language": "Language",
-  "loading": "Loading user",
-  "password": "Password",
-  "password-current": "Current password",
-  "password-new": "New password",
-  "password-repeat": "Repeat password",
-  "password-update": "Update password",
-  "password-updated": "Password updated",
-  "preferences": "Preferences",
-  "preferences-updated": "Preferences updated",
-  "go-sign-up": "Don't have a account? Go to sign up",
-  "go-sign-in": "Already have a account? Go to sign in",
-  "sign-in": "Sign in",
-  "sign-out": "Sign out",
-  "sign-up": "Sign up"
+  "AUTH/EMAIL_INVALID": "Invalid email",
+  "AUTH/PASSWORD_INVALID": "Invalid password",
+  "IDENTITY/CREDENTIALS_UNRECOGNIZED": "User's email does not exist or failed to validate password"
 }
