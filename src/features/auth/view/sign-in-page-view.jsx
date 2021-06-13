@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   AppBar,
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -12,10 +13,12 @@ import {
   InputAdornment,
   TextField,
   Toolbar,
-  Typography
+  Typography,
+  styled
 } from '@material-ui/core';
 import {
   EmailTwoTone,
+  LaunchTwoTone,
   VpnKeyTwoTone,
   VisibilityTwoTone,
   VisibilityOffTwoTone
@@ -34,13 +37,10 @@ export function SignInPageView ({ onSignIn, error, isLoading }) {
   });
 
   return (
-    <SignInPage>
+    <PageWrapper>
       <PlainAppBar />
-      <SignInWrapper onSubmit={() => onSignIn(payload)}>
-          <CardHeader
-            title="Sign In"
-            titleTypographyProps={{ align: 'center' }}
-          />
+      <FormWrapper onSubmit={() => onSignIn(payload)}>
+          <CardHeader title="Sign In" />
           <Divider />
           <CardContent>
             <EmailField
@@ -54,18 +54,25 @@ export function SignInPageView ({ onSignIn, error, isLoading }) {
             <ErrorMessage code={errorReport.escaped}/>
           </CardContent>
           <Divider />
-          <CardActions>
-            <Button />
-          </CardActions>
-        </SignInWrapper>
-      <p>v{appVersion()}</p>
-
+          <CardActionsStyled>
+            <Button
+              id="buttonSignIn"
+              type="submit"
+              variant="contained"
+              color="primary"
+              startIcon={<LaunchTwoTone />}
+            >
+              Sign in
+            </Button>
+          </CardActionsStyled>
+        </FormWrapper>
+      <AppVersion>v{appVersion()}</AppVersion>
       <Loading isLoading={isLoading} />
-    </SignInPage>
+    </PageWrapper>
   );
 }
 
-function SignInPage (props) {
+function PageWrapper (props) {
   return (
     <Box
       display="flex"
@@ -75,18 +82,6 @@ function SignInPage (props) {
       style={{ minHeight: '100vh' }}
       {...props}
     />
-  );
-}
-
-function SignInWrapper ({ onSubmit, children }) {
-  return (
-    <Form onSubmit={onSubmit}>
-      <Container maxWidth="xs">
-        <Card>
-          { children }
-        </Card>
-      </Container>
-    </Form>
   );
 }
 
@@ -102,6 +97,18 @@ function PlainAppBar () {
         </Typography>
       </Toolbar>
     </AppBar>
+  );
+}
+
+function FormWrapper ({ onSubmit, children }) {
+  return (
+    <Form onSubmit={onSubmit}>
+      <Container maxWidth="xs">
+        <Card>
+          { children }
+        </Card>
+      </Container>
+    </Form>
   );
 }
 
@@ -168,13 +175,19 @@ function PasswordField ({ errorCode, ...rest }) {
   );
 }
 
-function Button () {
+const CardActionsStyled = styled(CardActions)({
+  justifyContent: 'flex-end'
+});
+
+function AppVersion ({ children }) {
   return (
-    <button
-      id="buttonSignIn"
-      type="submit"
-    >
-      Sign in
-    </button>
+    <Box mt={2}>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+      >
+        {children}
+      </Typography>
+    </Box>
   );
 }
