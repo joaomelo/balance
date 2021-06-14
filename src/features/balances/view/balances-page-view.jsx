@@ -1,4 +1,7 @@
-import { Loading } from '../../../app/components';
+import {
+  Box,
+  Typography
+} from '@material-ui/core';
 import { BalanceAddView } from './balance-add-view';
 import { BalancesListView } from './balances-list-view';
 
@@ -12,17 +15,24 @@ export function BalancesPageView ({
   onDel,
   isLoading
 }) {
-  // import { createErrorReport } from '../../../app/error';
-  // const errorsEdit = createErrorReport(errorEdit);
-
   return (
     <div>
-      <h2>Balances</h2>
-      <BalanceAddView
-        accounts={accounts}
-        onAdd={onAdd}
-        error={errorAdd}
-      />
+      <Box
+        display="flex"
+        justifyContent="space-between"
+      >
+        <Typography
+          component="h1"
+          variant="h6"
+        >
+          Balances
+        </Typography>
+        <BalanceAddView
+          accounts={accounts}
+          onAdd={onAdd}
+          error={errorAdd}
+        />
+      </Box>
       <BalancesListView
         balances={balances}
         accounts={accounts}
@@ -30,7 +40,6 @@ export function BalancesPageView ({
         onEdit={onEdit}
         errorEdit={errorEdit}
       />
-      <Loading isLoading={isLoading} />
     </div>
   );
 }

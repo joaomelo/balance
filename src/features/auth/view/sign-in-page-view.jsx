@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   AppBar,
   Box,
@@ -27,7 +26,7 @@ import {
 } from '@material-ui/icons';
 import { createErrorReport } from '../../../app/error';
 import { appName, appVersion } from '../../../app/helpers';
-import { Form, usePayload } from '../../../app/components';
+import { Form, usePayload, useToggle } from '../../../app/components';
 
 export function SignInPageView ({ onSignIn, error, isLoading, t }) {
   const initialPayload = { email: '', password: '' };
@@ -141,8 +140,7 @@ function EmailField ({ error, ...rest }) {
 }
 
 function PasswordField ({ error, ...rest }) {
-  const [showPassword, setShowPassword] = useState(false);
-  const onToggle = () => setShowPassword(state => !state);
+  const [showPassword, toggleShowPassword] = useToggle();
 
   const PasswordToggleAdornment = ({ onClick }) => (
     <InputAdornment position="end">
@@ -171,7 +169,7 @@ function PasswordField ({ error, ...rest }) {
       helperText={error}
       InputProps={{
         startAdornment: <PasswordInfoAdornment />,
-        endAdornment: <PasswordToggleAdornment onClick={onToggle}/>
+        endAdornment: <PasswordToggleAdornment onClick={toggleShowPassword}/>
       }}
       {...rest}
     />

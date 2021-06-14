@@ -1,5 +1,6 @@
-import { useModal } from '../../../app/components';
-import { BalanceFormView } from './balance-form-view';
+import { Button } from '@material-ui/core';
+import { useSwitch } from '../../../app/components';
+import { BalanceDialogView } from './balance-dialog-view';
 
 export function BalanceAddView ({ accounts, onAdd, error }) {
   const initialPayload = {
@@ -7,27 +8,26 @@ export function BalanceAddView ({ accounts, onAdd, error }) {
     accountId: accounts[0]?.id || '',
     amount: ''
   };
-  const { open, close, modalProps, Modal } = useModal();
+  const [isOpen, open, close] = useSwitch();
 
   return (
     <>
-      <button
+      <Button
         id="buttonAddBalance"
+        variant="contained"
+        color="primary"
         onClick={open}
       >
-        Add
-      </button>
-      <Modal
-        {...modalProps}
-      >
-        <BalanceFormView
-          initialPayload={initialPayload}
-          accounts={accounts}
-          error={error}
-          onSubmit={onAdd}
-          onClose={close}
-        />
-      </Modal>
+        Add Balance
+      </Button>
+      <BalanceDialogView
+        initialPayload={initialPayload}
+        accounts={accounts}
+        error={error}
+        onSubmit={onAdd}
+        isOpen={isOpen}
+        onClose={close}
+      />
     </>
   );
 }

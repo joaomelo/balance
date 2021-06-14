@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useModal } from '../../../app/components';
+import { useSwitch } from '../../../app/components';
 import { BalancesListItemView } from './balances-list-item-view';
-import { BalanceFormView } from './balance-form-view';
+import { BalanceDialogView } from './balance-dialog-view';
 
 export function BalancesListView ({
   accounts,
@@ -10,8 +10,8 @@ export function BalancesListView ({
   onEdit,
   errorEdit
 }) {
-  const { open, close, modalProps, Modal } = useModal();
   const [initialPayload, setInitialPayload] = useState({});
+  const [isOpen, open, close] = useSwitch();
 
   const handleClaimEdit = id => {
     const balance = balances.find(b => b.id === id);
@@ -41,15 +41,14 @@ export function BalancesListView ({
           }
         </tbody>
       </table>
-      <Modal {...modalProps}>
-        <BalanceFormView
-          initialPayload={initialPayload}
-          accounts={accounts}
-          error={errorEdit}
-          onSubmit={onEdit}
-          onClose={close}
-        />
-      </Modal>
+      <BalanceDialogView
+        initialPayload={initialPayload}
+        accounts={accounts}
+        error={errorEdit}
+        onSubmit={onEdit}
+        isOpen={isOpen}
+        onClose={close}
+      />
     </>
   );
 }

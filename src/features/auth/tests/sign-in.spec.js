@@ -34,8 +34,8 @@ describe('sign in', () => {
     await page.fill('#inputPassword', 'password');
     await page.click('#buttonSignIn');
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('AUTH/EMAIL_INVALID');
+    const error = await page.$('text=invalid email');
+    expect(error).toBeTruthy();
   });
 
   it('show error message when password is invalid', async () => {
@@ -45,8 +45,8 @@ describe('sign in', () => {
     await page.fill('#inputPassword', 'bad');
     await page.click('#buttonSignIn');
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('AUTH/PASSWORD_INVALID');
+    const error = await page.$('text=invalid password');
+    expect(error).toBeTruthy();
   });
 
   it('show error message when user does not exist', async () => {
@@ -56,8 +56,8 @@ describe('sign in', () => {
     await page.fill('#inputPassword', 'password');
     await page.click('#buttonSignIn');
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('IDENTITY/CREDENTIALS_UNRECOGNIZED');
+    const error = await page.$('text=does not exist');
+    expect(error).toBeTruthy();
   });
 
   it('show error message when password does no match', async () => {
@@ -69,7 +69,7 @@ describe('sign in', () => {
     await page.fill('#inputPassword', `__${password}__`);
     await page.click('#buttonSignIn');
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('IDENTITY/CREDENTIALS_UNRECOGNIZED');
+    const error = await page.$('text=does not exist');
+    expect(error).toBeTruthy();
   });
 });

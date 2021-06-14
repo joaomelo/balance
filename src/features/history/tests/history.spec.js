@@ -26,6 +26,6 @@ describe('history chart', () => {
     await page.click('a >> text=History');
 
     const historyChart = await page.$('#balance-history');
-    expect(historyChart).toBeDefined();
+    expect(historyChart).toBeTruthy();
   });
 });

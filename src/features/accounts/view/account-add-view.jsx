@@ -1,26 +1,28 @@
-import { useModal } from '../../../app/components';
-import { AccountFormView } from './account-form-view';
+import { Button } from '@material-ui/core';
+import { useSwitch } from '../../../app/components';
+import { AccountDialogView } from './account-dialog-view';
 
 export function AccountAddView ({ onAdd, error }) {
   const initialPayload = { name: '' };
-  const { open, close, modalProps, Modal } = useModal();
+  const [isOpen, open, close] = useSwitch();
 
   return (
     <>
-      <button
-        id='buttonAddAccount'
+      <Button
+        id="buttonAddAccount"
+        variant="contained"
+        color="primary"
         onClick={open}
       >
-        Add
-      </button>
-      <Modal {...modalProps}>
-        <AccountFormView
-          initialPayload={initialPayload}
-          error={error}
-          onSubmit={onAdd}
-          onClose={close}
-        />
-      </Modal>
+        Add Account
+      </Button>
+      <AccountDialogView
+        initialPayload={initialPayload}
+        error={error}
+        onSubmit={onAdd}
+        isOpen={isOpen}
+        onClose={close}
+      />
     </>
   );
 }

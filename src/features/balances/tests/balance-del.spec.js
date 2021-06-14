@@ -32,7 +32,7 @@ describe('del balance', () => {
 
     const balanceFilter = `tbody td >> text=${name}`;
     const addedBalance = await page.$(balanceFilter);
-    expect(addedBalance).toBeDefined();
+    expect(addedBalance).toBeTruthy();
 
     const buttonDelId = camelCase('button', 'del', name, asUtcIsoString(new Date()));
     await page.click(`#${buttonDelId}`);
