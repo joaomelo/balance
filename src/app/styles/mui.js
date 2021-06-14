@@ -1,8 +1,9 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { theme } from './theme';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-export function MuiWrapper ({ children }) {
+const theme = createMuiTheme();
+
+export function MuiStyles ({ children }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -1,3 +1,4 @@
+import { Alert } from '@material-ui/lab';
 import {
   AppBar,
   Box,
@@ -16,7 +17,6 @@ import {
   Typography,
   styled
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import {
   EmailTwoTone,
   LaunchTwoTone,

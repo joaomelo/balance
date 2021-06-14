@@ -1,5 +1,6 @@
+import { Alert } from '@material-ui/lab';
 import { Dialog, DialogContent } from '@material-ui/core';
-import { usePayload, Form, ErrorMessage } from '../../../app/components';
+import { usePayload, Form } from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
 
 export function AccountDialogView ({
@@ -31,7 +32,9 @@ export function AccountDialogView ({
             id='inputName'
             {...bind('name')}
           />
-          <ErrorMessage code={errorReport.escaped}/>
+          { errorReport.escaped &&
+            <Alert severity="error">{(errorReport.escaped)}</Alert>
+          }
           <button
             type='button'
             onClick={onClose}
