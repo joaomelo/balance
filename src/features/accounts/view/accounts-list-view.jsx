@@ -40,13 +40,15 @@ export function AccountsListView ({
           )}
         </tbody>
       </table>
-      <AccountDialogView
-        initialPayload={initialPayload}
-        error={errorEdit}
-        onSubmit={onEdit}
-        isOpen={isOpen}
-        onClose={close}
-      />
+      {isOpen &&
+        <AccountDialogView
+          initialPayload={initialPayload}
+          error={errorEdit}
+          onSubmit={onEdit}
+          isOpen={isOpen}
+          onClose={close}
+        />
+      }
     </>
   );
 }

@@ -21,14 +21,16 @@ export function BalanceAddView ({ accounts, onAdd, error }) {
       >
         Add Balance
       </Button>
-      <BalanceDialogView
-        initialPayload={initialPayload}
-        accounts={accounts}
-        error={error}
-        onSubmit={onAdd}
-        isOpen={isOpen}
-        onClose={close}
-      />
+      {isOpen &&
+        <BalanceDialogView
+          initialPayload={initialPayload}
+          accounts={accounts}
+          error={error}
+          onSubmit={onAdd}
+          isOpen={isOpen}
+          onClose={close}
+        />
+      }
     </>
   );
 }

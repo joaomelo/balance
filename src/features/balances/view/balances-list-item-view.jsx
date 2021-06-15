@@ -1,4 +1,5 @@
-import { asUtcIsoString, camelCase } from '../../../app/helpers';
+import { DateTime } from 'luxon';
+import { camelCase } from '../../../app/helpers';
 
 export function BalancesListItemView ({
   balance,
@@ -6,7 +7,7 @@ export function BalancesListItemView ({
   onClaimEdit
 }) {
   const { id, accountName, date, amount } = balance;
-  const isoDate = asUtcIsoString(date);
+  const isoDate = DateTime.fromJSDate(date).toISODate();
   return (
     <tr id={camelCase('row', 'balance', accountName, isoDate)}>
       <td id={camelCase('cell', 'name', accountName, isoDate)}>

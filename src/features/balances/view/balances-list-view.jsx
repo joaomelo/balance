@@ -41,14 +41,16 @@ export function BalancesListView ({
           }
         </tbody>
       </table>
-      <BalanceDialogView
-        initialPayload={initialPayload}
-        accounts={accounts}
-        error={errorEdit}
-        onSubmit={onEdit}
-        isOpen={isOpen}
-        onClose={close}
-      />
+      {isOpen &&
+        <BalanceDialogView
+          initialPayload={initialPayload}
+          accounts={accounts}
+          error={errorEdit}
+          onSubmit={onEdit}
+          isOpen={isOpen}
+          onClose={close}
+        />
+      }
     </>
   );
 }

@@ -1,4 +1,5 @@
-import { asUtcIsoString, camelCase } from '../../../app/helpers';
+import { DateTime } from 'luxon';
+import { camelCase } from '../../../app/helpers';
 
 export function AccountsListItemView ({
   account,
@@ -16,7 +17,7 @@ export function AccountsListItemView ({
         {name}
       </td>
       <td id={camelCase('cell', 'date', name)}>
-        {date ? asUtcIsoString(date) : '-'}
+        {date ? DateTime.fromJSDate(date).toISODate() : '-'}
       </td>
       <td id={camelCase('cell', 'amount', name)}>
         {amount || '-'}

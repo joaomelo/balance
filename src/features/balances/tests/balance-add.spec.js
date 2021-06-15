@@ -39,8 +39,8 @@ describe('add balance', () => {
 
     await addBalanceMacro(page);
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('BALANCES/ACCOUNT_INVALID');
+    const error = await page.$('text=BALANCES/ACCOUNT_INVALID');
+    expect(error).toBeTruthy();
   });
 
   test('show error if no amount', async () => {
@@ -53,8 +53,8 @@ describe('add balance', () => {
     await page.fill('#inputAmount', '');
     await page.click('#buttonSave');
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('BALANCES/AMOUNT_REQUIRED');
+    const error = await page.$('text=BALANCES/AMOUNT_INVALID');
+    expect(error).toBeTruthy();
   });
 
   test('show error if invalid date', async () => {
@@ -68,8 +68,8 @@ describe('add balance', () => {
     await page.fill('#inputAmount', '500');
     await page.click('#buttonSave');
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('BALANCES/DATE_REQUIRED');
+    const error = await page.$('text=BALANCES/DATE_INVALID');
+    expect(error).toBeTruthy();
   });
 
   test('show error if attempt to add same date to the same account more than once', async () => {
@@ -80,7 +80,7 @@ describe('add balance', () => {
     await addBalanceMacro(page);
     await addBalanceMacro(page);
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('BALANCES/DATE_COLLIDING');
+    const error = await page.$('text=BALANCES/DATE_COLLIDING');
+    expect(error).toBeTruthy();
   });
 });

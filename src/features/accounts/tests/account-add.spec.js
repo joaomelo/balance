@@ -37,8 +37,8 @@ describe('add account', () => {
     await page.click('#buttonAddAccount');
     await page.click('#buttonSave');
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('ACCOUNTS/NAME_INVALID');
+    const error = await page.$('text=ACCOUNTS/NAME_INVALID');
+    expect(error).toBeTruthy();
   });
 
   test('show error if another account with the same name already exists', async () => {
@@ -48,7 +48,7 @@ describe('add account', () => {
     await addAccountMacro(page, name);
     await addAccountMacro(page, name);
 
-    const errorCode = await page.getAttribute('[data-error]', 'data-error');
-    expect(errorCode).toBe('ACCOUNTS/NON_UNIQUE_NAME');
+    const error = await page.$('text=ACCOUNTS/NON_UNIQUE_NAME');
+    expect(error).toBeTruthy();
   });
 });

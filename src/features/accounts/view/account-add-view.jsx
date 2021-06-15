@@ -16,13 +16,15 @@ export function AccountAddView ({ onAdd, error }) {
       >
         Add Account
       </Button>
-      <AccountDialogView
-        initialPayload={initialPayload}
-        error={error}
-        onSubmit={onAdd}
-        isOpen={isOpen}
-        onClose={close}
-      />
+      {isOpen &&
+        <AccountDialogView
+          initialPayload={initialPayload}
+          error={error}
+          onSubmit={onAdd}
+          isOpen={isOpen}
+          onClose={close}
+        />
+      }
     </>
   );
 }
