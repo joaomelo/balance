@@ -40,8 +40,8 @@ export function BalanceDialogView ({
 
   const errorReport = createErrorReport(error, {
     account: 'BALANCES/ACCOUNT_INVALID',
-    date: ['BALANCES/DATE_REQUIRED', 'BALANCES/DATE_COLLIDING'],
-    amount: 'BALANCES/AMOUNT_REQUIRED'
+    date: ['BALANCES/DATE_INVALID', 'BALANCES/DATE_COLLIDING'],
+    amount: 'BALANCES/AMOUNT_INVALID'
   });
 
   return (
@@ -122,10 +122,19 @@ function AccountField ({ accounts, error, ...rest }) {
   );
 }
 
-function DateField ({ error, ...rest }) {
+function DateField ({ error, value, onChange, ...rest }) {
+  const handleChange = luxonDate => {
+    const date = luxonDate?.isValid
+      ? luxonDate.endOf('day').toJSDate()
+      : null;
+    onChange(date);
+  };
+
   return (
     <KeyboardDatePicker
       id="inputDate"
+      value={value}
+      onChange={handleChange}
       label="Date"
       inputVariant="outlined"
       fullWidth
@@ -140,34 +149,23 @@ function DateField ({ error, ...rest }) {
   );
 }
 
-function AmountField ({ error, ...rest }) {
+function AmountField ({ error, value, onChange, ...rest }) {
+  const handleChange = e => {
+    const amount = parseFloat(e.target.value) || null;
+    onChange(amount);
+  };
+
   const AmountAdornment = () => (
     <InputAdornment position="start">
       $
     </InputAdornment>
   );
 
-  // export function InputAmount ({ value, onChange, ...rest }) {
-  //   const handleChange = e => {
-  //     const amount = parseFloat(e.target.value) || '';
-  //     onChange(amount);
-  //   };
-
-  //   return (
-  //     <input
-  //       value={value}
-  //       onChange={handleChange}
-  //       type="number"
-  //       step="0.01"
-  //       {...rest}
-  //     />
-  //   );
-  // }
-
   return (
     <TextField
       id="inputAmount"
-      type="number"
+      value={value || ''}
+      onChange={handleChange}
       label="Amount"
       variant="outlined"
       fullWidth
@@ -176,7 +174,6 @@ function AmountField ({ error, ...rest }) {
       error={!!error}
       helperText={error}
       InputProps={{ startAdornment: <AmountAdornment /> }}
-      inputProps={{ step: '0.01' }}
       {...rest}
     />
   );

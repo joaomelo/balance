@@ -5,12 +5,12 @@ export function validateBalance (context, balanceData) {
   const { accounts, balances } = context;
   const { id, amount, date, accountId } = balanceData;
 
-  if (!date) {
-    throw new DateRequiredError();
+  if (!(date instanceof Date)) {
+    throw new DateInvalidError();
   }
 
-  if (amount !== 0 && !amount) {
-    throw new AmountRequiredError();
+  if (typeof amount !== 'number') {
+    throw new AmountInvalidError();
   }
 
   if (!accounts.find(({ id }) => id === accountId)) {
@@ -38,13 +38,13 @@ export class AccountInvalidError extends AppError {
   }
 }
 
-export class DateRequiredError extends AppError {
+export class DateInvalidError extends AppError {
   constructor () {
     super({
-      code: 'BALANCES/DATE_REQUIRED',
+      code: 'BALANCES/DATE_INVALID',
       isOperational: true
     });
-    Error.captureStackTrace(this, DateRequiredError);
+    Error.captureStackTrace(this, DateInvalidError);
   }
 }
 
@@ -58,12 +58,12 @@ export class DateCollidingError extends AppError {
   }
 }
 
-export class AmountRequiredError extends AppError {
+export class AmountInvalidError extends AppError {
   constructor () {
     super({
-      code: 'BALANCES/AMOUNT_REQUIRED',
+      code: 'BALANCES/AMOUNT_INVALID',
       isOperational: true
     });
-    Error.captureStackTrace(this, AmountRequiredError);
+    Error.captureStackTrace(this, AmountInvalidError);
   }
 }
