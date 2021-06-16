@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
-import { camelCase, asUtcIsoString } from '../../../app/helpers';
+import { DateTime } from 'luxon';
+import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from '../../accounts/tests';
 import { addBalanceMacro } from './macros';
@@ -30,7 +31,7 @@ describe('edit balance', () => {
     await addAccountMacro(page, name);
     await addBalanceMacro(page);
 
-    const buttonEditFilter = camelCase('button', 'edit', name, asUtcIsoString(new Date()));
+    const buttonEditFilter = camelCase('button', 'edit', name, DateTime.now().toISODate());
     await page.click(`#${buttonEditFilter}`);
 
     const newDate = '2021-01-01';

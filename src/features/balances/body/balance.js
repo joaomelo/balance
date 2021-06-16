@@ -1,4 +1,4 @@
-import { isSameDate } from '../../../app/helpers';
+import { isSameDay } from '../../../app/helpers';
 import { AppError } from '../../../app/error';
 
 export function validateBalance (context, balanceData) {
@@ -20,7 +20,7 @@ export function validateBalance (context, balanceData) {
   const collidingDate = b => {
     return b.id !== id &&
     b.accountId === accountId &&
-    isSameDate(b.date, date);
+    isSameDay(b.date, date);
   };
 
   if (balances.find(collidingDate)) {

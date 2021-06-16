@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
-import { camelCase, asUtcIsoString } from '../../../app/helpers';
+import { DateTime } from 'luxon';
+import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addBalanceMacro } from '../../balances/tests';
 import { goToAccountsMacro, addAccountMacro } from './macros';
@@ -46,7 +47,7 @@ describe('list accounts', () => {
     await goToAccountsMacro(page);
 
     const lastBalanceDate = await page.textContent(`#${camelCase('cell', 'date', name)}`);
-    expect(lastBalanceDate).toBe(asUtcIsoString(new Date()));
+    expect(lastBalanceDate).toBe(DateTime.now().toISODate());
 
     const lastBalanceAmount = await page.textContent(`#${camelCase('cell', 'amount', name)}`);
     expect(lastBalanceAmount).toBe('500');

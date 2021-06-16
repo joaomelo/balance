@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
-import { camelCase, asUtcIsoString } from '../../../app/helpers';
+import { DateTime } from 'luxon';
+import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addBalanceMacro, goToBalancesMacro } from '../../balances/tests';
 import { addAccountMacro, goToAccountsMacro } from './macros';
@@ -35,7 +36,7 @@ describe('del account', () => {
 
     await addBalanceMacro(page);
 
-    const todayIso = asUtcIsoString(new Date());
+    const todayIso = DateTime.now().toISODate();
     const balanceNameFilter = `#${camelCase('cell', 'name', name, todayIso)}`;
     const balanceName = await page.textContent(balanceNameFilter);
     expect(balanceName).toBe(name);

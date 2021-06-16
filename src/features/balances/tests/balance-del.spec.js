@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
-import { camelCase, asUtcIsoString } from '../../../app/helpers';
+import { DateTime } from 'luxon';
+import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from '../../accounts/tests';
 import { addBalanceMacro } from './macros';
@@ -34,7 +35,7 @@ describe('del balance', () => {
     const addedBalance = await page.$(balanceFilter);
     expect(addedBalance).toBeTruthy();
 
-    const buttonDelId = camelCase('button', 'del', name, asUtcIsoString(new Date()));
+    const buttonDelId = camelCase('button', 'del', name, DateTime.now().toISODate());
     await page.click(`#${buttonDelId}`);
 
     const deletedAccount = await page.$(balanceFilter);
