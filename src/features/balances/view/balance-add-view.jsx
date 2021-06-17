@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import { useSwitch } from '../../../app/components';
 import { BalanceDialogView } from './balance-dialog-view';
 
-export function BalanceAddView ({ accounts, onAdd, error }) {
+export function BalanceAddView ({ accounts, onAdd, error, t }) {
   const initialPayload = {
     date: DateTime.now().endOf('day').toJSDate(),
     accountId: accounts[0]?.id || '',
@@ -29,6 +29,7 @@ export function BalanceAddView ({ accounts, onAdd, error }) {
           onSubmit={onAdd}
           isOpen={isOpen}
           onClose={close}
+          t={t}
         />
       }
     </>

@@ -13,7 +13,8 @@ export function BalancesPageView ({
   onEdit,
   errorEdit,
   onDel,
-  isLoading
+  isLoading,
+  t
 }) {
   return (
     <div>
@@ -31,6 +32,7 @@ export function BalancesPageView ({
           accounts={accounts}
           onAdd={onAdd}
           error={errorAdd}
+          t={t}
         />
       </Box>
       <BalancesListView
@@ -39,6 +41,7 @@ export function BalancesPageView ({
         onDel={onDel}
         onEdit={onEdit}
         errorEdit={errorEdit}
+        t={t}
       />
     </div>
   );

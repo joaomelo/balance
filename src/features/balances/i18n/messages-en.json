@@ -1,0 +1,6 @@
+{
+  "BALANCES/ACCOUNT_INVALID": "An associated account is required.",
+  "BALANCES/DATE_INVALID": "A valid date is required.",
+  "BALANCES/DATE_COLLIDING": "This account already has a recorded balance for this date.",
+  "BALANCES/AMOUNT_INVALID": "A valid amount is required."
+}

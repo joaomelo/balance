@@ -26,7 +26,8 @@ export function BalanceDialogView ({
   error,
   onSubmit,
   isOpen,
-  onClose
+  onClose,
+  t
 }) {
   const { payload, bind, reset } = usePayload(initialPayload);
 
@@ -55,19 +56,19 @@ export function BalanceDialogView ({
         <DialogContent>
           <AccountField
             accounts={accounts}
-            error={errorReport.account}
+            error={t(errorReport.account)}
             {...bind('accountId')}
           />
           <DateField
-            error={errorReport.date}
+            error={t(errorReport.date)}
             {...bind('date')}
           />
           <AmountField
-            error={errorReport.amount}
+            error={t(errorReport.amount)}
             {...bind('amount')}
           />
           { errorReport.escaped &&
-            <Alert severity="error">{(errorReport.escaped)}</Alert>
+            <Alert severity="error">{t(errorReport.escaped)}</Alert>
           }
         </DialogContent>
         <Divider />

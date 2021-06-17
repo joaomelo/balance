@@ -8,7 +8,8 @@ export function BalancesListView ({
   balances,
   onDel,
   onEdit,
-  errorEdit
+  errorEdit,
+  t
 }) {
   const [initialPayload, setInitialPayload] = useState({});
   const [isOpen, open, close] = useSwitch();
@@ -49,6 +50,7 @@ export function BalancesListView ({
           onSubmit={onEdit}
           isOpen={isOpen}
           onClose={close}
+          t={t}
         />
       }
     </>

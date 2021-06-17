@@ -39,7 +39,7 @@ describe('add balance', () => {
 
     await addBalanceMacro(page);
 
-    const error = await page.$('text=BALANCES/ACCOUNT_INVALID');
+    const error = await page.$('text=account is required');
     expect(error).toBeTruthy();
   });
 
@@ -53,7 +53,7 @@ describe('add balance', () => {
     await page.fill('#inputAmount', '');
     await page.click('#buttonSave');
 
-    const error = await page.$('text=BALANCES/AMOUNT_INVALID');
+    const error = await page.$('text=amount is required');
     expect(error).toBeTruthy();
   });
 
@@ -68,7 +68,7 @@ describe('add balance', () => {
     await page.fill('#inputAmount', '500');
     await page.click('#buttonSave');
 
-    const error = await page.$('text=BALANCES/DATE_INVALID');
+    const error = await page.$('text=date is required');
     expect(error).toBeTruthy();
   });
 
@@ -80,7 +80,7 @@ describe('add balance', () => {
     await addBalanceMacro(page);
     await addBalanceMacro(page);
 
-    const error = await page.$('text=BALANCES/DATE_COLLIDING');
+    const error = await page.$('text=already has a recorded balance for this date');
     expect(error).toBeTruthy();
   });
 });
