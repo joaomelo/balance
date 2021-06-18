@@ -7,7 +7,9 @@ export function AccountsListView ({
   accounts,
   onDel,
   onEdit,
-  errorEdit
+  error,
+  isLoading,
+  t
 }) {
   const [initialPayload, setInitialPayload] = useState({});
   const [isOpen, open, close] = useSwitch();
@@ -43,10 +45,12 @@ export function AccountsListView ({
       {isOpen &&
         <AccountDialogView
           initialPayload={initialPayload}
-          error={errorEdit}
+          error={error}
           onSubmit={onEdit}
           isOpen={isOpen}
           onClose={close}
+          isLoading={isLoading}
+          t={t}
         />
       }
     </>

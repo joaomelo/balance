@@ -12,7 +12,8 @@ export function AccountsPageView ({
   onEdit,
   errorEdit,
   onDel,
-  isLoading
+  isLoading,
+  t
 }) {
   return (
     <div>
@@ -29,13 +30,17 @@ export function AccountsPageView ({
         <AccountAddView
           onAdd={onAdd}
           error={errorAdd}
+          isLoading={isLoading}
+          t={t}
         />
       </Box>
       <AccountsListView
         accounts={accounts}
         onDel={onDel}
         onEdit={onEdit}
-        errorEdit={errorEdit}
+        error={errorEdit}
+        isLoading={isLoading}
+        t={t}
       />
     </div>
   );

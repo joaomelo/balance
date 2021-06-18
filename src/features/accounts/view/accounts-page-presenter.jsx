@@ -11,6 +11,9 @@ export function AccountsPagePresenter ({ dependencies }) {
   const [onEdit, isEditing, errorEdit] = useCommand(dependencies, setAccountCommand);
   const [onDel, isDeleting] = useCommand(dependencies, delAccountCommand);
 
+  const { useI18n } = dependencies;
+  const { t } = useI18n();
+
   return (
     <AccountsPageView
       accounts={Object.values(accounts)}
@@ -20,6 +23,7 @@ export function AccountsPagePresenter ({ dependencies }) {
       errorEdit={errorEdit}
       onDel={onDel}
       isLoading={isAdding || isDeleting || isEditing}
+      t={t}
     />
   );
 }

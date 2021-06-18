@@ -1,0 +1,4 @@
+{
+  "ACCOUNTS/NAME_INVALID": "A valid name is required.",
+  "ACCOUNTS/NON_UNIQUE_NAME": "This account name is already in use."
+}

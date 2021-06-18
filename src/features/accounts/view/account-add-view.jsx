@@ -2,7 +2,12 @@ import { Button } from '@material-ui/core';
 import { useSwitch } from '../../../app/components';
 import { AccountDialogView } from './account-dialog-view';
 
-export function AccountAddView ({ onAdd, error }) {
+export function AccountAddView ({
+  onAdd,
+  error,
+  isLoading,
+  t
+}) {
   const initialPayload = { name: '' };
   const [isOpen, open, close] = useSwitch();
 
@@ -23,6 +28,8 @@ export function AccountAddView ({ onAdd, error }) {
           onSubmit={onAdd}
           isOpen={isOpen}
           onClose={close}
+          isLoading={isLoading}
+          t={t}
         />
       }
     </>

@@ -1,5 +1,3 @@
-import { Alert } from '@material-ui/lab';
-import { KeyboardDatePicker } from '@material-ui/pickers';
 import {
   Button,
   Dialog,
@@ -12,13 +10,10 @@ import {
   MenuItem,
   TextField
 } from '@material-ui/core';
-import {
-  SaveTwoTone
-} from '@material-ui/icons';
-import {
-  usePayload,
-  Form
-} from '../../../app/components';
+import { Alert } from '@material-ui/lab';
+import { KeyboardDatePicker } from '@material-ui/pickers';
+import { SaveTwoTone } from '@material-ui/icons';
+import { usePayload, Form } from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
 
 export function BalanceDialogView ({
@@ -32,7 +27,6 @@ export function BalanceDialogView ({
   t
 }) {
   const { payload, bind, reset } = usePayload(initialPayload);
-
   const handleSubmit = async () => {
     const success = await onSubmit(payload);
     if (success) {
@@ -96,7 +90,7 @@ export function BalanceDialogView ({
           >
             Save
           </Button>
-      </DialogActions>
+        </DialogActions>
       </Form>
     </Dialog>
   );

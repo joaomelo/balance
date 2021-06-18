@@ -37,7 +37,7 @@ describe('add account', () => {
     await page.click('#buttonAddAccount');
     await page.click('#buttonSave');
 
-    const error = await page.$('text=ACCOUNTS/NAME_INVALID');
+    const error = await page.$('text=valid name is required');
     expect(error).toBeTruthy();
   });
 
@@ -48,7 +48,7 @@ describe('add account', () => {
     await addAccountMacro(page, name);
     await addAccountMacro(page, name);
 
-    const error = await page.$('text=ACCOUNTS/NON_UNIQUE_NAME');
+    const error = await page.$('text=name is already in use');
     expect(error).toBeTruthy();
   });
 });

@@ -16,14 +16,15 @@ import {
 } from '../app/repository';
 import { mountRoot } from '../features/root';
 import { messagesAuth } from '../features/auth';
-import { selectAccountsWithBalances } from '../features/accounts';
+import { messagesAccount, selectAccountsWithBalances } from '../features/accounts';
 import { messagesBalance, selectBalancesWithAccount } from '../features/balances';
 
 async function main () {
   const useI18n = await initI18nProvider([
     messagesCommon,
     messagesAuth,
-    messagesBalance
+    messagesBalance,
+    messagesAccount
   ]);
 
   const { firestore, fireauth } = await initFirebaseSuiteFromEnv();

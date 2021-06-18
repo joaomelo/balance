@@ -1,5 +1,15 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  LinearProgress,
+  TextField
+} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { Dialog, DialogContent } from '@material-ui/core';
+import { SaveTwoTone } from '@material-ui/icons';
 import { usePayload, Form } from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
 
@@ -8,7 +18,9 @@ export function AccountDialogView ({
   error,
   onSubmit,
   isOpen,
-  onClose
+  onClose,
+  isLoading,
+  t
 }) {
   const { payload, bind, reset } = usePayload(initialPayload);
   const handleSubmit = async () => {
@@ -19,36 +31,68 @@ export function AccountDialogView ({
     }
   };
 
-  const errorReport = createErrorReport(error);
+  const errorReport = createErrorReport(error, {
+    name: ['ACCOUNTS/NAME_INVALID', 'ACCOUNTS/NON_UNIQUE_NAME']
+  });
 
   return (
     <Dialog
+      maxWidth="xs"
       open={isOpen}
       onClose={onClose}
     >
-      <DialogContent>
-        <Form onSubmit={handleSubmit}>
-          <input
-            id='inputName'
+      <Form onSubmit={handleSubmit}>
+        <DialogTitle>Account</DialogTitle>
+        <Divider />
+        <DialogContent>
+          <NameField
+            error={t(errorReport.name)}
             {...bind('name')}
           />
           { errorReport.escaped &&
-            <Alert severity="error">{(errorReport.escaped)}</Alert>
+            <Alert severity="error">{t(errorReport.escaped)}</Alert>
           }
-          <button
+        </DialogContent>
+        { isLoading ? <LinearProgress /> : <Divider /> }
+        <DialogActions>
+          <Button
+            id='buttonCancel'
             type='button'
             onClick={onClose}
+            variant="text"
+            color="primary"
+            disabled={isLoading}
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             id='buttonSave'
             type='submit'
+            variant="contained"
+            color="primary"
+            startIcon={<SaveTwoTone />}
+            disabled={isLoading}
           >
             Save
-          </button>
-        </Form>
-      </DialogContent>
+          </Button>
+        </DialogActions>
+      </Form>
     </Dialog>
+  );
+}
+
+function NameField ({ error, ...rest }) {
+  return (
+    <TextField
+      id='inputName'
+      label="Name"
+      variant="outlined"
+      fullWidth
+      margin="normal"
+      required
+      error={!!error}
+      helperText={error}
+      {...rest}
+    />
   );
 }
