@@ -9,6 +9,7 @@ export function BalancesListView ({
   onDel,
   onEdit,
   errorEdit,
+  isLoading,
   t
 }) {
   const [initialPayload, setInitialPayload] = useState({});
@@ -51,6 +52,7 @@ export function BalancesListView ({
           isOpen={isOpen}
           onClose={close}
           t={t}
+          isLoading={isLoading}
         />
       }
     </>

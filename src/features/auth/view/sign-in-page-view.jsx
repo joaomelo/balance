@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { Alert } from '@material-ui/lab';
 import {
   AppBar,
@@ -14,8 +15,7 @@ import {
   LinearProgress,
   TextField,
   Toolbar,
-  Typography,
-  styled
+  Typography
 } from '@material-ui/core';
 import {
   EmailTwoTone,
@@ -42,7 +42,7 @@ export function SignInPageView ({ onSignIn, error, isLoading, t }) {
       <PlainAppBar />
       <FormWrapper onSubmit={() => onSignIn(payload)}>
           <CardHeader title="Sign In" />
-          { isLoading ? <LinearProgress /> : <Divider /> }
+          <Divider />
           <CardContent>
             <EmailField
               {...bind('email')}
@@ -56,7 +56,7 @@ export function SignInPageView ({ onSignIn, error, isLoading, t }) {
               <Alert severity="error">{t(errorReport.escaped)}</Alert>
             }
           </CardContent>
-          <Divider />
+          { isLoading ? <LinearProgress /> : <Divider /> }
           <CardActionsStyled>
             <Button
               id="buttonSignIn"
@@ -176,9 +176,9 @@ function PasswordField ({ error, ...rest }) {
   );
 }
 
-const CardActionsStyled = styled(CardActions)({
-  justifyContent: 'flex-end'
-});
+const CardActionsStyled = styled(CardActions)`
+  justify-content: flex-end
+`;
 
 function AppVersion ({ children }) {
   return (

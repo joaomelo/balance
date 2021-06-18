@@ -32,6 +32,7 @@ export function BalancesPageView ({
           accounts={accounts}
           onAdd={onAdd}
           error={errorAdd}
+          isLoading={isLoading}
           t={t}
         />
       </Box>
@@ -41,6 +42,7 @@ export function BalancesPageView ({
         onDel={onDel}
         onEdit={onEdit}
         errorEdit={errorEdit}
+        isLoading={isLoading}
         t={t}
       />
     </div>

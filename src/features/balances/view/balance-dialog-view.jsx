@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Divider,
   InputAdornment,
+  LinearProgress,
   MenuItem,
   TextField
 } from '@material-ui/core';
@@ -27,6 +28,7 @@ export function BalanceDialogView ({
   onSubmit,
   isOpen,
   onClose,
+  isLoading,
   t
 }) {
   const { payload, bind, reset } = usePayload(initialPayload);
@@ -53,6 +55,7 @@ export function BalanceDialogView ({
     >
       <Form onSubmit={handleSubmit}>
         <DialogTitle>Balance</DialogTitle>
+        <Divider />
         <DialogContent>
           <AccountField
             accounts={accounts}
@@ -71,7 +74,7 @@ export function BalanceDialogView ({
             <Alert severity="error">{t(errorReport.escaped)}</Alert>
           }
         </DialogContent>
-        <Divider />
+        { isLoading ? <LinearProgress /> : <Divider /> }
         <DialogActions>
           <Button
             id='buttonCancel'
@@ -79,6 +82,7 @@ export function BalanceDialogView ({
             onClick={onClose}
             variant="text"
             color="primary"
+            disabled={isLoading}
           >
             Cancel
           </Button>
@@ -88,6 +92,7 @@ export function BalanceDialogView ({
             variant="contained"
             color="primary"
             startIcon={<SaveTwoTone />}
+            disabled={isLoading}
           >
             Save
           </Button>

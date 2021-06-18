@@ -1,7 +1,10 @@
 import { createUuid } from '../../../app/ids';
 import { validateAccount } from '../body';
 
+// import { delay } from '../../../app/helpers';
+
 export async function setAccountCommand (dependencies, payload) {
+  // await delay(5);
   const {
     accountsMutations,
     activeAccountsSelector,
