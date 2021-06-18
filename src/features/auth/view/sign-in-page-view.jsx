@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Alert } from '@material-ui/lab';
 import {
   AppBar,
   Box,
@@ -12,7 +11,6 @@ import {
   Divider,
   IconButton,
   InputAdornment,
-  LinearProgress,
   TextField,
   Toolbar,
   Typography
@@ -24,9 +22,15 @@ import {
   VisibilityTwoTone,
   VisibilityOffTwoTone
 } from '@material-ui/icons';
+import {
+  usePayload,
+  useToggle,
+  Form,
+  ErrorAlert,
+  ProgressDivider
+} from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
 import { appName, appVersion } from '../../../app/helpers';
-import { Form, usePayload, useToggle } from '../../../app/components';
 
 export function SignInPageView ({ onSignIn, error, isLoading, t }) {
   const initialPayload = { email: '', password: '' };
@@ -52,11 +56,9 @@ export function SignInPageView ({ onSignIn, error, isLoading, t }) {
               {...bind('password')}
               error={t(errorReport.password)}
             />
-            { errorReport.escaped &&
-              <Alert severity="error">{t(errorReport.escaped)}</Alert>
-            }
+            <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
           </CardContent>
-          { isLoading ? <LinearProgress /> : <Divider /> }
+          <ProgressDivider isLoading={isLoading}/>
           <CardActionsStyled>
             <Button
               id="buttonSignIn"
@@ -177,7 +179,7 @@ function PasswordField ({ error, ...rest }) {
 }
 
 const CardActionsStyled = styled(CardActions)`
-  justify-content: flex-end
+  justify-content: flex-end;
 `;
 
 function AppVersion ({ children }) {

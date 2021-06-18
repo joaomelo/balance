@@ -1,19 +1,21 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
   InputAdornment,
-  LinearProgress,
   MenuItem,
   TextField
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import { KeyboardDatePicker } from '@material-ui/pickers';
-import { SaveTwoTone } from '@material-ui/icons';
-import { usePayload, Form } from '../../../app/components';
+import {
+  usePayload,
+  Form,
+  ErrorAlert,
+  ProgressDivider,
+  SaveCancel
+} from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
 
 export function BalanceDialogView ({
@@ -64,32 +66,14 @@ export function BalanceDialogView ({
             error={t(errorReport.amount)}
             {...bind('amount')}
           />
-          { errorReport.escaped &&
-            <Alert severity="error">{t(errorReport.escaped)}</Alert>
-          }
+          <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
         </DialogContent>
-        { isLoading ? <LinearProgress /> : <Divider /> }
+        <ProgressDivider isLoading={isLoading} />
         <DialogActions>
-          <Button
-            id='buttonCancel'
-            type='button'
-            onClick={onClose}
-            variant="text"
-            color="primary"
-            disabled={isLoading}
-          >
-            Cancel
-          </Button>
-          <Button
-            id='buttonSave'
-            type='submit'
-            variant="contained"
-            color="primary"
-            startIcon={<SaveTwoTone />}
-            disabled={isLoading}
-          >
-            Save
-          </Button>
+          <SaveCancel
+            onCancel={onClose}
+            isLoading={isLoading}
+          />
         </DialogActions>
       </Form>
     </Dialog>

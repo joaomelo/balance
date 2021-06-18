@@ -1,16 +1,18 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
-  LinearProgress,
   TextField
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { SaveTwoTone } from '@material-ui/icons';
-import { usePayload, Form } from '../../../app/components';
+import {
+  usePayload,
+  ErrorAlert,
+  Form,
+  ProgressDivider,
+  SaveCancel
+} from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
 
 export function AccountDialogView ({
@@ -49,32 +51,14 @@ export function AccountDialogView ({
             error={t(errorReport.name)}
             {...bind('name')}
           />
-          { errorReport.escaped &&
-            <Alert severity="error">{t(errorReport.escaped)}</Alert>
-          }
+          <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
         </DialogContent>
-        { isLoading ? <LinearProgress /> : <Divider /> }
+        <ProgressDivider isLoading={isLoading}/>
         <DialogActions>
-          <Button
-            id='buttonCancel'
-            type='button'
-            onClick={onClose}
-            variant="text"
-            color="primary"
-            disabled={isLoading}
-          >
-            Cancel
-          </Button>
-          <Button
-            id='buttonSave'
-            type='submit'
-            variant="contained"
-            color="primary"
-            startIcon={<SaveTwoTone />}
-            disabled={isLoading}
-          >
-            Save
-          </Button>
+          <SaveCancel
+            isLoading={isLoading}
+            onCancel={onClose}
+          />
         </DialogActions>
       </Form>
     </Dialog>
