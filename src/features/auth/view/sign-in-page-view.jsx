@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import {
-  AppBar,
-  Box,
   Button,
   Card,
   CardActions,
@@ -11,9 +9,7 @@ import {
   Divider,
   IconButton,
   InputAdornment,
-  TextField,
-  Toolbar,
-  Typography
+  TextField
 } from '@material-ui/core';
 import {
   EmailTwoTone,
@@ -30,7 +26,6 @@ import {
   ProgressDivider
 } from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
-import { appName, appVersion } from '../../../app/helpers';
 
 export function SignInPageView ({ onSignIn, error, isLoading, t }) {
   const initialPayload = { email: '', password: '' };
@@ -42,77 +37,47 @@ export function SignInPageView ({ onSignIn, error, isLoading, t }) {
   });
 
   return (
-    <PageWrapper>
-      <PlainAppBar />
+    <>
       <FormWrapper onSubmit={() => onSignIn(payload)}>
-          <CardHeader title="Sign In" />
-          <Divider />
-          <CardContent>
-            <EmailField
-              {...bind('email')}
-              error={t(errorReport.email)}
-            />
-            <PasswordField
-              {...bind('password')}
-              error={t(errorReport.password)}
-            />
-            <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
-          </CardContent>
-          <ProgressDivider isLoading={isLoading}/>
-          <CardActionsStyled>
-            <Button
-              id="buttonSignIn"
-              type="submit"
-              variant="contained"
-              color="primary"
-              startIcon={<LaunchTwoTone />}
-              disabled={isLoading}
-            >
-              Sign in
-            </Button>
-          </CardActionsStyled>
-        </FormWrapper>
-      <AppVersion>v{appVersion()}</AppVersion>
-    </PageWrapper>
-  );
-}
-
-function PageWrapper (props) {
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      {...props}
-    />
-  );
-}
-
-function PlainAppBar () {
-  return (
-    <AppBar position="sticky">
-      <Toolbar>
-        <Typography
-          component="h1"
-          variant="h6"
-        >
-          {appName().toUpperCase()}
-        </Typography>
-      </Toolbar>
-    </AppBar>
+        <CardHeader title="Sign In" />
+        <Divider />
+        <CardContent>
+          <EmailField
+            {...bind('email')}
+            error={t(errorReport.email)}
+          />
+          <PasswordField
+            {...bind('password')}
+            error={t(errorReport.password)}
+          />
+          <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
+        </CardContent>
+        <ProgressDivider isLoading={isLoading}/>
+        <CardActionsStyled>
+          <Button
+            id="buttonSignIn"
+            type="submit"
+            variant="contained"
+            color="primary"
+            startIcon={<LaunchTwoTone />}
+            disabled={isLoading}
+          >
+            Sign in
+          </Button>
+        </CardActionsStyled>
+      </FormWrapper>
+    </>
   );
 }
 
 function FormWrapper ({ onSubmit, children }) {
   return (
     <Form onSubmit={onSubmit}>
-      <Box mt={4}>
-        <Container maxWidth="xs">
-          <Card>
-            { children }
-          </Card>
-        </Container>
-      </Box>
+      <Container maxWidth="xs">
+        <Card>
+          { children }
+        </Card>
+      </Container>
     </Form>
   );
 }
@@ -181,16 +146,3 @@ function PasswordField ({ error, ...rest }) {
 const CardActionsStyled = styled(CardActions)`
   justify-content: flex-end;
 `;
-
-function AppVersion ({ children }) {
-  return (
-    <Box mt={2}>
-      <Typography
-        variant="caption"
-        color="textSecondary"
-      >
-        {children}
-      </Typography>
-    </Box>
-  );
-}
