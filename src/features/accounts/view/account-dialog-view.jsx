@@ -69,6 +69,7 @@ function NameField ({ error, ...rest }) {
   return (
     <TextField
       id='inputName'
+      autoFocus
       label="Name"
       variant="outlined"
       fullWidth

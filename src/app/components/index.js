@@ -1,3 +1,4 @@
+export * from './action-cell';
 export * from './command';
 export * from './date-chart';
 export * from './error-alert';

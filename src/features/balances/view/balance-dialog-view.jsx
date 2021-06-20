@@ -84,6 +84,7 @@ function AccountField ({ accounts, error, ...rest }) {
   return (
     <TextField
       id="inputAccount"
+      autoFocus
       label="Account"
       variant="outlined"
       select

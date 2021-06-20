@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { IconButton } from '@material-ui/core';
-import { DeleteTwoTone, EditTwoTone } from '@material-ui/icons';
 import { GridToolbar, DataGrid } from '@material-ui/data-grid';
 import { DateTime } from 'luxon';
-import { useSwitch } from '../../../app/components';
+import { ActionCell, useSwitch } from '../../../app/components';
 import { BalanceDialogView } from './balance-dialog-view';
 
 export function BalancesListView ({
@@ -18,7 +16,7 @@ export function BalancesListView ({
   const [initialPayload, setInitialPayload] = useState({});
   const [isOpen, open, close] = useSwitch();
 
-  const handleClaimEdit = id => {
+  const handleEditClick = id => {
     const balance = balances.find(b => b.id === id);
     setInitialPayload(balance);
     open();
@@ -62,8 +60,8 @@ export function BalancesListView ({
         return (
           <ActionCell
             id={params.id}
-            onDel={onDel}
-            onClaimEdit={handleClaimEdit}
+            onDelClick={id => onDel({ id })}
+            onEditClick={handleEditClick}
           />
         );
       }
@@ -79,6 +77,7 @@ export function BalancesListView ({
         density="compact"
         components={{ Toolbar: GridToolbar }}
         sortModel={[{ field: 'date', sort: 'desc' }]}
+        disableSelectionOnClick
       />
       {isOpen &&
         <BalanceDialogView
@@ -92,25 +91,6 @@ export function BalancesListView ({
           isLoading={isLoading}
         />
       }
-    </>
-  );
-}
-
-function ActionCell ({ id, onDel, onClaimEdit }) {
-  return (
-    <>
-      <IconButton
-        size="small"
-        onClick={() => onClaimEdit(id)}
-      >
-        <EditTwoTone fontSize="inherit" />
-      </IconButton>
-      <IconButton
-        size="small"
-        onClick={() => onDel({ id })}
-      >
-        <DeleteTwoTone fontSize="inherit" />
-      </IconButton>
     </>
   );
 }
