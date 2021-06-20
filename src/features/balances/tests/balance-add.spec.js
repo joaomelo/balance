@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from '../../accounts/tests';
-import { addBalanceMacro } from './macros';
+import { addBalanceMacro, goToBalancesMacro } from './macros';
 
 describe('add balance', () => {
   let browser, page;
@@ -48,7 +48,7 @@ describe('add balance', () => {
     const name = 'savings';
     await addAccountMacro(page, name);
 
-    await page.click('a >> text=Balances');
+    await goToBalancesMacro(page);
     await page.click('#buttonAddBalance');
     await page.fill('#inputAmount', '');
     await page.click('#buttonSave');
@@ -62,7 +62,7 @@ describe('add balance', () => {
     const name = 'savings';
     await addAccountMacro(page, name);
 
-    await page.click('a >> text=Balances');
+    await goToBalancesMacro(page);
     await page.click('#buttonAddBalance');
     await page.press('#inputDate', 'Delete');
     await page.fill('#inputAmount', '500');
@@ -72,13 +72,15 @@ describe('add balance', () => {
     expect(error).toBeTruthy();
   });
 
-  test('show error if attempt to add same date to the same account more than once', async () => {
+  test.only('show error if attempt to add same date to the same account more than once', async () => {
     await signInMacro(page);
     const name = 'savings';
     await addAccountMacro(page, name);
 
     await addBalanceMacro(page);
+    console.log(1);
     await addBalanceMacro(page);
+    console.log(2);
 
     const error = await page.$('text=already has a recorded balance for this date');
     expect(error).toBeTruthy();

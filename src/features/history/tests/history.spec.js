@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { signInMacro } from '../../auth/tests';
+import { goToHistoryMacro } from './macros';
 
 describe('history chart', () => {
   let browser, page;
@@ -23,7 +24,7 @@ describe('history chart', () => {
   test('chart is rendered', async () => {
     await signInMacro(page);
 
-    await page.click('a >> text=History');
+    await goToHistoryMacro(page);
 
     const historyChart = await page.$('#balance-history');
     expect(historyChart).toBeTruthy();

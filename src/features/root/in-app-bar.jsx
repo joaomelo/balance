@@ -16,6 +16,7 @@ import {
   MeetingRoomTwoTone,
   Menu
 } from '@material-ui/icons';
+import { camelCase } from '../../app/helpers';
 import { useSwitch, useCommand } from '../../app/components';
 import { signOutCommand } from '../auth';
 import { OutAppBar } from './out-app-bar';
@@ -29,6 +30,7 @@ export function InAppBar ({ dependencies }) {
       <OutAppBar>
         <Box mr={1}>
           <IconButton
+            id="buttonNav"
             edge="start"
             color="inherit"
             onClick={open}
@@ -85,7 +87,12 @@ function AppDrawer ({ isOpen, onClose, onSignOut }) {
 function ListLink ({ icon, text, to }) {
   return (
     <li>
-      <ListItem button component={Link} to={to}>
+      <ListItem
+        id={camelCase('nav', text)}
+        button
+        component={Link}
+        to={to}
+      >
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItem>

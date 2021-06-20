@@ -1,5 +1,6 @@
 export async function goToAccountsMacro (page) {
-  await page.click('a >> text=Accounts');
+  await page.click('#buttonNav');
+  await page.click('#navAccounts');
 }
 
 export async function addAccountMacro (page, name) {
