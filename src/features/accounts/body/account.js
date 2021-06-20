@@ -4,7 +4,7 @@ export function validateAccount (context, accountData) {
   const { accounts } = context;
   const { id, name } = accountData;
 
-  if (typeof name !== 'string' || name.length < 3 || name.length > 64) {
+  if (typeof name !== 'string' || name.length < 2 || name.length > 64) {
     throw new NameInvalidError();
   }
 
