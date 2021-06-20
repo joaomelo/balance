@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { IconButton } from '@material-ui/core';
+import { DeleteTwoTone, EditTwoTone } from '@material-ui/icons';
+import { GridToolbar, DataGrid } from '@material-ui/data-grid';
+import { DateTime } from 'luxon';
 import { useSwitch } from '../../../app/components';
-import { BalancesListItemView } from './balances-list-item-view';
 import { BalanceDialogView } from './balance-dialog-view';
 
 export function BalancesListView ({
@@ -21,28 +24,62 @@ export function BalancesListView ({
     open();
   };
 
+  const columns = [
+    {
+      field: 'accountName',
+      headerName: 'Account',
+      flex: 1
+    },
+    {
+      field: 'date',
+      type: 'date',
+      headerName: 'Date',
+      flex: 1,
+      valueFormatter: params => DateTime.fromJSDate(params.value).toISODate()
+    },
+    {
+      field: 'amount',
+      type: 'number',
+      headerName: 'Amount',
+      flex: 1,
+      valueFormatter: (params) => {
+        const formatter = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        });
+        return formatter.format(params.value);
+      }
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      align: 'center',
+      headerAlign: 'center',
+      disableColumnMenu: true,
+      filterable: false,
+      sortable: false,
+      renderCell: function ActionCellRender (params) {
+        return (
+          <ActionCell
+            id={params.id}
+            onDel={onDel}
+            onClaimEdit={handleClaimEdit}
+          />
+        );
+      }
+    }
+  ];
+
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>Account</th>
-            <th>Date</th>
-            <th>Amount</th>
-            <th colSpan="2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {balances.map(b =>
-            <BalancesListItemView
-              key={b.id}
-              balance={b}
-              onDel={onDel}
-              onClaimEdit={handleClaimEdit}
-            />)
-          }
-        </tbody>
-      </table>
+      <DataGrid
+        rows={balances}
+        columns={columns}
+        autoPageSize
+        density="compact"
+        components={{ Toolbar: GridToolbar }}
+        sortModel={[{ field: 'date', sort: 'desc' }]}
+      />
       {isOpen &&
         <BalanceDialogView
           initialPayload={initialPayload}
@@ -55,6 +92,25 @@ export function BalancesListView ({
           isLoading={isLoading}
         />
       }
+    </>
+  );
+}
+
+function ActionCell ({ id, onDel, onClaimEdit }) {
+  return (
+    <>
+      <IconButton
+        size="small"
+        onClick={() => onClaimEdit(id)}
+      >
+        <EditTwoTone fontSize="inherit" />
+      </IconButton>
+      <IconButton
+        size="small"
+        onClick={() => onDel({ id })}
+      >
+        <DeleteTwoTone fontSize="inherit" />
+      </IconButton>
     </>
   );
 }

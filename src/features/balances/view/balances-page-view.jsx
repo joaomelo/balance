@@ -17,10 +17,12 @@ export function BalancesPageView ({
   t
 }) {
   return (
-    <div>
+    <>
       <Box
         display="flex"
         justifyContent="space-between"
+        alignItems="baseline"
+        mb={4}
       >
         <Typography
           component="h1"
@@ -45,6 +47,6 @@ export function BalancesPageView ({
         isLoading={isLoading}
         t={t}
       />
-    </div>
+    </>
   );
 }

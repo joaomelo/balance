@@ -16,10 +16,12 @@ export function AccountsPageView ({
   t
 }) {
   return (
-    <div>
+    <>
       <Box
         display="flex"
         justifyContent="space-between"
+        alignItems="baseline"
+        mb={4}
       >
         <Typography
           component="h1"
@@ -42,6 +44,6 @@ export function AccountsPageView ({
         isLoading={isLoading}
         t={t}
       />
-    </div>
+    </>
   );
 }
