@@ -1,7 +1,4 @@
-import {
-  Box,
-  Typography
-} from '@material-ui/core';
+import { ListViewTop } from '../../../app/components';
 import { AccountAddView } from './account-add-view';
 import { AccountsListView } from './accounts-list-view';
 
@@ -17,25 +14,14 @@ export function AccountsPageView ({
 }) {
   return (
     <>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="baseline"
-        mb={4}
-      >
-        <Typography
-          component="h1"
-          variant="h6"
-        >
-          Accounts
-        </Typography>
+      <ListViewTop title="Accounts">
         <AccountAddView
-          onAdd={onAdd}
-          error={errorAdd}
-          isLoading={isLoading}
-          t={t}
-        />
-      </Box>
+            onAdd={onAdd}
+            error={errorAdd}
+            isLoading={isLoading}
+            t={t}
+          />
+      </ListViewTop>
       <AccountsListView
         accounts={accounts}
         onDel={onDel}
