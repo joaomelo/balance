@@ -1,6 +1,4 @@
 import { chromium } from 'playwright';
-import { DateTime } from 'luxon';
-import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from '../../accounts/tests';
 import { addBalanceMacro } from './macros';
@@ -31,8 +29,8 @@ describe('edit balance', () => {
     await addAccountMacro(page, name);
     await addBalanceMacro(page);
 
-    const buttonEditFilter = camelCase('button', 'edit', name, DateTime.now().toISODate());
-    await page.click(`#${buttonEditFilter}`);
+    const editButtonSelector = '[aria-label="edit"]';
+    await page.click(editButtonSelector);
 
     const newDate = '2021-01-01';
     const newAmount = '100';
@@ -40,12 +38,12 @@ describe('edit balance', () => {
     await page.fill('#inputAmount', newAmount);
     await page.click('#buttonSave');
 
-    const balanceDateFilter = camelCase('cell', 'date', name, newDate);
-    const balanceDate = await page.textContent(`#${balanceDateFilter}`);
-    expect(balanceDate).toBe(newDate);
+    const dateCellSelector = '[role="cell"][data-field="date"]';
+    const dateCellText = await page.textContent(dateCellSelector);
+    expect(dateCellText).toBe(newDate);
 
-    const balanceAmountFilter = camelCase('cell', 'amount', name, newDate);
-    const balanceAmount = await page.textContent(`#${balanceAmountFilter}`);
-    expect(balanceAmount).toBe(newAmount);
+    const amountCellSelector = '[role="cell"][data-field="amount"]';
+    const amountCellText = await page.textContent(amountCellSelector);
+    expect(amountCellText).toMatch(newAmount);
   });
 });

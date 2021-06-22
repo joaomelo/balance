@@ -1,6 +1,11 @@
 export async function goToBalancesMacro (page) {
+  if (page.url().includes('balances')) return;
+
   await page.click('#buttonNav');
-  await page.click('#navBalances');
+  await Promise.all([
+    page.waitForNavigation({ url: '**/balances' }),
+    page.click('#navBalances')
+  ]);
 }
 
 export async function addBalanceMacro (page) {

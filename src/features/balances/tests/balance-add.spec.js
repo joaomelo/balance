@@ -30,8 +30,9 @@ describe('add balance', () => {
 
     await addBalanceMacro(page);
 
-    const firstListContent = await page.textContent('tbody td');
-    expect(firstListContent).toBe(name);
+    const accountNameCellSelector = '[role="cell"][data-field="accountName"]';
+    const accountNameCellText = await page.textContent(accountNameCellSelector);
+    expect(accountNameCellText).toBe(name);
   });
 
   test('show error if no account', async () => {
@@ -45,6 +46,7 @@ describe('add balance', () => {
 
   test('show error if no amount', async () => {
     await signInMacro(page);
+
     const name = 'savings';
     await addAccountMacro(page, name);
 
@@ -59,6 +61,7 @@ describe('add balance', () => {
 
   test('show error if invalid date', async () => {
     await signInMacro(page);
+
     const name = 'savings';
     await addAccountMacro(page, name);
 
@@ -72,15 +75,14 @@ describe('add balance', () => {
     expect(error).toBeTruthy();
   });
 
-  test.only('show error if attempt to add same date to the same account more than once', async () => {
+  test('show error if attempt to add same date to the same account more than once', async () => {
     await signInMacro(page);
+
     const name = 'savings';
     await addAccountMacro(page, name);
 
     await addBalanceMacro(page);
-    console.log(1);
     await addBalanceMacro(page);
-    console.log(2);
 
     const error = await page.$('text=already has a recorded balance for this date');
     expect(error).toBeTruthy();

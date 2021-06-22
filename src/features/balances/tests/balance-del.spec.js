@@ -1,6 +1,4 @@
 import { chromium } from 'playwright';
-import { DateTime } from 'luxon';
-import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from '../../accounts/tests';
 import { addBalanceMacro } from './macros';
@@ -25,20 +23,20 @@ describe('del balance', () => {
   });
 
   test('del balance', async () => {
-    const name = 'savings';
-
     await signInMacro(page);
+
+    const name = 'savings';
     await addAccountMacro(page, name);
     await addBalanceMacro(page);
 
-    const balanceFilter = `tbody td >> text=${name}`;
-    const addedBalance = await page.$(balanceFilter);
-    expect(addedBalance).toBeTruthy();
+    const accountNameCellSelector = '[role="cell"][data-field="accountName"]';
+    const accountNameCellText = await page.textContent(accountNameCellSelector);
+    expect(accountNameCellText).toBe(name);
 
-    const buttonDelId = camelCase('button', 'del', name, DateTime.now().toISODate());
-    await page.click(`#${buttonDelId}`);
+    const delButtonSelector = '[aria-label="delete"]';
+    await page.click(delButtonSelector);
 
-    const deletedAccount = await page.$(balanceFilter);
+    const deletedAccount = await page.$(accountNameCellSelector);
     expect(deletedAccount).toBeNull();
   });
 });

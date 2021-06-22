@@ -1,5 +1,4 @@
 import { chromium } from 'playwright';
-import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from './macros';
 
@@ -23,18 +22,20 @@ describe('edit account', () => {
   });
 
   test('edit account name', async () => {
-    const name = 'savings';
-
     await signInMacro(page);
+
+    const name = 'savings';
     await addAccountMacro(page, name);
 
-    await page.click(`#${camelCase('button', 'edit', name)}`);
+    const editButtonSelector = '[aria-label="edit"]';
+    await page.click(editButtonSelector);
 
     const newName = 'credit card';
     await page.fill('#inputName', newName);
     await page.click('#buttonSave');
 
-    const accountName = await page.textContent(`#${camelCase('cell', 'name', newName)}`);
-    expect(accountName).toBe(newName);
+    const nameCellSelector = '[role="cell"][data-field="name"]';
+    const nameCellText = await page.textContent(nameCellSelector);
+    expect(nameCellText).toBe(newName);
   });
 });

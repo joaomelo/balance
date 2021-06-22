@@ -9,12 +9,14 @@ export function ActionCell ({
   return (
     <>
       <IconButton
+        aria-label="edit"
         size="small"
         onClick={() => onEditClick(id)}
       >
         <EditTwoTone fontSize="inherit" />
       </IconButton>
       <IconButton
+        aria-label="delete"
         size="small"
         onClick={() => onDelClick(id)}
       >

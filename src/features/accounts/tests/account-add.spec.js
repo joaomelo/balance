@@ -1,5 +1,4 @@
 import { chromium } from 'playwright';
-import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addAccountMacro } from './macros';
 
@@ -23,13 +22,14 @@ describe('add account', () => {
   });
 
   test('add account to repository with correct data shape', async () => {
-    const name = 'savings';
-
     await signInMacro(page);
+
+    const name = 'savings';
     await addAccountMacro(page, name);
 
-    const firstListContent = await page.textContent(`#${camelCase('cell', 'name', name)}`);
-    expect(firstListContent).toBe(name);
+    const nameCellSelector = '[role="cell"][data-field="name"]';
+    const nameCellText = await page.textContent(nameCellSelector);
+    expect(nameCellText).toBe(name);
   });
 
   test('show error if empty account name', async () => {
@@ -42,10 +42,11 @@ describe('add account', () => {
   });
 
   test('show error if another account with the same name already exists', async () => {
-    const name = 'savings';
     await signInMacro(page);
 
+    const name = 'savings';
     await addAccountMacro(page, name);
+
     await addAccountMacro(page, name);
 
     const error = await page.$('text=name is already in use');

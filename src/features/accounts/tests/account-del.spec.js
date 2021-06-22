@@ -1,6 +1,4 @@
 import { chromium } from 'playwright';
-import { DateTime } from 'luxon';
-import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addBalanceMacro, goToBalancesMacro } from '../../balances/tests';
 import { addAccountMacro, goToAccountsMacro } from './macros';
@@ -30,25 +28,25 @@ describe('del account', () => {
     const name = 'savings';
     await addAccountMacro(page, name);
 
-    const accountNameFilter = `#${camelCase('cell', 'name', name)}`;
-    const accountName = await page.textContent(accountNameFilter);
-    expect(accountName).toBe(name);
+    const accountNameCellSelector = '[role="cell"][data-field="name"]';
+    const accountNameCellText = await page.textContent(accountNameCellSelector);
+    expect(accountNameCellText).toBe(name);
 
     await addBalanceMacro(page);
 
-    const todayIso = DateTime.now().toISODate();
-    const balanceNameFilter = `#${camelCase('cell', 'name', name, todayIso)}`;
-    const balanceName = await page.textContent(balanceNameFilter);
-    expect(balanceName).toBe(name);
+    const balanceAccountNameSelector = '[role="cell"][data-field="accountName"]';
+    const balanceAccountNameText = await page.textContent(balanceAccountNameSelector);
+    expect(balanceAccountNameText).toBe(name);
 
     await goToAccountsMacro(page);
-    await page.click(`#${camelCase('button', 'del', name)}`);
+    const delButtonSelector = '[aria-label="delete"]';
+    await page.click(delButtonSelector);
 
-    const accountNameCell = await page.$(accountNameFilter);
+    const accountNameCell = await page.$(accountNameCellSelector);
     expect(accountNameCell).toBeNull();
 
     await goToBalancesMacro(page);
-    const balanceNameCell = await page.$(balanceNameFilter);
-    expect(balanceNameCell).toBeNull();
+    const balanceAccountNameCell = await page.$(balanceAccountNameSelector);
+    expect(balanceAccountNameCell).toBeNull();
   });
 });

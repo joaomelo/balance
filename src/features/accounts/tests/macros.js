@@ -1,6 +1,11 @@
 export async function goToAccountsMacro (page) {
+  if (page.url().includes('accounts')) return;
+
   await page.click('#buttonNav');
-  await page.click('#navAccounts');
+  await Promise.all([
+    page.waitForNavigation({ url: '**/accounts' }),
+    page.click('#navAccounts')
+  ]);
 }
 
 export async function addAccountMacro (page, name) {

@@ -1,6 +1,5 @@
 import { chromium } from 'playwright';
 import { DateTime } from 'luxon';
-import { camelCase } from '../../../app/helpers';
 import { signInMacro } from '../../auth/tests';
 import { addBalanceMacro } from '../../balances/tests';
 import { goToAccountsMacro, addAccountMacro } from './macros';
@@ -24,17 +23,20 @@ describe('list accounts', () => {
     await page.close();
   });
 
+  const dateCellSelector = '[role="cell"][data-field="date"]';
+  const amountCellSelector = '[role="cell"][data-field="amount"]';
+
   test('account without balances show placeholder in last balances data', async () => {
     const name = 'savings';
 
     await signInMacro(page);
     await addAccountMacro(page, name);
 
-    const lastBalanceDate = await page.textContent(`#${camelCase('cell', 'date', name)}`);
-    expect(lastBalanceDate).toBe('-');
+    const dateCellText = await page.textContent(dateCellSelector);
+    expect(dateCellText).toBe('');
 
-    const lastBalanceAmount = await page.textContent(`#${camelCase('cell', 'amount', name)}`);
-    expect(lastBalanceAmount).toBe('-');
+    const amountCellText = await page.textContent(amountCellSelector);
+    expect(amountCellText).toBe('');
   });
 
   test('account with balances show date and amount of the last balances', async () => {
@@ -46,10 +48,10 @@ describe('list accounts', () => {
 
     await goToAccountsMacro(page);
 
-    const lastBalanceDate = await page.textContent(`#${camelCase('cell', 'date', name)}`);
-    expect(lastBalanceDate).toBe(DateTime.now().toISODate());
+    const dateCellText = await page.textContent(dateCellSelector);
+    expect(dateCellText).toBe(DateTime.now().toISODate());
 
-    const lastBalanceAmount = await page.textContent(`#${camelCase('cell', 'amount', name)}`);
-    expect(lastBalanceAmount).toBe('500');
+    const amountCellText = await page.textContent(amountCellSelector);
+    expect(amountCellText).toMatch('500');
   });
 });
