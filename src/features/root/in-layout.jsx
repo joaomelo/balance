@@ -8,9 +8,9 @@ import { InAppBar } from './in-app-bar';
 
 export function InLayout (props) {
   return (
-    <WrapperLayout>
+    <WrapperLayout id="wrapper-layout">
       <InAppBar {...props}/>
-      <WrapperPage>
+      <WrapperPage id="wrapper-page">
         <CurrentPage {...props}/>
       </WrapperPage>
     </WrapperLayout>

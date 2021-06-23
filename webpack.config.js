@@ -58,6 +58,19 @@ module.exports = env => {
 
       rules: [
         {
+          test: /\.svg$/,
+          use: {
+            loader: '@svgr/webpack',
+            options: {
+              svgoConfig: {
+                plugins: {
+                  removeViewBox: false
+                }
+              }
+            }
+          }
+        },
+        {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           use: {

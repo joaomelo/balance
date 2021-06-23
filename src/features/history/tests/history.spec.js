@@ -26,7 +26,7 @@ describe('history chart', () => {
 
     await goToHistoryMacro(page);
 
-    const historyChart = await page.$('#balance-history');
-    expect(historyChart).toBeTruthy();
+    const historyHeading = await page.$('text=history');
+    expect(historyHeading).toBeTruthy();
   });
 });

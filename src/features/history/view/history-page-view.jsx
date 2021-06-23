@@ -1,4 +1,4 @@
-import { DateChart } from '../../../app/components';
+import { ListViewTop, DateChart } from '../../../app/components';
 import styled from 'styled-components';
 
 export function HistoryPageView ({ accounts }) {
@@ -9,18 +9,22 @@ export function HistoryPageView ({ accounts }) {
 
   return (
     <>
-      <h2>History</h2>
-      <DateChartExpanded
-        id="balance-history"
-        datasets={datasets}
-      />
+      <ListViewTop title="History" />
+      <DateChartWrapper>
+        <DateChart
+          id="balance-history"
+          datasets={datasets}
+        />
+      </DateChartWrapper>
     </>
   );
 }
 
-const DateChartExpanded = styled(DateChart)`
+const DateChartWrapper = styled.div`
   width: 100%;
   flex: 1;
+  display: flex;
+  justify-content: center;
   padding: var(--size-200);
   padding-bottom: var(--size-500);
 `;
