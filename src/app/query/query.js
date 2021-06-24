@@ -1,15 +1,11 @@
 import { cloneDeep } from 'lodash';
-import { Base } from './base';
+import { Subject } from './subject';
 
 export function query (state) {
   return new Query(state);
 }
-export class Query extends Base {
-  constructor (state) {
-    super(cloneDeep(state));
-  }
-
+export class Query extends Subject {
   update (state) {
-    this.subject.next(cloneDeep(state));
+    this.baseObservable.next(cloneDeep(state));
   };
 }

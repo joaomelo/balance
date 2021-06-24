@@ -51,4 +51,12 @@ describe('query', () => {
     updatedNumber = 7;
     expect(numberQuery.current).toBe(6);
   });
+
+  it('state references are isolated from consumers', () => {
+    const helloQuery = query({ hello: 'world' });
+
+    helloQuery.subscribe(v => (v.hello = 'folks'));
+
+    expect(helloQuery.current).toMatchObject({ hello: 'world' });
+  });
 });

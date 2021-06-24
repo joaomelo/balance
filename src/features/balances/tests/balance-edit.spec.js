@@ -30,13 +30,16 @@ describe('edit balance', () => {
     await addBalanceMacro(page);
 
     const editButtonSelector = '[aria-label="edit"]';
-    await page.click(editButtonSelector);
+    // hack for playwright proper click in edit
+    await page.dispatchEvent(editButtonSelector, 'click');
 
     const newDate = '2021-01-01';
     const newAmount = '100';
     await page.fill('#inputDate', newDate);
+    // hack for playwright to replace numeric input data
     await page.press('#inputAmount', 'Delete');
     await page.fill('#inputAmount', newAmount);
+
     await page.click('#buttonSave');
 
     const dateCellSelector = '[role="cell"][data-field="date"]';

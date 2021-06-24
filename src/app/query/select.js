@@ -1,19 +1,20 @@
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Base } from './base';
+import { Subject } from './subject';
 
 export function select (sources, project) {
-  const subject = Array.isArray(sources)
-    ? combineLatest(sources.map(s => s.subject))
-    : sources.subject;
-  const observable = subject.pipe(map(project));
-
-  return new Selector(observable);
+  return new Selector(sources, project);
 }
 
-export class Selector extends Base {
-  constructor (observable) {
+export class Selector extends Subject {
+  constructor (subjects, project) {
     super();
-    observable.subscribe(this.subject);
+
+    const combinedSources = Array.isArray(subjects)
+      ? combineLatest(subjects.map(s => s.baseObservable))
+      : subjects.baseObservable;
+    const projectObservable = combinedSources.pipe(map(project));
+
+    projectObservable.subscribe(this.baseObservable);
   }
 }
