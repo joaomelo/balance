@@ -19,6 +19,7 @@ import {
 import { camelCase } from '../../app/helpers';
 import { useSwitch, useCommand } from '../../app/components';
 import { signOutCommand } from '../auth';
+import { AppVersion } from './app-version';
 import { OutAppBar } from './out-app-bar';
 
 export function InAppBar ({ dependencies }) {
@@ -79,6 +80,7 @@ function AppDrawer ({ isOpen, onClose, onSignOut }) {
             onClick={onSignOut}
           />
         </List>
+        <AppVersionPositioned />
       </Box>
     </Drawer>
   );
@@ -108,5 +110,18 @@ function ListAction ({ icon, text, onClick }) {
         <ListItemText primary={text} />
       </ListItem>
     </li>
+  );
+}
+
+function AppVersionPositioned () {
+  return (
+    <Box
+      position="absolute"
+      bottom={0}
+      right={0}
+      marginRight={1}
+    >
+      <AppVersion />
+    </Box>
   );
 }

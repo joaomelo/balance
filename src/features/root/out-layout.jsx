@@ -3,7 +3,7 @@ import { SignInPagePresenter } from '../auth';
 import { WrapperLayout } from './wrapper-layout';
 import { WrapperPage } from './wrapper-page';
 import { OutAppBar } from './out-app-bar';
-import { OutVersion } from './out-version';
+import { AppVersion } from './app-version';
 
 export function OutLayout (props) {
   return (
@@ -12,7 +12,7 @@ export function OutLayout (props) {
       <WrapperPage>
         <CurrentPage {...props}/>
       </WrapperPage>
-      <OutVersion />
+      <AppVersion />
     </WrapperLayout>
   );
 }
