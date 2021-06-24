@@ -35,6 +35,7 @@ describe('edit balance', () => {
     const newDate = '2021-01-01';
     const newAmount = '100';
     await page.fill('#inputDate', newDate);
+    await page.press('#inputAmount', 'Delete');
     await page.fill('#inputAmount', newAmount);
     await page.click('#buttonSave');
 

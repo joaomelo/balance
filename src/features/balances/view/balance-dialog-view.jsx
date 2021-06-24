@@ -4,11 +4,12 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  InputAdornment,
+  // InputAdornment,
   MenuItem,
   TextField
 } from '@material-ui/core';
 import { KeyboardDatePicker } from '@material-ui/pickers';
+import NumberFormat from 'react-number-format';
 import {
   usePayload,
   Form,
@@ -135,22 +136,11 @@ function DateField ({ error, value, onChange, ...rest }) {
 }
 
 function AmountField ({ error, value, onChange, ...rest }) {
-  const handleChange = e => {
-    const amount = parseFloat(e.target.value) || null;
-    onChange(amount);
-  };
-
-  const AmountAdornment = () => (
-    <InputAdornment position="start">
-      $
-    </InputAdornment>
-  );
-
   return (
     <TextField
       id="inputAmount"
       value={value || ''}
-      onChange={handleChange}
+      onChange={onChange}
       label="Amount"
       variant="outlined"
       fullWidth
@@ -158,8 +148,23 @@ function AmountField ({ error, value, onChange, ...rest }) {
       required
       error={!!error}
       helperText={error}
-      InputProps={{ startAdornment: <AmountAdornment /> }}
+      InputProps={{ inputComponent: NumberFormatCustom }}
       {...rest}
     />
   );
 }
+
+function NumberFormatCustom ({ inputRef, onChange, ...other }) {
+  return (
+    <NumberFormat
+      getInputRef={inputRef}
+      onValueChange={({ floatValue }) => onChange(floatValue)}
+      decimalScale={2}
+      fixedDecimalScale
+      thousandSeparator
+      isNumericString
+      prefix="$"
+      {...other}
+    />
+  );
+};
