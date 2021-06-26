@@ -1,6 +1,7 @@
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { AccountsPagePresenter } from '../accounts';
 import { BalancesPagePresenter } from '../balances';
+import { GroupsPagePresenter } from '../groups';
 import { HistoryPagePresenter } from '../history';
 import { WrapperLayout } from './wrapper-layout';
 import { WrapperPage } from './wrapper-page';
@@ -28,6 +29,9 @@ function CurrentPage (props) {
       </Route>
       <Route path={`${path}/balances`}>
         <BalancesPagePresenter {...props}/>
+      </Route>
+      <Route path={`${path}/groups`}>
+        <GroupsPagePresenter {...props}/>
       </Route>
       <Route path={`${path}/history`}>
         <HistoryPagePresenter {...props}/>

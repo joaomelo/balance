@@ -16,15 +16,26 @@ import {
 } from '../app/repository';
 import { mountRoot } from '../features/root';
 import { messagesAuth } from '../features/auth';
-import { messagesAccount, selectAccountsWithBalances } from '../features/accounts';
-import { messagesBalance, selectBalancesWithAccount } from '../features/balances';
+import {
+  messagesAccount,
+  selectAccountsWithBalances
+} from '../features/accounts';
+import {
+  messagesBalance,
+  selectBalancesWithAccount
+} from '../features/balances';
+import {
+  messagesGroup,
+  selectGroupsWithRelations
+} from '../features/groups';
 
 async function main () {
   const useI18n = await initI18nProvider([
     messagesCommon,
     messagesAuth,
     messagesBalance,
-    messagesAccount
+    messagesAccount,
+    messagesGroup
   ]);
 
   const { firestore, fireauth } = await initFirebaseSuiteFromEnv();
@@ -44,6 +55,11 @@ async function main () {
   const balancesQuery = queryRepoWithUser(userIdSelector, balancesCollection.orderBy('date', 'desc'));
   const activeBalancesSelector = selectActiveItems(balancesQuery);
 
+  const groupsCollection = firestore.collection('groups');
+  const groupsMutations = createRepositoryMutations(groupsCollection);
+  const groupsQuery = queryRepoWithUser(userIdSelector, groupsCollection.orderBy('name'));
+  const activeGroupsSelector = selectActiveItems(groupsQuery);
+
   const accountsWithBalancesSelector = selectAccountsWithBalances(
     activeAccountsSelector,
     activeBalancesSelector
@@ -51,6 +67,11 @@ async function main () {
   const balancesWithAccountSelector = selectBalancesWithAccount(
     activeBalancesSelector,
     activeAccountsSelector
+  );
+  const groupsWithRelationsSelector = selectGroupsWithRelations(
+    activeGroupsSelector,
+    activeAccountsSelector,
+    activeBalancesSelector
   );
 
   const dependencies = {
@@ -66,7 +87,9 @@ async function main () {
     balancesMutations,
     balancesQuery,
     activeBalancesSelector,
-    balancesWithAccountSelector
+    balancesWithAccountSelector,
+    groupsMutations,
+    groupsWithRelationsSelector
   };
 
   // dependencies exposed globally to facilitate tests and debug

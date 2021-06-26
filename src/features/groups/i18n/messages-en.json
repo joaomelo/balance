@@ -1,0 +1,4 @@
+{
+  "GROUPS/NAME_INVALID": "A valid group name is required.",
+  "GROUPS/NON_UNIQUE_NAME": "This group name is already in use."
+}

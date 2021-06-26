@@ -13,6 +13,8 @@ import {
   AccountBalanceTwoTone,
   AccountBalanceWalletTwoTone,
   AssessmentTwoTone,
+  EqualizerTwoTone,
+  GroupWorkTwoTone,
   MeetingRoomTwoTone,
   Menu
 } from '@material-ui/icons';
@@ -69,8 +71,19 @@ function AppDrawer ({ isOpen, onClose, onSignOut }) {
             to="/i/balances"
           />
           <ListLink
+            icon={<GroupWorkTwoTone />}
+            text="Groups"
+            to="/i/groups"
+          />
+          <Divider />
+          <ListLink
             icon={<AssessmentTwoTone />}
-            text="History"
+            text="Accounts History"
+            to="/i/history"
+          />
+          <ListLink
+            icon={<EqualizerTwoTone />}
+            text="Groups History"
             to="/i/history"
           />
           <Divider />

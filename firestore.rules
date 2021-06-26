@@ -27,5 +27,13 @@ service cloud.firestore {
       allow create: if request.auth != null
         && request.resource.data.user == request.auth.uid
     }
+
+    match /groups/{accountId} {
+      allow delete: if false;
+      allow read, update: if request.auth != null 
+        && request.auth.uid == resource.data.user;
+      allow create: if request.auth != null
+        && request.resource.data.user == request.auth.uid
+    }
  }
 }
