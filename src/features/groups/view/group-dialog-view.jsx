@@ -13,7 +13,6 @@ import {
   ProgressDivider,
   SaveCancel
 } from '../../../app/components';
-import { Select } from 'antd';
 import { createErrorReport } from '../../../app/error';
 
 export function GroupDialogView ({
@@ -53,10 +52,6 @@ export function GroupDialogView ({
             error={t(errorReport.name)}
             {...bind('name')}
           />
-          <AccountsField
-            accounts={accounts}
-            {...bind('accounts')}
-          />
           <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
         </DialogContent>
         <ProgressDivider isLoading={isLoading}/>
@@ -87,81 +82,3 @@ function NameField ({ error, ...rest }) {
     />
   );
 }
-
-const { Option } = Select;
-function AccountsField ({ accounts, ...rest }) {
-  console.log({ accounts, rest });
-  return (
-    <Select
-      id="selectAccounts"
-      mode="multiple"
-      allowClear
-      {...rest}
-    >
-      {accounts.map(({ id, name }) => (
-        <Option
-          key={id}
-          value={id}
-        >
-          {name}
-        </Option>
-      ))}
-    </Select>
-  );
-}
-
-// function AccountsField ({ accounts, ...rest }) {
-//   console.log({ accounts, rest });
-//   return (
-//     <FormControl
-//       fullWidth
-//       margin="normal"
-//       variant="outlined"
-//     >
-//       <InputLabel id="selectAccountsLabel">
-//         Accounts
-//       </InputLabel>
-//       <Select
-//         id="selectAccounts"
-//         labelId="selectAccountsLabel"
-//         multiple
-//         variant="outlined"
-//         input={<Input
-//           id="inputAccounts"
-//           variant="outlined"
-//         />}
-//         renderValue={selectedAccounts => (
-//           <Box
-//             display="flex"
-//             flexWrap="wrap"
-//           >
-//             {selectedAccounts.map(({ id, name }) => (
-//               <AccountChip
-//                 key={id}
-//                 label={name}
-//               />
-//             ))}
-//           </Box>
-//         )}
-//         {...rest}
-//       >
-//         {accounts.map(({ id, name }) => (
-//           <MenuItem
-//             key={id}
-//             value={name}
-//           >
-//             {name}
-//           </MenuItem>
-//         ))}
-//       </Select>
-//     </FormControl>
-//   );
-// }
-
-// function AccountChip ({ label }) {
-//   return (
-//     <Chip
-//       label={label}
-//     />
-//   );
-// }

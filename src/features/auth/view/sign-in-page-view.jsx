@@ -26,7 +26,6 @@ import {
   ProgressDivider
 } from '../../../app/components';
 import { createErrorReport } from '../../../app/error';
-import { Select } from 'antd';
 
 export function SignInPageView ({ onSignIn, error, isLoading, t }) {
   const initialPayload = { email: '', password: '' };
@@ -51,7 +50,6 @@ export function SignInPageView ({ onSignIn, error, isLoading, t }) {
             {...bind('password')}
             error={t(errorReport.password)}
           />
-          <AccountsField />
           <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
         </CardContent>
         <ProgressDivider isLoading={isLoading}/>

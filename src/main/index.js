@@ -28,7 +28,6 @@ import {
   messagesGroup,
   selectGroupsWithRelations
 } from '../features/groups';
-import 'antd/dist/antd.css';
 
 async function main () {
   const useI18n = await initI18nProvider([
