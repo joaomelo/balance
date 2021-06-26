@@ -3,12 +3,13 @@ import { useSwitch } from '../../../app/components';
 import { GroupDialogView } from './group-dialog-view';
 
 export function GroupAddView ({
+  accounts,
   onAdd,
   error,
   isLoading,
   t
 }) {
-  const initialPayload = { name: '' };
+  const initialPayload = { name: '', accounts: [] };
   const [isOpen, open, close] = useSwitch();
 
   return (
@@ -23,6 +24,7 @@ export function GroupAddView ({
       </Button>
       {isOpen &&
         <GroupDialogView
+          accounts={accounts}
           initialPayload={initialPayload}
           error={error}
           onSubmit={onAdd}

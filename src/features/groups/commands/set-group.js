@@ -4,12 +4,12 @@ import { validateGroup } from '../body';
 export async function setGroupCommand (dependencies, payload) {
   const {
     groupsMutations,
-    groupsWithRelationsSelector,
+    activeGroupsSelector,
     userIdSelector
   } = dependencies;
 
   validateGroup(
-    { groups: groupsWithRelationsSelector.current },
+    { groups: activeGroupsSelector.current },
     payload
   );
 

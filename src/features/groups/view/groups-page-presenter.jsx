@@ -4,8 +4,12 @@ import { setGroupCommand, delGroupCommand } from '../commands';
 import { GroupsPageView } from './groups-page-view';
 
 export function GroupsPagePresenter ({ dependencies }) {
-  const { groupsWithRelationsSelector } = dependencies;
+  const {
+    activeAccountsSelector,
+    groupsWithRelationsSelector
+  } = dependencies;
   const groups = useQuery(groupsWithRelationsSelector);
+  const accounts = useQuery(activeAccountsSelector);
 
   const [onAdd, isAdding, errorAdd] = useCommand(dependencies, setGroupCommand);
   const [onEdit, isEditing, errorEdit] = useCommand(dependencies, setGroupCommand);
@@ -17,6 +21,7 @@ export function GroupsPagePresenter ({ dependencies }) {
   return (
     <GroupsPageView
       groups={groups}
+      accounts={accounts}
       onAdd={onAdd}
       errorAdd={errorAdd}
       onEdit={onEdit}

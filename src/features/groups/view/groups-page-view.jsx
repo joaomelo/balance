@@ -4,6 +4,7 @@ import { GroupsListView } from './groups-list-view';
 
 export function GroupsPageView ({
   groups,
+  accounts,
   onAdd,
   errorAdd,
   onEdit,
@@ -16,14 +17,16 @@ export function GroupsPageView ({
     <>
       <ListViewTop title="Groups">
         <GroupAddView
-            onAdd={onAdd}
-            error={errorAdd}
-            isLoading={isLoading}
-            t={t}
-          />
+          accounts={accounts}
+          onAdd={onAdd}
+          error={errorAdd}
+          isLoading={isLoading}
+          t={t}
+        />
       </ListViewTop>
       <GroupsListView
         groups={groups}
+        accounts={accounts}
         onDel={onDel}
         onEdit={onEdit}
         error={errorEdit}
