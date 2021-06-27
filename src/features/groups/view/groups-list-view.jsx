@@ -15,10 +15,18 @@ export function GroupsListView ({
   const [isOpen, open, close] = useSwitch();
 
   const handleEditClick = id => {
-    const group = groups.find(a => a.id === id);
-    setInitialPayload(group);
+    const { name } = groups.find(a => a.id === id);
+    setInitialPayload({ id, name });
     open();
   };
+
+  const rows = groups.map(g => {
+    const { accounts, ...groupData } = g;
+    const accountsNames = accounts
+      .map(({ name }) => name)
+      .join(', ');
+    return { accountsNames, ...groupData };
+  });
 
   const columns = [
     {
@@ -27,8 +35,8 @@ export function GroupsListView ({
       flex: 1
     },
     {
-      field: 'accounts',
-      headerName: 'accounts',
+      field: 'accountsNames',
+      headerName: 'Accounts',
       flex: 1
     },
     {
@@ -54,7 +62,7 @@ export function GroupsListView ({
   return (
     <>
       <DataGrid
-        rows={groups}
+        rows={rows}
         columns={columns}
         autoPageSize
         density="compact"

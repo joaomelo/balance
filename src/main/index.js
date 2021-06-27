@@ -18,7 +18,7 @@ import { mountRoot } from '../features/root';
 import { messagesAuth } from '../features/auth';
 import {
   messagesAccount,
-  selectAccountsWithBalances
+  selectAccountsWithRelations
 } from '../features/accounts';
 import {
   messagesBalance,
@@ -60,8 +60,9 @@ async function main () {
   const groupsQuery = queryRepoWithUser(userIdSelector, groupsCollection.orderBy('name'));
   const activeGroupsSelector = selectActiveItems(groupsQuery);
 
-  const accountsWithBalancesSelector = selectAccountsWithBalances(
+  const accountsWithRelationsSelector = selectAccountsWithRelations(
     activeAccountsSelector,
+    activeGroupsSelector,
     activeBalancesSelector
   );
   const balancesWithAccountSelector = selectBalancesWithAccount(
@@ -83,7 +84,7 @@ async function main () {
     accountsMutations,
     accountsQuery,
     activeAccountsSelector,
-    accountsWithBalancesSelector,
+    accountsWithRelationsSelector,
     balancesMutations,
     balancesQuery,
     activeBalancesSelector,

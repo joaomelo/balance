@@ -27,10 +27,10 @@ describe('list accounts', () => {
   const amountCellSelector = '[role="cell"][data-field="amount"]';
 
   test('account without balances show placeholder in last balances data', async () => {
-    const name = 'savings';
+    const account = 'savings';
 
     await signInMacro(page);
-    await addAccountMacro(page, name);
+    await addAccountMacro(page, { account });
 
     const dateCellText = await page.textContent(dateCellSelector);
     expect(dateCellText).toBe('');
@@ -40,10 +40,10 @@ describe('list accounts', () => {
   });
 
   test('account with balances show date and amount of the last balances', async () => {
-    const name = 'savings';
+    const account = 'savings';
 
     await signInMacro(page);
-    await addAccountMacro(page, name);
+    await addAccountMacro(page, { account });
     await addBalanceMacro(page);
 
     await goToAccountsMacro(page);

@@ -6,6 +6,7 @@ import { AccountDialogView } from './account-dialog-view';
 
 export function AccountsListView ({
   accounts,
+  groups,
   onDel,
   onEdit,
   error,
@@ -16,8 +17,8 @@ export function AccountsListView ({
   const [isOpen, open, close] = useSwitch();
 
   const handleEditClick = id => {
-    const account = accounts.find(a => a.id === id);
-    setInitialPayload(account);
+    const { name, groupId } = accounts.find(a => a.id === id);
+    setInitialPayload({ id, name, groupId });
     open();
   };
 
@@ -25,6 +26,11 @@ export function AccountsListView ({
     {
       field: 'name',
       headerName: 'Account',
+      flex: 1
+    },
+    {
+      field: 'groupName',
+      headerName: 'Group',
       flex: 1
     },
     {
@@ -70,11 +76,11 @@ export function AccountsListView ({
   ];
 
   const rows = accounts.map(a => {
-    const { id, name, balances } = a;
+    const { balances, ...accountData } = a;
     const { date, amount } = balances.length > 0
       ? balances[0]
       : { date: null, amount: null };
-    return { id, name, date, amount };
+    return { date, amount, ...accountData };
   });
 
   return (
@@ -91,6 +97,7 @@ export function AccountsListView ({
       {isOpen &&
         <AccountDialogView
           initialPayload={initialPayload}
+          groups={groups}
           error={error}
           onSubmit={onEdit}
           isOpen={isOpen}

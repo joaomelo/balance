@@ -3,12 +3,13 @@ import { useSwitch } from '../../../app/components';
 import { AccountDialogView } from './account-dialog-view';
 
 export function AccountAddView ({
+  groups,
   onAdd,
   error,
   isLoading,
   t
 }) {
-  const initialPayload = { name: '' };
+  const initialPayload = { name: '', groupId: null };
   const [isOpen, open, close] = useSwitch();
 
   return (
@@ -24,6 +25,7 @@ export function AccountAddView ({
       {isOpen &&
         <AccountDialogView
           initialPayload={initialPayload}
+          groups={groups}
           error={error}
           onSubmit={onAdd}
           isOpen={isOpen}

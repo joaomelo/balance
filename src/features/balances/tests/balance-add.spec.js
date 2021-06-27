@@ -22,17 +22,18 @@ describe('add balance', () => {
     await page.close();
   });
 
+  const account = 'savings';
+
   test('add balance to repository with correct data shape', async () => {
     await signInMacro(page);
 
-    const name = 'savings';
-    await addAccountMacro(page, name);
+    await addAccountMacro(page, { account });
 
     await addBalanceMacro(page);
 
     const accountNameCellSelector = '[role="cell"][data-field="accountName"]';
     const accountNameCellText = await page.textContent(accountNameCellSelector);
-    expect(accountNameCellText).toBe(name);
+    expect(accountNameCellText).toBe(account);
   });
 
   test('show error if no account', async () => {
@@ -47,8 +48,7 @@ describe('add balance', () => {
   test('show error if no amount', async () => {
     await signInMacro(page);
 
-    const name = 'savings';
-    await addAccountMacro(page, name);
+    await addAccountMacro(page, { account });
 
     await goToBalancesMacro(page);
     await page.click('#buttonAddBalance');
@@ -62,8 +62,7 @@ describe('add balance', () => {
   test('show error if invalid date', async () => {
     await signInMacro(page);
 
-    const name = 'savings';
-    await addAccountMacro(page, name);
+    await addAccountMacro(page, { account });
 
     await goToBalancesMacro(page);
     await page.click('#buttonAddBalance');
@@ -78,8 +77,7 @@ describe('add balance', () => {
   test('show error if attempt to add same date to the same account more than once', async () => {
     await signInMacro(page);
 
-    const name = 'savings';
-    await addAccountMacro(page, name);
+    await addAccountMacro(page, { account });
 
     await addBalanceMacro(page);
     await addBalanceMacro(page);

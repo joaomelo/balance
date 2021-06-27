@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { signInMacro } from '../../auth/tests';
+import { addGroupMacro } from '../../groups/tests';
 import { addAccountMacro } from './macros';
 
 describe('add account', () => {
@@ -24,12 +25,19 @@ describe('add account', () => {
   test('add account to repository with correct data shape', async () => {
     await signInMacro(page);
 
-    const name = 'savings';
-    await addAccountMacro(page, name);
+    const group = 'investments';
+    await addGroupMacro(page, group);
+
+    const account = 'savings';
+    await addAccountMacro(page, { account, group });
 
     const nameCellSelector = '[role="cell"][data-field="name"]';
     const nameCellText = await page.textContent(nameCellSelector);
-    expect(nameCellText).toBe(name);
+    expect(nameCellText).toBe(account);
+
+    const groupCellSelector = '[role="cell"][data-field="groupName"]';
+    const groupCellText = await page.textContent(groupCellSelector);
+    expect(groupCellText).toBe(group);
   });
 
   test('show error if empty account name', async () => {
@@ -44,10 +52,10 @@ describe('add account', () => {
   test('show error if another account with the same name already exists', async () => {
     await signInMacro(page);
 
-    const name = 'savings';
-    await addAccountMacro(page, name);
+    const account = 'savings';
+    await addAccountMacro(page, { account });
 
-    await addAccountMacro(page, name);
+    await addAccountMacro(page, { account });
 
     const error = await page.$('text=name is already in use');
     expect(error).toBeTruthy();

@@ -25,18 +25,18 @@ describe('del account', () => {
   test('del account and respective balances', async () => {
     await signInMacro(page);
 
-    const name = 'savings';
-    await addAccountMacro(page, name);
+    const account = 'savings';
+    await addAccountMacro(page, { account });
 
     const accountNameCellSelector = '[role="cell"][data-field="name"]';
     const accountNameCellText = await page.textContent(accountNameCellSelector);
-    expect(accountNameCellText).toBe(name);
+    expect(accountNameCellText).toBe(account);
 
     await addBalanceMacro(page);
 
     const balanceAccountNameSelector = '[role="cell"][data-field="accountName"]';
     const balanceAccountNameText = await page.textContent(balanceAccountNameSelector);
-    expect(balanceAccountNameText).toBe(name);
+    expect(balanceAccountNameText).toBe(account);
 
     await goToAccountsMacro(page);
     const delButtonSelector = '[aria-label="delete"]';

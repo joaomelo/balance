@@ -24,8 +24,8 @@ describe('edit account', () => {
   test('edit account name', async () => {
     await signInMacro(page);
 
-    const name = 'savings';
-    await addAccountMacro(page, name);
+    const account = 'savings';
+    await addAccountMacro(page, { account });
 
     const editButtonSelector = '[aria-label="edit"]';
     await page.click(editButtonSelector);

@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { signInMacro } from '../../auth/tests';
+import { goToAccountsMacro, addAccountMacro } from '../../accounts/tests';
 import { addGroupMacro, goToGroupsMacro } from './macros';
 
 describe('del group', () => {
@@ -21,15 +22,22 @@ describe('del group', () => {
     await page.close();
   });
 
-  test('del group and dissociate from respective accounts', async () => {
+  test('del group and dissociate from respective account', async () => {
     await signInMacro(page);
 
-    const name = 'assets';
-    await addGroupMacro(page, name);
+    const group = 'assets';
+    await addGroupMacro(page, group);
 
     const groupNameCellSelector = '[role="cell"][data-field="name"]';
     const groupNameCellText = await page.textContent(groupNameCellSelector);
-    expect(groupNameCellText).toBe(name);
+    expect(groupNameCellText).toBe(group);
+
+    const account = 'car';
+    await addAccountMacro(page, { group, account });
+
+    const groupCellSelector = '[role="cell"][data-field="groupName"]';
+    const groupFilledCellText = await page.textContent(groupCellSelector);
+    expect(groupFilledCellText).toBe(group);
 
     await goToGroupsMacro(page);
     const delButtonSelector = '[aria-label="delete"]';
@@ -37,5 +45,9 @@ describe('del group', () => {
 
     const groupNameCell = await page.$(groupNameCellSelector);
     expect(groupNameCell).toBeNull();
+
+    await goToAccountsMacro(page);
+    const groupEmptyCellText = await page.textContent(groupCellSelector);
+    expect(groupEmptyCellText).toBe('');
   });
 });

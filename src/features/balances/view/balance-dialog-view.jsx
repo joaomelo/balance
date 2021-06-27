@@ -4,7 +4,6 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  // InputAdornment,
   MenuItem,
   TextField
 } from '@material-ui/core';

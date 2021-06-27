@@ -4,8 +4,12 @@ import { setAccountCommand, delAccountCommand } from '../commands';
 import { AccountsPageView } from './accounts-page-view';
 
 export function AccountsPagePresenter ({ dependencies }) {
-  const { accountsWithBalancesSelector } = dependencies;
-  const accounts = useQuery(accountsWithBalancesSelector);
+  const {
+    accountsWithRelationsSelector,
+    activeGroupsSelector
+  } = dependencies;
+  const accounts = useQuery(accountsWithRelationsSelector);
+  const groups = useQuery(activeGroupsSelector);
 
   const [onAdd, isAdding, errorAdd] = useCommand(dependencies, setAccountCommand);
   const [onEdit, isEditing, errorEdit] = useCommand(dependencies, setAccountCommand);
@@ -16,7 +20,8 @@ export function AccountsPagePresenter ({ dependencies }) {
 
   return (
     <AccountsPageView
-      accounts={Object.values(accounts)}
+      accounts={accounts}
+      groups={groups}
       onAdd={onAdd}
       errorAdd={errorAdd}
       onEdit={onEdit}

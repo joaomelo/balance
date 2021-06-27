@@ -1,1 +1,1 @@
-export * from './accounts-with-balances';
+export * from './accounts-with-relations';

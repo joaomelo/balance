@@ -9,7 +9,7 @@ export function GroupAddView ({
   isLoading,
   t
 }) {
-  const initialPayload = { name: '', accounts: [] };
+  const initialPayload = { name: '' };
   const [isOpen, open, close] = useSwitch();
 
   return (

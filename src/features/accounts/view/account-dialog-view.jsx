@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
+  MenuItem,
   TextField
 } from '@material-ui/core';
 import {
@@ -17,6 +18,7 @@ import { createErrorReport } from '../../../app/error';
 
 export function AccountDialogView ({
   initialPayload,
+  groups,
   error,
   onSubmit,
   isOpen,
@@ -51,6 +53,10 @@ export function AccountDialogView ({
             error={t(errorReport.name)}
             {...bind('name')}
           />
+          <GroupField
+            groups={groups}
+            {...bind('groupId')}
+          />
           <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
         </DialogContent>
         <ProgressDivider isLoading={isLoading}/>
@@ -79,5 +85,30 @@ function NameField ({ error, ...rest }) {
       helperText={error}
       {...rest}
     />
+  );
+}
+
+function GroupField ({ groups, value, ...rest }) {
+  return (
+    <TextField
+      id="selectGroup"
+      value={value || ''}
+      label="Group"
+      variant="outlined"
+      select
+      fullWidth
+      margin="normal"
+      disabled={groups.length === 0}
+      {...rest}
+    >
+      {groups.map(g => (
+        <MenuItem
+          key={g.id}
+          value={g.id}
+        >
+          {g.name}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 }

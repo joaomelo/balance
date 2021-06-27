@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import { signInMacro } from '../../auth/tests';
-import { goToGroupsMacro, addGroupMacro } from './macros';
+import { addAccountMacro } from '../../accounts/tests';
+import { addGroupMacro, goToGroupsMacro } from './macros';
 
 describe('list groups', () => {
   let browser, page;
@@ -21,31 +22,24 @@ describe('list groups', () => {
     await page.close();
   });
 
-  const dateCellSelector = '[role="cell"][data-field="accounts"]';
-
-  test('group without accounts show empty cell', async () => {
-    const name = 'assets';
+  test('proper show accounts data in list', async () => {
+    const group = 'assets';
 
     await signInMacro(page);
-    await addGroupMacro(page, name);
+    await addGroupMacro(page, group);
 
-    const accountsCellText = await page.textContent(dateCellSelector);
-    expect(accountsCellText).toBe('');
+    const accountsCellSelector = '[role="cell"][data-field="accountsNames"]';
+    const emptyAccountsCellText = await page.textContent(accountsCellSelector);
+    expect(emptyAccountsCellText).toBe('');
+
+    const account1 = 'car';
+    await addAccountMacro(page, { group, account: account1 });
+
+    const account2 = 'house';
+    await addAccountMacro(page, { group, account: account2 });
+
+    await goToGroupsMacro(page);
+    const manyAccountsCellText = await page.textContent(accountsCellSelector);
+    expect(manyAccountsCellText).toMatch(`${account1}, ${account2}`);
   });
-
-  // test('group with balances show date and amount of the last balances', async () => {
-  //   const name = 'savings';
-
-  //   await signInMacro(page);
-  //   await addGroupMacro(page, name);
-  //   await addBalanceMacro(page);
-
-  //   await goToGroupsMacro(page);
-
-  //   const dateCellText = await page.textContent(dateCellSelector);
-  //   expect(dateCellText).toBe(DateTime.now().toISODate());
-
-  //   const amountCellText = await page.textContent(amountCellSelector);
-  //   expect(amountCellText).toMatch('500');
-  // });
 });

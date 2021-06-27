@@ -17,8 +17,8 @@ export function BalancesListView ({
   const [isOpen, open, close] = useSwitch();
 
   const handleEditClick = id => {
-    const balance = balances.find(b => b.id === id);
-    setInitialPayload(balance);
+    const { accountId, amount, date } = balances.find(b => b.id === id);
+    setInitialPayload({ id, accountId, amount, date });
     open();
   };
 
