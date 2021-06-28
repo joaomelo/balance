@@ -1,19 +1,14 @@
 import { ListViewTop, DateChart } from '../../../app/components';
 import styled from 'styled-components';
 
-export function HistoryPageView ({ accounts }) {
-  const datasets = accounts.map(a => ({
-    label: a.name,
-    data: a.balances.map(b => ({ x: b.date, y: b.amount }))
-  }));
-
+export function HistoryPageView ({ history }) {
   return (
     <>
       <ListViewTop title="History" />
       <DateChartWrapper>
         <DateChart
           id="balance-history"
-          datasets={datasets}
+          datasets={history}
         />
       </DateChartWrapper>
     </>

@@ -2,10 +2,10 @@ import { useQuery } from '../../../app/query';
 import { HistoryPageView } from './history-page-view';
 
 export function HistoryPagePresenter ({ dependencies }) {
-  const { accountsWithRelationsSelector } = dependencies;
-  const accounts = useQuery(accountsWithRelationsSelector);
+  const { composedHistorySelector } = dependencies;
+  const history = useQuery(composedHistorySelector);
 
   return (
-    <HistoryPageView accounts={accounts}/>
+    <HistoryPageView history={history}/>
   );
 }

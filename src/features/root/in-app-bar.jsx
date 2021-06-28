@@ -13,7 +13,6 @@ import {
   AccountBalanceTwoTone,
   AccountBalanceWalletTwoTone,
   AssessmentTwoTone,
-  EqualizerTwoTone,
   GroupWorkTwoTone,
   MeetingRoomTwoTone,
   Menu
@@ -75,15 +74,9 @@ function AppDrawer ({ isOpen, onClose, onSignOut }) {
             text="Groups"
             to="/i/groups"
           />
-          <Divider />
           <ListLink
             icon={<AssessmentTwoTone />}
-            text="Accounts History"
-            to="/i/history"
-          />
-          <ListLink
-            icon={<EqualizerTwoTone />}
-            text="Groups History"
+            text="History"
             to="/i/history"
           />
           <Divider />

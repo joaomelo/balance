@@ -28,6 +28,7 @@ import {
   messagesGroup,
   selectGroupsWithRelations
 } from '../features/groups';
+import { selectComposedHistory } from '../features/history';
 
 async function main () {
   const useI18n = await initI18nProvider([
@@ -74,6 +75,10 @@ async function main () {
     activeAccountsSelector,
     activeBalancesSelector
   );
+  const composedHistorySelector = selectComposedHistory(
+    groupsWithRelationsSelector,
+    accountsWithRelationsSelector
+  );
 
   const dependencies = {
     useI18n,
@@ -91,7 +96,8 @@ async function main () {
     balancesWithAccountSelector,
     groupsMutations,
     activeGroupsSelector,
-    groupsWithRelationsSelector
+    groupsWithRelationsSelector,
+    composedHistorySelector
   };
 
   // dependencies exposed globally to facilitate tests and debug
