@@ -1,1 +1,1 @@
-export * from './groups-with-relations';
+export * from './relationships';

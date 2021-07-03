@@ -1,6 +1,6 @@
 import { ListViewTop } from '../../../app/components';
-import { GroupAddView } from './group-add-view';
-import { GroupsListView } from './groups-list-view';
+import { GroupAddView } from './view-add';
+import { GroupsListView } from './view-list';
 
 export function GroupsPageView ({
   groups,

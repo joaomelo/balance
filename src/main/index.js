@@ -24,10 +24,7 @@ import {
   messagesBalance,
   selectBalancesWithAccount
 } from '../features/balances';
-import {
-  messagesGroup,
-  selectGroupsWithRelations
-} from '../features/groups';
+import { messagesGroups } from '../features/groups';
 import { selectComposedHistory } from '../features/history';
 
 async function main () {
@@ -36,7 +33,7 @@ async function main () {
     messagesAuth,
     messagesBalance,
     messagesAccount,
-    messagesGroup
+    messagesGroups
   ]);
 
   const { firestore, fireauth } = await initFirebaseSuiteFromEnv();
@@ -70,15 +67,6 @@ async function main () {
     activeBalancesSelector,
     activeAccountsSelector
   );
-  const groupsWithRelationsSelector = selectGroupsWithRelations(
-    activeGroupsSelector,
-    activeAccountsSelector,
-    activeBalancesSelector
-  );
-  const composedHistorySelector = selectComposedHistory(
-    groupsWithRelationsSelector,
-    accountsWithRelationsSelector
-  );
 
   const dependencies = {
     useI18n,
@@ -95,9 +83,7 @@ async function main () {
     activeBalancesSelector,
     balancesWithAccountSelector,
     groupsMutations,
-    activeGroupsSelector,
-    groupsWithRelationsSelector,
-    composedHistorySelector
+    activeGroupsSelector
   };
 
   // dependencies exposed globally to facilitate tests and debug

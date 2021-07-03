@@ -1,10 +1,10 @@
 import { isSameDay } from '../../../app/helpers';
 
 export function consolidateGroupsBalances (groups, accounts, balances) {
-  return groups.map(group => ({
-    ...group,
-    balances: consolidateGroupBalances(group, accounts, balances)
-  }));
+  return groups.reduce((acc, group) => {
+    acc[group.id] = consolidateGroupBalances(group, accounts, balances);
+    return acc;
+  }, {});
 }
 
 function consolidateGroupBalances (group, accounts, balances) {

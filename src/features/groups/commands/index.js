@@ -1,2 +1,2 @@
-export * from './del-group';
-export * from './set-group';
+export * from './del';
+export * from './set';

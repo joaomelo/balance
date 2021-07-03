@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import { useSwitch } from '../../../app/components';
-import { GroupDialogView } from './group-dialog-view';
+import { GroupDialogView } from './view-dialog';
 
 export function GroupAddView ({
   accounts,

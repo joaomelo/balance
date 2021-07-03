@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GridToolbar, DataGrid } from '@material-ui/data-grid';
 import { ActionCell, useSwitch } from '../../../app/components';
-import { GroupDialogView } from './group-dialog-view';
+import { GroupDialogView } from './view-dialog';
 
 export function GroupsListView ({
   groups,

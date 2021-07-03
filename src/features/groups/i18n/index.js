@@ -1,5 +1,5 @@
 import en from './messages-en';
 
-export const messagesGroup = {
+export const messagesGroups = {
   en
 };

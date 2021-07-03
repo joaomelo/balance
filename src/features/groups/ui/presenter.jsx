@@ -1,14 +1,23 @@
 import { useCommand } from '../../../app/components';
 import { useQuery } from '../../../app/query';
 import { setGroupCommand, delGroupCommand } from '../commands';
-import { GroupsPageView } from './groups-page-view';
+import { selectGroupsWithRelationships } from '../queries';
+import { GroupsPageView } from './view-page';
 
 export function GroupsPagePresenter ({ dependencies }) {
   const {
+    activeGroupsSelector,
     activeAccountsSelector,
-    groupsWithRelationsSelector
+    activeBalancesSelector
   } = dependencies;
-  const groups = useQuery(groupsWithRelationsSelector);
+
+  const groupsSelector = selectGroupsWithRelationships(
+    activeGroupsSelector,
+    activeAccountsSelector,
+    activeBalancesSelector
+  );
+
+  const groups = useQuery(groupsSelector);
   const accounts = useQuery(activeAccountsSelector);
 
   const [onAdd, isAdding, errorAdd] = useCommand(dependencies, setGroupCommand);
