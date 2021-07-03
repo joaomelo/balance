@@ -1,20 +1,4 @@
 import { isSameDay } from '../../../app/helpers';
-import { select } from '../../../app/query';
-
-export function selectGroupsWithRelations (
-  groupsSelector,
-  accountsSelector,
-  balancesSelector
-) {
-  return select(
-    [
-      groupsSelector,
-      accountsSelector,
-      balancesSelector
-    ],
-    groupsWithRelationsProject
-  );
-}
 
 export function groupsWithRelationsProject ([
   groups,
