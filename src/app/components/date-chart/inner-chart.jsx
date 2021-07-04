@@ -39,5 +39,6 @@ export function InnerChart ({ datasets, id, ...rest }) {
 // the chart wrapper must obey the chart.js lib constraints for responsiveness
 // https://www.chartjs.org/docs/latest/configuration/responsive.html#important-note
 const ChartWrapper = styled.div`
+  width: 100%;
   position: relative;
 `;
