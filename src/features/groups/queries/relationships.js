@@ -7,7 +7,11 @@ export function selectGroupsWithRelationships (
   balancesSelector
 ) {
   return select(
-    [groupsSelector, accountsSelector, balancesSelector],
+    [
+      groupsSelector,
+      accountsSelector,
+      balancesSelector
+    ],
     values => projectGroupsWithRelationships(...values)
   );
 }

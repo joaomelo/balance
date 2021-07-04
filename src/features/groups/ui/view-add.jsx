@@ -24,7 +24,6 @@ export function GroupAddView ({
       </Button>
       {isOpen &&
         <GroupDialogView
-          accounts={accounts}
           initialPayload={initialPayload}
           error={error}
           onSubmit={onAdd}

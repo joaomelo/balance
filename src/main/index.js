@@ -18,13 +18,16 @@ import { mountRoot } from '../features/root';
 import { messagesAuth } from '../features/auth';
 import {
   messagesAccount,
-  selectAccountsWithRelations
+  selectAccountsWithRelationships
 } from '../features/accounts';
 import {
   messagesBalance,
   selectBalancesWithAccount
 } from '../features/balances';
-import { messagesGroups } from '../features/groups';
+import {
+  messagesGroups,
+  selectGroupsWithRelationships
+} from '../features/groups';
 import { selectComposedHistory } from '../features/history';
 
 async function main () {
@@ -58,14 +61,24 @@ async function main () {
   const groupsQuery = queryRepoWithUser(userIdSelector, groupsCollection.orderBy('name'));
   const activeGroupsSelector = selectActiveItems(groupsQuery);
 
-  const accountsWithRelationsSelector = selectAccountsWithRelations(
+  const balancesWithAccountSelector = selectBalancesWithAccount(
+    activeBalancesSelector,
+    activeAccountsSelector
+  );
+
+  const accountsWithRelationshipsSelector = selectAccountsWithRelationships(
     activeAccountsSelector,
     activeGroupsSelector,
     activeBalancesSelector
   );
-  const balancesWithAccountSelector = selectBalancesWithAccount(
-    activeBalancesSelector,
-    activeAccountsSelector
+  const groupsWithRelationshipsSelector = selectGroupsWithRelationships(
+    activeGroupsSelector,
+    activeAccountsSelector,
+    activeBalancesSelector
+  );
+  const composedHistorySelector = selectComposedHistory(
+    groupsWithRelationshipsSelector,
+    accountsWithRelationshipsSelector
   );
 
   const dependencies = {
@@ -77,13 +90,15 @@ async function main () {
     accountsMutations,
     accountsQuery,
     activeAccountsSelector,
-    accountsWithRelationsSelector,
+    accountsWithRelationshipsSelector,
     balancesMutations,
     balancesQuery,
     activeBalancesSelector,
     balancesWithAccountSelector,
     groupsMutations,
-    activeGroupsSelector
+    activeGroupsSelector,
+    groupsWithRelationshipsSelector,
+    composedHistorySelector
   };
 
   // dependencies exposed globally to facilitate tests and debug

@@ -17,7 +17,6 @@ import { createErrorReport } from '../../../app/error';
 
 export function GroupDialogView ({
   initialPayload,
-  accounts,
   error,
   onSubmit,
   isOpen,

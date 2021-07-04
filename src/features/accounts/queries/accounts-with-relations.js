@@ -1,6 +1,6 @@
 import { select } from '../../../app/query';
 
-export function selectAccountsWithRelations (
+export function selectAccountsWithRelationships (
   accountsSelector,
   groupsSelector,
   balancesSelector

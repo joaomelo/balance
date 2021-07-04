@@ -4,6 +4,6 @@ export async function goToHistoryMacro (page) {
   await page.click('#buttonNav');
   await Promise.all([
     page.waitForNavigation({ url: '**/history' }),
-    page.click('#navAccountsHistory')
+    page.click('#navHistory')
   ]);
 }

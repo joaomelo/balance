@@ -5,10 +5,11 @@ import { AccountsPageView } from './accounts-page-view';
 
 export function AccountsPagePresenter ({ dependencies }) {
   const {
-    accountsWithRelationsSelector,
+    accountsWithRelationshipsSelector,
     activeGroupsSelector
   } = dependencies;
-  const accounts = useQuery(accountsWithRelationsSelector);
+
+  const accounts = useQuery(accountsWithRelationshipsSelector);
   const groups = useQuery(activeGroupsSelector);
 
   const [onAdd, isAdding, errorAdd] = useCommand(dependencies, setAccountCommand);

@@ -60,14 +60,14 @@ function AppDrawer ({ isOpen, onClose, onSignOut }) {
       <Box width={250}>
         <List>
           <ListLink
-            icon={<AccountBalanceTwoTone />}
-            text="Accounts"
-            to="/i/accounts"
-          />
-          <ListLink
             icon={<AccountBalanceWalletTwoTone />}
             text="Balances"
             to="/i/balances"
+          />
+          <ListLink
+            icon={<AccountBalanceTwoTone />}
+            text="Accounts"
+            to="/i/accounts"
           />
           <ListLink
             icon={<GroupWorkTwoTone />}
