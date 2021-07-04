@@ -36,8 +36,8 @@ describe('edit balance', () => {
     const newDate = '2021-01-01';
     const newAmount = '100';
     await page.fill('#inputDate', newDate);
-    // hack for playwright to replace numeric input data
-    await page.press('#inputAmount', 'Delete');
+    // hack to avoid playwright flakiness regarding numeric input data
+    await page.fill('#inputAmount', '');
     await page.fill('#inputAmount', newAmount);
 
     await page.click('#buttonSave');
