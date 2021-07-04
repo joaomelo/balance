@@ -5,12 +5,12 @@ import { GroupsPagePresenter } from '../groups';
 import { HistoryPagePresenter } from '../history';
 import { WrapperLayout } from './wrapper-layout';
 import { WrapperPage } from './wrapper-page';
-import { InAppBar } from './in-app-bar';
+import { AppBarIn } from './app-bar-in';
 
-export function InLayout (props) {
+export function LayoutIn (props) {
   return (
     <WrapperLayout id="wrapper-layout">
-      <InAppBar {...props}/>
+      <AppBarIn {...props}/>
       <WrapperPage id="wrapper-page">
         <CurrentPage {...props}/>
       </WrapperPage>

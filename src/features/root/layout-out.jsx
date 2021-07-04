@@ -2,13 +2,13 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { SignInPagePresenter } from '../auth';
 import { WrapperLayout } from './wrapper-layout';
 import { WrapperPage } from './wrapper-page';
-import { OutAppBar } from './out-app-bar';
+import { AppBarBase } from './app-bar-base';
 import { AppVersion } from './app-version';
 
-export function OutLayout (props) {
+export function LayoutOut (props) {
   return (
     <WrapperLayout>
-      <OutAppBar />
+      <AppBarBase />
       <WrapperPage>
         <CurrentPage {...props}/>
       </WrapperPage>

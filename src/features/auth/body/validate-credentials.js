@@ -1,5 +1,5 @@
-import { validateEmail } from './email';
-import { validatePassword } from './password';
+import { validateEmail } from './validate-email';
+import { validatePassword } from './validate-password';
 
 export function validateCredentials (credentials) {
   const { email, password } = credentials;

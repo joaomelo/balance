@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { appName } from '../../app/helpers';
 
-export function OutAppBar ({ children }) {
+export function AppBarBase ({ children }) {
   return (
     <AppBar position="sticky">
       <Toolbar>

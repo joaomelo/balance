@@ -2,29 +2,34 @@ import { useState } from 'react';
 import { GridToolbar, DataGrid } from '@material-ui/data-grid';
 import { DateTime } from 'luxon';
 import { ActionCell, useSwitch } from '../../../app/components';
-import { BalanceDialogView } from './balance-dialog-view';
+import { AccountDialogView } from './view-dialog';
 
-export function BalancesListView ({
+export function AccountsListView ({
   accounts,
-  balances,
+  groups,
   onDel,
   onEdit,
-  errorEdit,
+  error,
   isLoading
 }) {
   const [initialPayload, setInitialPayload] = useState({});
   const [isOpen, open, close] = useSwitch();
 
   const handleEditClick = id => {
-    const { accountId, amount, date } = balances.find(b => b.id === id);
-    setInitialPayload({ id, accountId, amount, date });
+    const { name, groupId } = accounts.find(a => a.id === id);
+    setInitialPayload({ id, name, groupId });
     open();
   };
 
   const columns = [
     {
-      field: 'accountName',
+      field: 'name',
       headerName: 'Account',
+      flex: 1
+    },
+    {
+      field: 'groupName',
+      headerName: 'Group',
       flex: 1
     },
     {
@@ -40,6 +45,8 @@ export function BalancesListView ({
       headerName: 'Amount',
       flex: 1,
       valueFormatter: (params) => {
+        if (!params.value) return '';
+
         const formatter = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD'
@@ -67,22 +74,30 @@ export function BalancesListView ({
     }
   ];
 
+  const rows = accounts.map(a => {
+    const { balances, ...accountData } = a;
+    const { date, amount } = balances.length > 0
+      ? balances[0]
+      : { date: null, amount: null };
+    return { date, amount, ...accountData };
+  });
+
   return (
     <>
       <DataGrid
-        rows={balances}
+        rows={rows}
         columns={columns}
         autoPageSize
         density="compact"
         components={{ Toolbar: GridToolbar }}
-        sortModel={[{ field: 'date', sort: 'desc' }]}
+        sortModel={[{ field: 'name', sort: 'asc' }]}
         disableSelectionOnClick
       />
       {isOpen &&
-        <BalanceDialogView
+        <AccountDialogView
           initialPayload={initialPayload}
-          accounts={accounts}
-          error={errorEdit}
+          groups={groups}
+          error={error}
           onSubmit={onEdit}
           isOpen={isOpen}
           onClose={close}

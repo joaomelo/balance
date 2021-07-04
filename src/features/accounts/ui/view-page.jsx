@@ -1,6 +1,6 @@
 import { ListViewTop } from '../../../app/components';
-import { AccountAddView } from './account-add-view';
-import { AccountsListView } from './accounts-list-view';
+import { AccountsListView } from './view-list';
+import { AccountAddView } from './view-add';
 
 export function AccountsPageView ({
   accounts,

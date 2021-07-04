@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { MuiProvider } from '../../app/mui';
 import { useQuery } from '../../app/query';
 import { NotFound } from '../not-found';
-import { InLayout } from './in-layout';
-import { OutLayout } from './out-layout';
+import { LayoutIn } from './layout-in';
+import { LayoutOut } from './layout-out';
 
 export function Root ({ dependencies }) {
   const { isSignedInSelector } = dependencies;
@@ -16,11 +16,11 @@ export function Root ({ dependencies }) {
           <Redirect exact from="/" to={isSignedIn ? '/i' : '/o'} />
           <Route path='/o'>
             { isSignedIn && <Redirect to="/i" /> }
-            <OutLayout dependencies={dependencies} />
+            <LayoutOut dependencies={dependencies} />
           </Route>
           <Route path="/i">
             { !isSignedIn && <Redirect to="/o" /> }
-            <InLayout dependencies={dependencies} />
+            <LayoutIn dependencies={dependencies} />
           </Route>
           <Route path="/not-found">
             <NotFound />

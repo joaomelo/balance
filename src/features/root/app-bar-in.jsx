@@ -21,15 +21,15 @@ import { camelCase } from '../../app/helpers';
 import { useSwitch, useCommand } from '../../app/components';
 import { signOutCommand } from '../auth';
 import { AppVersion } from './app-version';
-import { OutAppBar } from './out-app-bar';
+import { AppBarBase } from './app-bar-base';
 
-export function InAppBar ({ dependencies }) {
+export function AppBarIn ({ dependencies }) {
   const [isOpen, open, close] = useSwitch();
   const [onSignOut] = useCommand(dependencies, signOutCommand);
 
   return (
     <>
-      <OutAppBar>
+      <AppBarBase>
         <Box mr={1}>
           <IconButton
             id="buttonNav"
@@ -40,7 +40,7 @@ export function InAppBar ({ dependencies }) {
             <Menu />
           </IconButton>
         </Box>
-      </OutAppBar>
+      </AppBarBase>
       <AppDrawer
         isOpen={isOpen}
         onClose={close}

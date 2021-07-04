@@ -1,7 +1,7 @@
 import { useCommand } from '../../../app/components';
 import { useQuery } from '../../../app/query';
 import { setAccountCommand, delAccountCommand } from '../commands';
-import { AccountsPageView } from './accounts-page-view';
+import { AccountsPageView } from './view-page';
 
 export function AccountsPagePresenter ({ dependencies }) {
   const {

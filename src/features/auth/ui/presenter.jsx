@@ -1,6 +1,6 @@
 import { useCommand } from '../../../app/components';
 import { signInCommand } from '../commands';
-import { SignInPageView } from './sign-in-page-view';
+import { SignInPageView } from './view';
 
 export function SignInPagePresenter ({ dependencies }) {
   const [onSignIn, isSigning, error] = useCommand(dependencies, signInCommand);

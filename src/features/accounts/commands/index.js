@@ -1,2 +1,2 @@
-export * from './del-account';
-export * from './set-account';
+export * from './del';
+export * from './set';

@@ -1,7 +1,7 @@
 import { useCommand } from '../../../app/components';
 import { useQuery } from '../../../app/query';
 import { setBalanceCommand, delBalanceCommand } from '../commands';
-import { BalancesPageView } from './balances-page-view';
+import { BalancesPageView } from './view-page';
 
 export function BalancesPagePresenter ({ dependencies }) {
   const {

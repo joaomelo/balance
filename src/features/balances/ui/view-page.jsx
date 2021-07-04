@@ -1,6 +1,6 @@
 import { ListViewTop } from '../../../app/components';
-import { BalanceAddView } from './balance-add-view';
-import { BalancesListView } from './balances-list-view';
+import { BalanceAddView } from './view-add';
+import { BalancesListView } from './view-list';
 
 export function BalancesPageView ({
   balances,
