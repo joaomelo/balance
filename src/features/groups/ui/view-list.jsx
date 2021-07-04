@@ -8,8 +8,7 @@ export function GroupsListView ({
   onDel,
   onEdit,
   error,
-  isLoading,
-  t
+  isLoading
 }) {
   const [initialPayload, setInitialPayload] = useState({});
   const [isOpen, open, close] = useSwitch();
@@ -78,7 +77,6 @@ export function GroupsListView ({
           isOpen={isOpen}
           onClose={close}
           isLoading={isLoading}
-          t={t}
         />
       }
     </>

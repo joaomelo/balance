@@ -41,9 +41,6 @@ export function GroupsPagePresenter ({ dependencies }) {
     isDeleting
   ] = useCommand(commandsDependencies, delGroupCommand);
 
-  const { useI18n } = dependencies;
-  const { t } = useI18n();
-
   return (
     <GroupsPageView
       groups={groups}
@@ -53,7 +50,6 @@ export function GroupsPagePresenter ({ dependencies }) {
       errorEdit={errorEdit}
       onDel={onDel}
       isLoading={isAdding || isDeleting || isEditing}
-      t={t}
     />
   );
 }

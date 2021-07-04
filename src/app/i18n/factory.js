@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { useTranslation, initReactI18next } from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 import { bundleModulesMessages } from './resources';
 
 export async function initI18nProvider (modules) {
@@ -14,6 +14,4 @@ export async function initI18nProvider (modules) {
         escapeValue: false
       }
     });
-
-  return useTranslation;
 }

@@ -10,8 +10,7 @@ export function AccountsPagePresenter ({ dependencies }) {
     groupsWithRelationshipsSelector,
     accountsMutations,
     balancesMutations,
-    userIdSelector,
-    useI18n
+    userIdSelector
   } = dependencies;
 
   const accounts = useQuery(accountsWithRelationshipsSelector);
@@ -30,8 +29,6 @@ export function AccountsPagePresenter ({ dependencies }) {
   const [onEdit, isEditing, errorEdit] = useCommand(commandsDependencies, setAccountCommand);
   const [onDel, isDeleting] = useCommand(commandsDependencies, delAccountCommand);
 
-  const { t } = useI18n();
-
   return (
     <AccountsPageView
       accounts={accounts}
@@ -42,7 +39,6 @@ export function AccountsPagePresenter ({ dependencies }) {
       errorEdit={errorEdit}
       onDel={onDel}
       isLoading={isAdding || isDeleting || isEditing}
-      t={t}
     />
   );
 }

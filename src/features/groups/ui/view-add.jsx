@@ -6,8 +6,7 @@ export function GroupAddView ({
   accounts,
   onAdd,
   error,
-  isLoading,
-  t
+  isLoading
 }) {
   const initialPayload = { name: '' };
   const [isOpen, open, close] = useSwitch();
@@ -30,7 +29,6 @@ export function GroupAddView ({
           isOpen={isOpen}
           onClose={close}
           isLoading={isLoading}
-          t={t}
         />
       }
     </>

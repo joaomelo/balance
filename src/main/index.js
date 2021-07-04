@@ -31,7 +31,7 @@ import {
 import { selectComposedHistory } from '../features/history';
 
 async function main () {
-  const useI18n = await initI18nProvider([
+  await initI18nProvider([
     messagesCommon,
     messagesAuth,
     messagesBalance,
@@ -82,7 +82,6 @@ async function main () {
   );
 
   const dependencies = {
-    useI18n,
     identityMutations,
     userIdSelector,
     isSignedInSelector,

@@ -7,7 +7,6 @@ export function BalanceAddView ({
   accounts,
   onAdd,
   error,
-  t,
   isLoading
 }) {
   const initialPayload = {
@@ -35,7 +34,6 @@ export function BalanceAddView ({
           onSubmit={onAdd}
           isOpen={isOpen}
           onClose={close}
-          t={t}
           isLoading={isLoading}
         />
       }

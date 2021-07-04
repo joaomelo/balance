@@ -13,6 +13,7 @@ import {
   ProgressDivider,
   SaveCancel
 } from '../../../app/components';
+import { useI18n } from '../../../app/i18n';
 import { createErrorReport } from '../../../app/error';
 
 export function GroupDialogView ({
@@ -21,9 +22,9 @@ export function GroupDialogView ({
   onSubmit,
   isOpen,
   onClose,
-  isLoading,
-  t
+  isLoading
 }) {
+  const t = useI18n();
   const { payload, bind, reset } = usePayload(initialPayload);
   const handleSubmit = async () => {
     const success = await onSubmit(payload);

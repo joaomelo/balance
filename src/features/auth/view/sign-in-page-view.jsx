@@ -25,9 +25,11 @@ import {
   ErrorAlert,
   ProgressDivider
 } from '../../../app/components';
+import { useI18n } from '../../../app/i18n';
 import { createErrorReport } from '../../../app/error';
 
-export function SignInPageView ({ onSignIn, error, isLoading, t }) {
+export function SignInPageView ({ onSignIn, error, isLoading }) {
+  const t = useI18n();
   const initialPayload = { email: '', password: '' };
   const { payload, bind } = usePayload(initialPayload);
 

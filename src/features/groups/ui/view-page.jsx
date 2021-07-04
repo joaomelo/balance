@@ -9,8 +9,7 @@ export function GroupsPageView ({
   onEdit,
   errorEdit,
   onDel,
-  isLoading,
-  t
+  isLoading
 }) {
   return (
     <>
@@ -19,7 +18,6 @@ export function GroupsPageView ({
           onAdd={onAdd}
           error={errorAdd}
           isLoading={isLoading}
-          t={t}
         />
       </ListViewTop>
       <GroupsListView
@@ -28,7 +26,6 @@ export function GroupsPageView ({
         onEdit={onEdit}
         error={errorEdit}
         isLoading={isLoading}
-        t={t}
       />
     </>
   );

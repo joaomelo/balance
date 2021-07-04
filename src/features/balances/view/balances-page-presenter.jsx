@@ -39,9 +39,6 @@ export function BalancesPagePresenter ({ dependencies }) {
     isDeleting
   ] = useCommand(commandsDependencies, delBalanceCommand);
 
-  const { useI18n } = dependencies;
-  const { t } = useI18n();
-
   return (
     <BalancesPageView
       balances={balances}
@@ -52,7 +49,6 @@ export function BalancesPagePresenter ({ dependencies }) {
       errorEdit={errorEdit}
       onDel={onDel}
       isLoading={isAdding || isDeleting || isEditing}
-      t={t}
     />
   );
 }
