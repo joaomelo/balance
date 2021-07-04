@@ -4,17 +4,15 @@ import { validateAccount } from '../body';
 export async function setAccountCommand (dependencies, payload) {
   const {
     accountsMutations,
-    activeAccountsSelector,
-    userIdSelector
+    accounts,
+    userId
   } = dependencies;
 
-  validateAccount({
-    accounts: activeAccountsSelector.current
-  }, payload);
+  validateAccount({ accounts }, payload);
 
   const account = {
     id: createUuid(),
-    user: userIdSelector.current,
+    user: userId,
     ...payload
   };
 

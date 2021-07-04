@@ -4,13 +4,42 @@ import { setGroupCommand, delGroupCommand } from '../commands';
 import { GroupsPageView } from './view-page';
 
 export function GroupsPagePresenter ({ dependencies }) {
-  const { groupsWithRelationshipsSelector } = dependencies;
+  const {
+    accountsMutations,
+    accountsWithRelationshipsSelector,
+    groupsMutations,
+    groupsWithRelationshipsSelector,
+    userIdSelector
+  } = dependencies;
 
+  const accounts = useQuery(accountsWithRelationshipsSelector);
   const groups = useQuery(groupsWithRelationshipsSelector);
+  const userId = useQuery(userIdSelector);
 
-  const [onAdd, isAdding, errorAdd] = useCommand(dependencies, setGroupCommand);
-  const [onEdit, isEditing, errorEdit] = useCommand(dependencies, setGroupCommand);
-  const [onDel, isDeleting] = useCommand(dependencies, delGroupCommand);
+  const commandsDependencies = {
+    accountsMutations,
+    accounts,
+    groupsMutations,
+    groups,
+    userId
+  };
+
+  const [
+    onAdd,
+    isAdding,
+    errorAdd
+  ] = useCommand(commandsDependencies, setGroupCommand);
+
+  const [
+    onEdit,
+    isEditing,
+    errorEdit
+  ] = useCommand(commandsDependencies, setGroupCommand);
+
+  const [
+    onDel,
+    isDeleting
+  ] = useCommand(commandsDependencies, delGroupCommand);
 
   const { useI18n } = dependencies;
   const { t } = useI18n();

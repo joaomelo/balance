@@ -1,22 +1,25 @@
 import { createUuid } from '../../../app/ids';
 import { validateBalance } from '../body';
 
-export async function setBalanceCommand (dependencies, payload) {
+export async function setBalanceCommand (
+  dependencies,
+  payload
+) {
   const {
     balancesMutations,
-    activeAccountsSelector,
-    activeBalancesSelector,
-    userIdSelector
+    accounts,
+    balances,
+    userId
   } = dependencies;
 
   validateBalance({
-    accounts: activeAccountsSelector.current,
-    balances: activeBalancesSelector.current
+    accounts,
+    balances
   }, payload);
 
   const balance = {
     id: createUuid(),
-    user: userIdSelector.current,
+    user: userId,
     ...payload
   };
 

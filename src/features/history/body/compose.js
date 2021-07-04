@@ -1,4 +1,4 @@
-export function projectHistory (groups, accounts) {
+export function projectComposedHistory (groups, accounts) {
   const groupsHistory = mapCollectionHistory(groups);
   const accountsHistory = mapCollectionHistory(accounts);
   return [...groupsHistory, ...accountsHistory];

@@ -2,14 +2,13 @@ export async function delGroupCommand (dependencies, payload) {
   const {
     groupsMutations,
     accountsMutations,
-    activeAccountsSelector
+    accounts
   } = dependencies;
 
   const { id } = payload;
   await groupsMutations.del(id);
 
-  const detachPromises = activeAccountsSelector
-    .current
+  const detachPromises = accounts
     .filter(({ groupId }) => groupId === id)
     .map(({ groupId, ...accountData }) => accountsMutations.set(accountData));
 

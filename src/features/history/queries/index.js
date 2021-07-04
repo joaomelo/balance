@@ -1,1 +1,1 @@
-export * from './composed-history';
+export * from './composed';

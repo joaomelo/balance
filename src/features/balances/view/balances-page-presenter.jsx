@@ -5,16 +5,39 @@ import { BalancesPageView } from './balances-page-view';
 
 export function BalancesPagePresenter ({ dependencies }) {
   const {
-    activeAccountsSelector,
-    balancesWithAccountSelector
+    accountsWithRelationshipsSelector,
+    balancesWithRelationshipsSelector,
+    userIdSelector,
+    balancesMutations
   } = dependencies;
 
-  const accounts = useQuery(activeAccountsSelector);
-  const balances = useQuery(balancesWithAccountSelector);
+  const accounts = useQuery(accountsWithRelationshipsSelector);
+  const balances = useQuery(balancesWithRelationshipsSelector);
+  const userId = useQuery(userIdSelector);
 
-  const [onAdd, isAdding, errorAdd] = useCommand(dependencies, setBalanceCommand);
-  const [onEdit, isEditing, errorEdit] = useCommand(dependencies, setBalanceCommand);
-  const [onDel, isDeleting] = useCommand(dependencies, delBalanceCommand);
+  const commandsDependencies = {
+    balancesMutations,
+    accounts,
+    balances,
+    userId
+  };
+
+  const [
+    onAdd,
+    isAdding,
+    errorAdd
+  ] = useCommand(commandsDependencies, setBalanceCommand);
+
+  const [
+    onEdit,
+    isEditing,
+    errorEdit
+  ] = useCommand(commandsDependencies, setBalanceCommand);
+
+  const [
+    onDel,
+    isDeleting
+  ] = useCommand(commandsDependencies, delBalanceCommand);
 
   const { useI18n } = dependencies;
   const { t } = useI18n();

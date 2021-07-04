@@ -1,1 +1,1 @@
-export * from './relationships';
+export * from './compose';

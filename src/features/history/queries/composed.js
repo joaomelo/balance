@@ -1,5 +1,5 @@
 import { select } from '../../../app/query';
-import { projectHistory } from '../body';
+import { projectComposedHistory } from '../body';
 
 export function selectComposedHistory (
   groupsSelector,
@@ -10,6 +10,6 @@ export function selectComposedHistory (
       groupsSelector,
       accountsSelector
     ],
-    values => projectHistory(...values)
+    values => projectComposedHistory(...values)
   );
 }

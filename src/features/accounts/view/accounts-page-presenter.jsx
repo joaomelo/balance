@@ -6,17 +6,30 @@ import { AccountsPageView } from './accounts-page-view';
 export function AccountsPagePresenter ({ dependencies }) {
   const {
     accountsWithRelationshipsSelector,
-    activeGroupsSelector
+    balancesWithRelationshipsSelector,
+    groupsWithRelationshipsSelector,
+    accountsMutations,
+    balancesMutations,
+    userIdSelector,
+    useI18n
   } = dependencies;
 
   const accounts = useQuery(accountsWithRelationshipsSelector);
-  const groups = useQuery(activeGroupsSelector);
+  const balances = useQuery(balancesWithRelationshipsSelector);
+  const groups = useQuery(groupsWithRelationshipsSelector);
+  const userId = useQuery(userIdSelector);
 
-  const [onAdd, isAdding, errorAdd] = useCommand(dependencies, setAccountCommand);
-  const [onEdit, isEditing, errorEdit] = useCommand(dependencies, setAccountCommand);
-  const [onDel, isDeleting] = useCommand(dependencies, delAccountCommand);
+  const commandsDependencies = {
+    accounts,
+    balances,
+    userId,
+    accountsMutations,
+    balancesMutations
+  };
+  const [onAdd, isAdding, errorAdd] = useCommand(commandsDependencies, setAccountCommand);
+  const [onEdit, isEditing, errorEdit] = useCommand(commandsDependencies, setAccountCommand);
+  const [onDel, isDeleting] = useCommand(commandsDependencies, delAccountCommand);
 
-  const { useI18n } = dependencies;
   const { t } = useI18n();
 
   return (

@@ -2,14 +2,13 @@ export async function delAccountCommand (dependencies, payload) {
   const {
     accountsMutations,
     balancesMutations,
-    activeBalancesSelector
+    balances
   } = dependencies;
 
   const { id } = payload;
   await accountsMutations.del(id);
 
-  const balancesIds = activeBalancesSelector
-    .current
+  const balancesIds = balances
     .filter(b => b.accountId === id)
     .map(b => b.id);
 

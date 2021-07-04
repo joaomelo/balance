@@ -22,7 +22,7 @@ import {
 } from '../features/accounts';
 import {
   messagesBalance,
-  selectBalancesWithAccount
+  selectBalancesWithRelationships
 } from '../features/balances';
 import {
   messagesGroups,
@@ -61,11 +61,10 @@ async function main () {
   const groupsQuery = queryRepoWithUser(userIdSelector, groupsCollection.orderBy('name'));
   const activeGroupsSelector = selectActiveItems(groupsQuery);
 
-  const balancesWithAccountSelector = selectBalancesWithAccount(
+  const balancesWithRelationshipsSelector = selectBalancesWithRelationships(
     activeBalancesSelector,
     activeAccountsSelector
   );
-
   const accountsWithRelationshipsSelector = selectAccountsWithRelationships(
     activeAccountsSelector,
     activeGroupsSelector,
@@ -76,6 +75,7 @@ async function main () {
     activeAccountsSelector,
     activeBalancesSelector
   );
+
   const composedHistorySelector = selectComposedHistory(
     groupsWithRelationshipsSelector,
     accountsWithRelationshipsSelector
@@ -84,19 +84,13 @@ async function main () {
   const dependencies = {
     useI18n,
     identityMutations,
-    userQuery,
     userIdSelector,
     isSignedInSelector,
     accountsMutations,
-    accountsQuery,
-    activeAccountsSelector,
     accountsWithRelationshipsSelector,
     balancesMutations,
-    balancesQuery,
-    activeBalancesSelector,
-    balancesWithAccountSelector,
+    balancesWithRelationshipsSelector,
     groupsMutations,
-    activeGroupsSelector,
     groupsWithRelationshipsSelector,
     composedHistorySelector
   };
