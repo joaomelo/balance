@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import {
   Box,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemIcon,
@@ -14,44 +13,15 @@ import {
   AccountBalanceWalletTwoTone,
   AssessmentTwoTone,
   GroupWorkTwoTone,
-  MeetingRoomTwoTone,
-  Menu
+  MeetingRoomTwoTone
 } from '@material-ui/icons';
 import { camelCase } from '../../app/helpers';
-import { useSwitch } from '../../app/components/switch';
-import { useCommand } from '../../app/components/command';
-import { signOutCommand } from '../auth';
-import { AppVersion } from './app-version';
-import { AppBarBase } from './app-bar-base';
 
-export function AppBarIn ({ dependencies }) {
-  const [isOpen, open, close] = useSwitch();
-  const [onSignOut] = useCommand(dependencies, signOutCommand);
-
-  return (
-    <>
-      <AppBarBase>
-        <Box mr={1}>
-          <IconButton
-            id="buttonNav"
-            edge="start"
-            color="inherit"
-            onClick={open}
-          >
-            <Menu />
-          </IconButton>
-        </Box>
-      </AppBarBase>
-      <AppDrawer
-        isOpen={isOpen}
-        onClose={close}
-        onSignOut={onSignOut}
-      />
-    </>
-  );
-}
-
-function AppDrawer ({ isOpen, onClose, onSignOut }) {
+export function AppSidebar ({
+  isOpen,
+  onClose,
+  onSignOut
+}) {
   return (
     <Drawer
       open={isOpen}
@@ -87,7 +57,6 @@ function AppDrawer ({ isOpen, onClose, onSignOut }) {
             onClick={onSignOut}
           />
         </List>
-        <AppVersionPositioned />
       </Box>
     </Drawer>
   );
@@ -117,18 +86,5 @@ function ListAction ({ icon, text, onClick }) {
         <ListItemText primary={text} />
       </ListItem>
     </li>
-  );
-}
-
-function AppVersionPositioned () {
-  return (
-    <Box
-      position="absolute"
-      bottom={0}
-      right={0}
-      marginRight={1}
-    >
-      <AppVersion />
-    </Box>
   );
 }

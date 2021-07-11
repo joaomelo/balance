@@ -3,6 +3,7 @@ import { Box } from '@material-ui/core';
 export function WrapperPage (props) {
   return (
     <Box
+      id="wrapper-page"
       display="flex"
       flexDirection="column"
       flexGrow={1}
