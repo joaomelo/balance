@@ -1,4 +1,4 @@
-import { ListViewTop } from '../../../app/components';
+import { ListViewTop } from '../../../app/components/list-view-top';
 import { BalanceAddView } from './view-add';
 import { BalancesListView } from './view-list';
 

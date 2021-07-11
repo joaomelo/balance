@@ -1,18 +1,7 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  TextField
-} from '@material-ui/core';
-import {
-  usePayload,
-  ErrorAlert,
-  Form,
-  ProgressDivider,
-  SaveCancel
-} from '../../../app/components';
+import { TextField } from '@material-ui/core';
+import { usePayload } from '../../../app/components/payload';
+import { ErrorAlert } from '../../../app/components/error-alert';
+import { ItemDialog } from '../../../app/components/item-dialog';
 import { useI18n } from '../../../app/i18n';
 import { createErrorReport } from '../../../app/error';
 
@@ -39,30 +28,19 @@ export function GroupDialogView ({
   });
 
   return (
-    <Dialog
-      maxWidth="xs"
-      open={isOpen}
+    <ItemDialog
+      title='Group'
+      isLoading={isLoading}
+      isOpen={isOpen}
       onClose={onClose}
+      onSubmit={handleSubmit}
     >
-      <Form onSubmit={handleSubmit}>
-        <DialogTitle>Group</DialogTitle>
-        <Divider />
-        <DialogContent>
-          <NameField
-            error={t(errorReport.name)}
-            {...bind('name')}
-          />
-          <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
-        </DialogContent>
-        <ProgressDivider isLoading={isLoading}/>
-        <DialogActions>
-          <SaveCancel
-            isLoading={isLoading}
-            onCancel={onClose}
-          />
-        </DialogActions>
-      </Form>
-    </Dialog>
+      <NameField
+        error={t(errorReport.name)}
+        {...bind('name')}
+      />
+      <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
+    </ItemDialog>
   );
 }
 
@@ -71,10 +49,10 @@ function NameField ({ error, ...rest }) {
     <TextField
       id='inputName'
       autoFocus
-      label="Name"
-      variant="outlined"
+      label='Name'
+      variant='outlined'
       fullWidth
-      margin="normal"
+      margin='normal'
       required
       error={!!error}
       helperText={error}

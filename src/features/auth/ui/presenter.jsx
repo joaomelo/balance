@@ -1,4 +1,4 @@
-import { useCommand } from '../../../app/components';
+import { useCommand } from '../../../app/components/command';
 import { signInCommand } from '../commands';
 import { SignInPageView } from './view';
 

@@ -18,13 +18,11 @@ import {
   VisibilityTwoTone,
   VisibilityOffTwoTone
 } from '@material-ui/icons';
-import {
-  usePayload,
-  useToggle,
-  Form,
-  ErrorAlert,
-  ProgressDivider
-} from '../../../app/components';
+import { usePayload } from '../../../app/components/payload';
+import { useToggle } from '../../../app/components/switch';
+import { Form } from '../../../app/components/form';
+import { ErrorAlert } from '../../../app/components/error-alert';
+import { ProgressDivider } from '../../../app/components/progress-divider';
 import { useI18n } from '../../../app/i18n';
 import { createErrorReport } from '../../../app/error';
 

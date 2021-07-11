@@ -1,4 +1,4 @@
-import { useCommand } from '../../../app/components';
+import { useCommand } from '../../../app/components/command';
 import { useQuery } from '../../../app/query';
 import { setBalanceCommand, delBalanceCommand } from '../commands';
 import { BalancesPageView } from './view-page';

@@ -1,21 +1,9 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  MenuItem,
-  TextField
-} from '@material-ui/core';
+import { MenuItem, TextField } from '@material-ui/core';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import NumberFormat from 'react-number-format';
-import {
-  usePayload,
-  Form,
-  ErrorAlert,
-  ProgressDivider,
-  SaveCancel
-} from '../../../app/components';
+import { usePayload } from '../../../app/components/payload';
+import { ErrorAlert } from '../../../app/components/error-alert';
+import { ItemDialog } from '../../../app/components/item-dialog';
 import { useI18n } from '../../../app/i18n';
 import { createErrorReport } from '../../../app/error';
 
@@ -45,39 +33,28 @@ export function BalanceDialogView ({
   });
 
   return (
-    <Dialog
-      maxWidth="xs"
-      open={isOpen}
+    <ItemDialog
+      title='Balance'
+      isLoading={isLoading}
+      isOpen={isOpen}
       onClose={onClose}
+      onSubmit={handleSubmit}
     >
-      <Form onSubmit={handleSubmit}>
-        <DialogTitle>Balance</DialogTitle>
-        <Divider />
-        <DialogContent>
-          <AccountField
-            accounts={accounts}
-            error={t(errorReport.account)}
-            {...bind('accountId')}
-          />
-          <DateField
-            error={t(errorReport.date)}
-            {...bind('date')}
-          />
-          <AmountField
-            error={t(errorReport.amount)}
-            {...bind('amount')}
-          />
-          <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
-        </DialogContent>
-        <ProgressDivider isLoading={isLoading} />
-        <DialogActions>
-          <SaveCancel
-            onCancel={onClose}
-            isLoading={isLoading}
-          />
-        </DialogActions>
-      </Form>
-    </Dialog>
+      <AccountField
+        accounts={accounts}
+        error={t(errorReport.account)}
+        {...bind('accountId')}
+      />
+      <DateField
+        error={t(errorReport.date)}
+        {...bind('date')}
+      />
+      <AmountField
+        error={t(errorReport.amount)}
+        {...bind('amount')}
+      />
+      <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
+    </ItemDialog>
   );
 }
 

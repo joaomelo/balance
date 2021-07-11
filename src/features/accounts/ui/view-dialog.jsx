@@ -1,19 +1,7 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  MenuItem,
-  TextField
-} from '@material-ui/core';
-import {
-  usePayload,
-  ErrorAlert,
-  Form,
-  ProgressDivider,
-  SaveCancel
-} from '../../../app/components';
+import { MenuItem, TextField } from '@material-ui/core';
+import { usePayload } from '../../../app/components/payload';
+import { ErrorAlert } from '../../../app/components/error-alert';
+import { ItemDialog } from '../../../app/components/item-dialog';
 import { useI18n } from '../../../app/i18n';
 import { createErrorReport } from '../../../app/error';
 
@@ -41,34 +29,23 @@ export function AccountDialogView ({
   });
 
   return (
-    <Dialog
-      maxWidth="xs"
-      open={isOpen}
+    <ItemDialog
+      title='Account'
+      isLoading={isLoading}
+      isOpen={isOpen}
       onClose={onClose}
+      onSubmit={handleSubmit}
     >
-      <Form onSubmit={handleSubmit}>
-        <DialogTitle>Account</DialogTitle>
-        <Divider />
-        <DialogContent>
-          <NameField
-            error={t(errorReport.name)}
-            {...bind('name')}
-          />
-          <GroupField
-            groups={groups}
-            {...bind('groupId')}
-          />
-          <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
-        </DialogContent>
-        <ProgressDivider isLoading={isLoading}/>
-        <DialogActions>
-          <SaveCancel
-            isLoading={isLoading}
-            onCancel={onClose}
-          />
-        </DialogActions>
-      </Form>
-    </Dialog>
+      <NameField
+        error={t(errorReport.name)}
+        {...bind('name')}
+      />
+      <GroupField
+        groups={groups}
+        {...bind('groupId')}
+      />
+      <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
+    </ItemDialog>
   );
 }
 

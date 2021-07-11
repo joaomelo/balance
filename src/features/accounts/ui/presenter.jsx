@@ -1,4 +1,4 @@
-import { useCommand } from '../../../app/components';
+import { useCommand } from '../../../app/components/command';
 import { useQuery } from '../../../app/query';
 import { setAccountCommand, delAccountCommand } from '../commands';
 import { AccountsPageView } from './view-page';

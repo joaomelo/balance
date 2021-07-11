@@ -1,4 +1,4 @@
-import { ListViewTop } from '../../../app/components';
+import { ListViewTop } from '../../../app/components/list-view-top';
 import { GroupAddView } from './view-add';
 import { GroupsListView } from './view-list';
 

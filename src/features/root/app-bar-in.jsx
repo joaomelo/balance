@@ -18,7 +18,8 @@ import {
   Menu
 } from '@material-ui/icons';
 import { camelCase } from '../../app/helpers';
-import { useSwitch, useCommand } from '../../app/components';
+import { useSwitch } from '../../app/components/switch';
+import { useCommand } from '../../app/components/command';
 import { signOutCommand } from '../auth';
 import { AppVersion } from './app-version';
 import { AppBarBase } from './app-bar-base';
