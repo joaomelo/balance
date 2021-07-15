@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { AccountsPagePresenter } from '../accounts';
 import { BalancesPagePresenter } from '../balances';
 import { GroupsPagePresenter } from '../groups';
@@ -8,20 +8,18 @@ import { NotFoundPageView } from '../not-found';
 
 export function CurrentPage ({ isSignedIn, ...rest }) {
   return (
-    <Router >
-      <Switch>
-        <Redirect exact from="/" to={isSignedIn ? '/i' : '/o'} />
-        <Route path='/o'>
-          { isSignedIn && <Redirect to="/i" /> }
-          <OutPage {...rest} />
-        </Route>
-        <Route path="/i">
-          { !isSignedIn && <Redirect to="/o" /> }
-          <InPage {...rest} />
-        </Route>
-        <Redirect to='/o/not-found' />
-      </Switch>
-    </Router>
+    <Switch>
+      <Redirect exact from="/" to={isSignedIn ? '/i' : '/o'} />
+      <Route path='/o'>
+        { isSignedIn && <Redirect to="/i" /> }
+        <OutPage {...rest} />
+      </Route>
+      <Route path="/i">
+        { !isSignedIn && <Redirect to="/o" /> }
+        <InPage {...rest} />
+      </Route>
+      <Redirect to='/o/not-found' />
+    </Switch>
   );
 }
 

@@ -4,7 +4,6 @@ import { AppSidebar } from './app-sidebar';
 
 export function AppNav ({ isSignedIn, onSignOut }) {
   const [isOpen, open, close] = useSwitch();
-
   return (
     <>
       <AppTopbar

@@ -32,7 +32,7 @@ function Hamburger ({ show, onClick }) {
         id="buttonNav"
         edge="start"
         color="inherit"
-        onClick={open}
+        onClick={onClick}
       >
         <Menu />
       </IconButton>

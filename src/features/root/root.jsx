@@ -1,4 +1,5 @@
 import { MuiProvider } from '../../app/mui';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { useQuery } from '../../app/query';
 import { useCommand } from '../../app/components/command';
 import { signOutCommand } from '../auth';
@@ -13,7 +14,7 @@ export function Root ({ dependencies }) {
   const [onSignOut] = useCommand(dependencies, signOutCommand);
 
   return (
-    <MuiProvider>
+    <Providers>
       <WrapperRoot>
         <AppNav
           isSignedIn={isSignedIn}
@@ -26,6 +27,16 @@ export function Root ({ dependencies }) {
           />
         </WrapperPage>
       </WrapperRoot>
+    </Providers>
+  );
+}
+
+function Providers ({ children }) {
+  return (
+    <MuiProvider>
+      <Router>
+        {children}
+      </Router>
     </MuiProvider>
   );
 }
