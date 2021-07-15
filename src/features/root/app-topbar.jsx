@@ -1,7 +1,9 @@
+import { Link as RouterLink } from 'react-router-dom';
 import {
   AppBar,
   Box,
   IconButton,
+  Link,
   Toolbar,
   Typography
 } from '@material-ui/core';
@@ -46,7 +48,14 @@ function AppName () {
       component="h1"
       variant="h6"
     >
-      {appName().toUpperCase()}
+      <Link
+        to='/'
+        component={RouterLink}
+        color='inherit'
+        underline='none'
+      >
+        {appName().toUpperCase()}
+      </Link>
     </Typography>
   );
 }
