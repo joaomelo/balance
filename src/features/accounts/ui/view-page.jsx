@@ -1,4 +1,5 @@
-import { PageHeader } from '../../../app/components/list-view-top';
+import { PageHeader } from '../../../app/components/page-header';
+import { PageContent } from '../../../app/components/page-content';
 import { AccountsListView } from './view-list';
 import { AccountAddView } from './view-add';
 
@@ -22,14 +23,16 @@ export function AccountsPageView ({
             isLoading={isLoading}
           />
       </PageHeader>
-      <AccountsListView
-        accounts={accounts}
-        groups={groups}
-        onDel={onDel}
-        onEdit={onEdit}
-        error={errorEdit}
-        isLoading={isLoading}
-      />
+      <PageContent>
+        <AccountsListView
+          accounts={accounts}
+          groups={groups}
+          onDel={onDel}
+          onEdit={onEdit}
+          error={errorEdit}
+          isLoading={isLoading}
+        />
+      </PageContent>
     </>
   );
 }

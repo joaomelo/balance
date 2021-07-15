@@ -1,11 +1,15 @@
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
 import { Typography, Box, Link } from '@material-ui/core';
+import { PageContent } from '../../../app/components/page-content';
 import NotFoundSvg from './not-found.svg';
 
 export function NotFoundPageView () {
   return (
-    <Wrapper>
+    <PageContent
+      maxWidth={500}
+      justifyContent="center"
+      alignItems="center"
+    >
       <NotFoundSvg />
       <Box
         mt={2}
@@ -21,11 +25,6 @@ export function NotFoundPageView () {
           Go to Home Page
         </Link>
       </Box>
-    </Wrapper>
+    </PageContent>
   );
 }
-
-const Wrapper = styled.div`
-  width: 100%;
-  max-width: 500px;
-`;

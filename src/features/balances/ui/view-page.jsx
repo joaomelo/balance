@@ -1,4 +1,5 @@
-import { PageHeader } from '../../../app/components/list-view-top';
+import { PageHeader } from '../../../app/components/page-header';
+import { PageContent } from '../../../app/components/page-content';
 import { BalanceAddView } from './view-add';
 import { BalancesListView } from './view-list';
 
@@ -22,14 +23,16 @@ export function BalancesPageView ({
           isLoading={isLoading}
         />
       </PageHeader>
-      <BalancesListView
-        balances={balances}
-        accounts={accounts}
-        onDel={onDel}
-        onEdit={onEdit}
-        errorEdit={errorEdit}
-        isLoading={isLoading}
-      />
+      <PageContent>
+        <BalancesListView
+          balances={balances}
+          accounts={accounts}
+          onDel={onDel}
+          onEdit={onEdit}
+          errorEdit={errorEdit}
+          isLoading={isLoading}
+        />
+      </PageContent>
     </>
   );
 }

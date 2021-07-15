@@ -1,26 +1,20 @@
-import { PageHeader } from '../../../app/components/list-view-top';
+import { PageHeader } from '../../../app/components/page-header';
+import { PageContent } from '../../../app/components/page-content';
 import { DateChart } from '../../../app/components/date-chart';
-import styled from 'styled-components';
 
 export function HistoryPageView ({ history }) {
   return (
     <>
       <PageHeader title="History" />
-      <DateChartWrapper>
+      <PageContent
+        justifyContent="center"
+        alignItems="center"
+      >
         <DateChart
           id="balance-history"
           datasets={history}
         />
-      </DateChartWrapper>
+      </PageContent>
     </>
   );
 }
-
-const DateChartWrapper = styled.div`
-  width: 100%;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  padding: var(--size-200);
-  padding-bottom: var(--size-500);
-`;

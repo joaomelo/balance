@@ -36,9 +36,13 @@ export function InnerChart ({ datasets, id, ...rest }) {
   );
 }
 
-// the chart wrapper must obey the chart.js lib constraints for responsiveness
-// https://www.chartjs.org/docs/latest/configuration/responsive.html#important-note
 const ChartWrapper = styled.div`
+  // try to make the chart as big as possible inside its parent
   width: 100%;
+  height: 100%;
+  flex-grow: 1;
+
+  // the chart wrapper must obey the chart.js lib constraints for responsiveness
+  // https://www.chartjs.org/docs/latest/configuration/responsive.html#important-note
   position: relative;
 `;

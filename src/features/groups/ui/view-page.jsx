@@ -1,4 +1,5 @@
-import { PageHeader } from '../../../app/components/list-view-top';
+import { PageHeader } from '../../../app/components/page-header';
+import { PageContent } from '../../../app/components/page-content';
 import { GroupAddView } from './view-add';
 import { GroupsListView } from './view-list';
 
@@ -20,13 +21,15 @@ export function GroupsPageView ({
           isLoading={isLoading}
         />
       </PageHeader>
-      <GroupsListView
-        groups={groups}
-        onDel={onDel}
-        onEdit={onEdit}
-        error={errorEdit}
-        isLoading={isLoading}
-      />
+      <PageContent>
+        <GroupsListView
+          groups={groups}
+          onDel={onDel}
+          onEdit={onEdit}
+          error={errorEdit}
+          isLoading={isLoading}
+        />
+      </PageContent>
     </>
   );
 }
