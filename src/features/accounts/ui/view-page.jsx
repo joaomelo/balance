@@ -1,4 +1,4 @@
-import { ListViewTop } from '../../../app/components/list-view-top';
+import { PageHeader } from '../../../app/components/list-view-top';
 import { AccountsListView } from './view-list';
 import { AccountAddView } from './view-add';
 
@@ -14,14 +14,14 @@ export function AccountsPageView ({
 }) {
   return (
     <>
-      <ListViewTop title="Accounts">
+      <PageHeader title="Accounts">
         <AccountAddView
             groups={groups}
             onAdd={onAdd}
             error={errorAdd}
             isLoading={isLoading}
           />
-      </ListViewTop>
+      </PageHeader>
       <AccountsListView
         accounts={accounts}
         groups={groups}

@@ -1,11 +1,11 @@
-import { ListViewTop } from '../../../app/components/list-view-top';
+import { PageHeader } from '../../../app/components/list-view-top';
 import { DateChart } from '../../../app/components/date-chart';
 import styled from 'styled-components';
 
 export function HistoryPageView ({ history }) {
   return (
     <>
-      <ListViewTop title="History" />
+      <PageHeader title="History" />
       <DateChartWrapper>
         <DateChart
           id="balance-history"

@@ -1,4 +1,4 @@
-import { ListViewTop } from '../../../app/components/list-view-top';
+import { PageHeader } from '../../../app/components/list-view-top';
 import { BalanceAddView } from './view-add';
 import { BalancesListView } from './view-list';
 
@@ -14,14 +14,14 @@ export function BalancesPageView ({
 }) {
   return (
     <>
-      <ListViewTop title="Balances">
+      <PageHeader title="Balances">
         <BalanceAddView
           accounts={accounts}
           onAdd={onAdd}
           error={errorAdd}
           isLoading={isLoading}
         />
-      </ListViewTop>
+      </PageHeader>
       <BalancesListView
         balances={balances}
         accounts={accounts}

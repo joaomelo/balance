@@ -3,12 +3,13 @@ import {
   Typography
 } from '@material-ui/core';
 
-export function ListViewTop ({ title, children }) {
+export function PageHeader ({ title, children }) {
   return (
     <Box
       display="flex"
       justifyContent="space-between"
       alignItems="baseline"
+      width="100%"
       mb={4}
     >
       <Typography

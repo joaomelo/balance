@@ -1,4 +1,4 @@
-import { ListViewTop } from '../../../app/components/list-view-top';
+import { PageHeader } from '../../../app/components/list-view-top';
 import { GroupAddView } from './view-add';
 import { GroupsListView } from './view-list';
 
@@ -13,13 +13,13 @@ export function GroupsPageView ({
 }) {
   return (
     <>
-      <ListViewTop title="Groups">
+      <PageHeader title="Groups">
         <GroupAddView
           onAdd={onAdd}
           error={errorAdd}
           isLoading={isLoading}
         />
-      </ListViewTop>
+      </PageHeader>
       <GroupsListView
         groups={groups}
         onDel={onDel}
