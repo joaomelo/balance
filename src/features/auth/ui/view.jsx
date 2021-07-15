@@ -37,36 +37,34 @@ export function SignInPageView ({ onSignIn, error, isLoading }) {
   });
 
   return (
-    <>
-      <FormWrapper onSubmit={() => onSignIn(payload)}>
-        <CardHeader title="Sign In" />
-        <Divider />
-        <CardContent>
-          <EmailField
-            {...bind('email')}
-            error={t(errorReport.email)}
-          />
-          <PasswordField
-            {...bind('password')}
-            error={t(errorReport.password)}
-          />
-          <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
-        </CardContent>
-        <ProgressDivider isLoading={isLoading}/>
-        <CardActionsStyled>
-          <Button
-            id="buttonSignIn"
-            type="submit"
-            variant="contained"
-            color="primary"
-            startIcon={<LaunchTwoTone />}
-            disabled={isLoading}
-          >
-            Sign in
-          </Button>
-        </CardActionsStyled>
-      </FormWrapper>
-    </>
+    <FormWrapper onSubmit={() => onSignIn(payload)}>
+      <CardHeader title="Sign In" />
+      <Divider />
+      <CardContent>
+        <EmailField
+          {...bind('email')}
+          error={t(errorReport.email)}
+        />
+        <PasswordField
+          {...bind('password')}
+          error={t(errorReport.password)}
+        />
+        <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
+      </CardContent>
+      <ProgressDivider isLoading={isLoading}/>
+      <CardActionsStyled>
+        <Button
+          id="buttonSignIn"
+          type="submit"
+          variant="contained"
+          color="primary"
+          startIcon={<LaunchTwoTone />}
+          disabled={isLoading}
+        >
+          Sign in
+        </Button>
+      </CardActionsStyled>
+    </FormWrapper>
   );
 }
 

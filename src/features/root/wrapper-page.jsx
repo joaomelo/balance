@@ -5,6 +5,8 @@ export function WrapperPage (props) {
     <Box
       id="wrapper-page"
       display="flex"
+      justifyContent="center"
+      alignItems="center"
       flexDirection="column"
       flexGrow={1}
       width="100%"
