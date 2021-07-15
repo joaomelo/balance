@@ -18,13 +18,13 @@ import {
   VisibilityTwoTone,
   VisibilityOffTwoTone
 } from '@material-ui/icons';
-import { usePayload } from '../../../app/components/payload';
-import { useToggle } from '../../../app/components/switch';
-import { Form } from '../../../app/components/form';
-import { ErrorAlert } from '../../../app/components/error-alert';
-import { ProgressDivider } from '../../../app/components/progress-divider';
-import { useI18n } from '../../../app/i18n';
-import { createErrorReport } from '../../../app/error';
+import { usePayload } from '../../../components/payload';
+import { useToggle } from '../../../components/switch';
+import { Form } from '../../../components/form';
+import { ErrorAlert } from '../../../components/error-alert';
+import { ProgressDivider } from '../../../components/progress-divider';
+import { useI18n } from '../../../libs/i18n';
+import { createErrorReport } from '../../../libs/errors';
 
 export function SignInPageView ({ onSignIn, error, isLoading }) {
   const t = useI18n();

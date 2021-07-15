@@ -1,4 +1,4 @@
-import { AppError } from '../../../app/error';
+import { AppError } from '../../../libs/errors';
 
 export function validateGroup (context, groupData) {
   const { groups } = context;

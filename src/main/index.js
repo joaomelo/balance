@@ -1,19 +1,19 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import { initI18nProvider, messagesCommon } from '../app/i18n';
-import { initFirebaseSuiteFromEnv } from '../app/firebase';
+import { initI18nProvider, messagesCommon } from '../libs/i18n';
+import { initFirebaseSuiteFromEnv } from '../services/firebase';
 import {
   createIdentityMutations,
   queryUser,
   selectUserId,
   selectIsSignedIn
-} from '../app/identity';
+} from '../services/identity';
 import {
   createRepositoryMutations,
   queryRepoWithUser,
   selectActiveItems
-} from '../app/repository';
+} from '../services/repository';
 import { mountRoot } from '../features/root';
 import { messagesAuth } from '../features/auth';
 import {

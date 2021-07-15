@@ -1,4 +1,4 @@
-import { createUuid } from '../../../app/ids';
+import { createUuid } from '../../../libs/helpers';
 import { validateAccount } from '../body';
 
 export async function setAccountCommand (dependencies, payload) {

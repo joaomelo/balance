@@ -1,7 +1,7 @@
 import { MuiProvider } from '../../app/mui';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { useQuery } from '../../app/query';
-import { useCommand } from '../../app/components/command';
+import { useQuery } from '../../libs/query';
+import { useCommand } from '../../components/command';
 import { signOutCommand } from '../auth';
 import { WrapperRoot } from './wrapper-root';
 import { WrapperPage } from './wrapper-page';

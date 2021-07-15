@@ -1,9 +1,9 @@
 import { MenuItem, TextField } from '@material-ui/core';
-import { usePayload } from '../../../app/components/payload';
-import { ErrorAlert } from '../../../app/components/error-alert';
-import { ItemDialog } from '../../../app/components/item-dialog';
-import { useI18n } from '../../../app/i18n';
-import { createErrorReport } from '../../../app/error';
+import { usePayload } from '../../../components/payload';
+import { ErrorAlert } from '../../../components/error-alert';
+import { ItemDialog } from '../../../components/item-dialog';
+import { useI18n } from '../../../libs/i18n';
+import { createErrorReport } from '../../../libs/errors';
 
 export function AccountDialogView ({
   initialPayload,

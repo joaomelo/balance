@@ -1,4 +1,4 @@
-import { useQuery } from '../../../app/query';
+import { useQuery } from '../../../libs/query';
 import { HistoryPageView } from './view';
 
 export function HistoryPagePresenter ({ dependencies }) {

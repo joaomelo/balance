@@ -1,5 +1,5 @@
-import { useCommand } from '../../../app/components/command';
-import { useQuery } from '../../../app/query';
+import { useCommand } from '../../../components/command';
+import { useQuery } from '../../../libs/query';
 import { setGroupCommand, delGroupCommand } from '../commands';
 import { GroupsPageView } from './view-page';
 

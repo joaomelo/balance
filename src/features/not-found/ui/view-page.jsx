@@ -1,6 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { Typography, Box, Link } from '@material-ui/core';
-import { PageContent } from '../../../app/components/page-content';
+import { PageContent } from '../../../components/page-content';
 import NotFoundSvg from './not-found.svg';
 
 export function NotFoundPageView () {

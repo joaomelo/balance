@@ -1,4 +1,4 @@
-import { isSameDay } from '../../../app/helpers';
+import { isSameDay } from '../../../libs/helpers';
 
 export function consolidateGroupsBalances (groups, accounts, balances) {
   return groups.reduce((acc, group) => {

@@ -1,4 +1,4 @@
-import { select } from '../../../app/query';
+import { select } from '../../../libs/query';
 import { projectAccountsWithRelationships } from '../body';
 
 export function selectAccountsWithRelationships (

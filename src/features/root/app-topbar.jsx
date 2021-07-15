@@ -8,7 +8,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
-import { appName, appVersion } from '../../app/helpers';
+import { appName, appVersion } from '../../libs/helpers';
 
 export function AppTopbar ({ showHamburger, onHamburgerClick }) {
   return (

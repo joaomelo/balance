@@ -1,5 +1,5 @@
 import validator from 'email-validator';
-import { AppError } from '../../../app/error';
+import { AppError } from '../../../libs/errors';
 
 export function validateEmail (email) {
   if (!validator.validate(email)) {
