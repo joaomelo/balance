@@ -1,0 +1,3 @@
+{"rule":"GITHUB","sentence":"^\\Qgithub actions codecov\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QThe software is very unsophisticated and tries to settle the need for minimal personal finance management to someone ~~too lazily~~ unable to do the right tracking based on individual transactions, category analysis and accounts reconciliation.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QThe software is very unsophisticated and tries to settle the need for minimal personal finance management for someone ~~too lazy~~ unable to do the correct tracking based on individual transactions, category analysis and accounts reconciliation.\\E$"}
