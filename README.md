@@ -97,9 +97,9 @@ password: password
 ```
 
 # Development
-_How to change it?_
+_How to change stuff?_
 
-Making changes is straightforward after you already set the local environment. Let me just cover a few more things. First let us familiarize with the project folder structure.
+Making changes is straightforward after you already set the local environment. Let me just cover a few more things. First, let us familiarize with the project folder structure.
 
 ``` js
 📂balance
@@ -117,13 +117,7 @@ Making changes is straightforward after you already set the local environment. L
 
 The code spread in those folders takes advantage of the JavaScript thriving open source ecosystem. [React](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Chart.js](https://www.chartjs.org/) are the UI backbone. [RxJS](https://rxjs.dev/) supports the state management. [Playwright](https://playwright.dev/) and [Jest](https://jestjs.io/) enable unit and e2e testing. The [package.json](package.json) file lists the many others libraries I was fortune to have access to.
 
-To support the development effort we have both unit and e2e tests. To run all the tests in watch mode, just type `npm test`.
-
-The project uses [Jest](https://jestjs.io/) for testing. By executing `npm start`, you turn on tests in watch mode and can begin coding. It is easy to focus on a particular module applying file patterns through Jest CLI options.
-
-But be aware these tests don't massage the final serverless functions. These functions are tiny and take care only of putting together dependencies. Nevertheless, If you want to run them locally, type the command `npm run shell`.
-
-The [shell interface](https://firebase.google.com/docs/functions/local-shell) enables local interactive invoke of Firebase functions from the command line.
+Finally, To support the development effort we have both unit and e2e tests. Type `npm t` to run all of those tests in watch mode.
 
 # Wrapping up
 _What to expect?_
