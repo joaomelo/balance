@@ -58,15 +58,43 @@ The follow example show the history chart for two groups with two accounts each.
 ![History](docs/history.gif)
 
 # Runtime
-_How production works?_
+_What lives in the runtime?_\
+_How to run locally?_
 
-Balance is a traditional single page application. The production artifacts are one HTML and some JavaScript files. I use [Firebase hosting](https://firebase.google.com/docs/hosting) to serve them, but any other web server will do just fine.
+## Components
+Balance is a traditional single page application. The production artifacts are one HTML file and some JavaScript files. I use [Firebase hosting](https://firebase.google.com/docs/hosting) to serve them, but any other web server will do just fine.
 
-To arrive at that production code, Balance takes advantage of the JavaScript thriving open source ecosystem. [React](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Chart.js](https://www.chartjs.org/) are the UI backbone. [RxJS](https://rxjs.dev/) supports the state management. [Playwright](https://playwright.dev/) and [Jest](https://jestjs.io/) enable unit and e2e testing. The [package.json](package.json) file lists the many others libraries I was fortune to have access.
+During runtime, the web app relies on two serverless services provided by [Firebase](https://firebase.google.com/). [Firestore](https://firebase.google.com/docs/firestore) to save data related to accounts, groups, and balances and [Firebase Auth](https://firebase.google.com/docs/auth) supports user authentication.
 
-The web app relies on two serverless services provided by [Firebase](https://firebase.google.com/). [Firestore](https://firebase.google.com/docs/firestore) to save data related to accounts, groups, and balances and [Firebase Auth](https://firebase.google.com/docs/auth) supports user authentication.
+## Local Environment
 
-The next sections will cover how to run your own instance of Balance locally and in production, but you will need to [create and set up](https://firebase.google.com/docs/web/setup) a Firebase project for that.
+The first step to run Balance in your local machine is download the project. GitHub offers many ways to do that. For example, you could clone the repo with git.
+
+``` bash
+git clone https://github.com/joaomelo/balance.git
+```
+
+After that, go to the project directory and install both the JS dependencies and the [Firebase CLI](https://firebase.google.com/docs/cli).
+
+``` bash
+npm i
+npm install -g firebase-tools
+```
+
+Now link the directory to a Firebase project you already [created and set up](https://firebase.google.com/docs/web/setup) on their platform.
+
+``` bash
+firebase use some-project-id
+```
+
+The last step is rename the `.env.exampe` file to just `.env`. For the local environment this is enough, but the `.env` file will need further updates if we want to deploy to the cloud.
+
+To run Balance type `npm start`. It will be available at `http://localhost:8181`. The default local user credentials are:
+
+```
+user: sofia@email.com
+password: password
+```
 
 # Wrapping up
 _What to expect?_
@@ -88,13 +116,6 @@ _what is the main tech stack behind the scenes?_
 _How to run it locally?_
 _How to develop it?_
 
-The first step is to clone the repo with git and install all dependencies.
-
-``` bash
-git clone https://github.com/joaomelo/lib.git
-npm i
-```
-
 Now you can get familiar with the project directories and files.
 
 ``` js
@@ -110,26 +131,7 @@ Now you can get familiar with the project directories and files.
   📁tests     // support test files
 ```
 
-Before we start developing, we need to get rid of some environmental tasks.
-
-## Environment Configuration
-
-To enable Firebase [Cloud Functions](https://firebase.google.com/docs/functions) and [Firestore](https://firebase.google.com/docs/firestore), you need to create a [Firebase project](https://firebase.google.com/docs/admin/setup) and set local development with their [local emulator suite](https://firebase.google.com/docs/emulator-suite).
-
-Now is also an excellent time to create accounts and note the search and email services' API keys. [Scale SERP](https://www.scaleserp.com/) and [Send Grid](https://sendgrid.com/) sites have the proper instructions.
-
-Regarding Send Grid, It is essential to register the email you will use to dispatch Track Reports.
-
-With all that information in hand, we can create a `.env` file at the project root directory and fill it with our services' corresponding data.
-
-``` env
-FIRESTORE_EMULATOR_HOST=localhost:8080
-SCALE_SERP_KEY=SOME_API_KEY_VALUE
-SEND_GRID_KEY=SOME_API_KEY_VALUE
-DEFAULT_FROM_EMAIL=some@email.com
-```
-
-I must say I have no affiliation with any of these services. I chose them from personal familiarity, ease of use, or free tier convenience. But Attaché was built aiming at easy substitutions. You can take advantage of that if some of the services do not suit your particular needs.
+To arrive at that production code, Balance takes advantage of the JavaScript thriving open source ecosystem. [React](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Chart.js](https://www.chartjs.org/) are the UI backbone. [RxJS](https://rxjs.dev/) supports the state management. [Playwright](https://playwright.dev/) and [Jest](https://jestjs.io/) enable unit and e2e testing. The [package.json](package.json) file lists the many others libraries I was fortune to have access to.
 
 ## Engine Start
 
