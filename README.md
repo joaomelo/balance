@@ -4,48 +4,58 @@
 # TL;DR
 _What problem it solves?_
 
-Balance is a personal finance software where we can periodically record accounts balances (from credit cards or loans for example) and assess their evolution in a chart. One can also group accounts and visualize the group's consolidated balance in the time series, like the net value of someone long term assets. 
+Balance is a minimal solution for finance self-management. It can record accounts balances (from credit cards or loans for example) and show their evolution in a chart.
 
-The software is very unsophisticated and tries to settle the need for minimal personal finance management for someone ~~too lazy~~ unable to do the correct tracking based on individual transactions, category analysis and accounts reconciliation. 
+It is an unsophisticated software which tries to settle the need for minimal personal finance management for someone ~~too lazy~~ unable to do the correct tracking based on individual transactions, category analysis and accounts reconciliation. 
 
 # Motivation
-_Why it was done?_
+_Why it was built?_
 
-The problem can surely be solved with some spreadsheet. Though, why lose some hours learning how to implement an algorithm in Excel if you can burn dozens more coding your own software?
+The problem can surely be solved with some spreadsheet shenanigans. Though, why lose some hours learning how to implement an algorithm in Excel if you can burn dozens more coding your own software?
 
-Seriously, I built the project mainly to explore in practice some techs and architectural approaches in a front-end web application:
+Seriously, I built the project mainly to explore in practice some techs and architectural approaches in a front-end web app. Mostly:
 - feasibility of single page applications without a traditional backend using serverless services;
-- application of concepts from [Clean Architecture](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure-ebook-dp-B075LRM681/dp/B075LRM681/ref=mt_other?_encoding=UTF8&me=&qid=) and [Grokking Simplicity](https://www.manning.com/books/grokking-simplicity?gclid=CjwKCAjw3MSHBhB3EiwAxcaEu7fdoYDomaXaYdL8obQ_-fKzSvr_gqgYZzf_s53g9lpfPHfTnG1sARoCFLYQAvD_BwE);
+- some concepts from [Clean Architecture](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure-ebook-dp-B075LRM681/dp/B075LRM681/ref=mt_other?_encoding=UTF8&me=&qid=) and [Grokking Simplicity](https://www.manning.com/books/grokking-simplicity?gclid=CjwKCAjw3MSHBhB3EiwAxcaEu7fdoYDomaXaYdL8obQ_-fKzSvr_gqgYZzf_s53g9lpfPHfTnG1sARoCFLYQAvD_BwE);
 - UI craft with React functional components and hooks;
 - reactive state management without a central store like Redux or Vuex;
 - end-to-end testing with Microsoft Playwright.
 
 # Usage
-_What are the apps features?_
+_What are the features?_
 
 The main output is a time series chart to assess the net balance evolution from accounts and groups. We can see a naive example below. 
 
-![Chart example](docs/chart-example.png)
+![Chart example](docs/chart-example.jpg)
 
 But the first step is to feed the relevant data.
 
-## Accounts, Groups, and Balances
+## Accounts
 
-Accounts can be used to represent things like savings, credit cards, loans, long term investments and assets as houses or cars.
+Accounts can be used to represent things like savings, credit cards, loans, long term investments and assets as houses or cars. Bellow an example on how to create an account in the app.
 
 ![Add accounts](docs/add-accounts.gif)
 
-A balance will represent the net value for one account at some point in time.
+## Balances
+
+A balance states the net value for one account at a given day. Here we create some balance records:
 
 ![Add balances](docs/add-balances.gif)
 
-Finally, accounts can be optionally grouped. This will create a time series with the calculated balance of all accounts in the same group.
+## Groups
+
+Accounts can be optionally grouped. Every group will appear as an additional time series in the history chart with calculated balances based on the accounts they aggregate.
 
 ![Add group](docs/add-groups.gif)
 
 ## History Chart
 
-…
+The history chart shows the balance progression for every account and group. The chart is interactive and series can be hidden to facilitate analysis.
+
+Groups balances are the sum of its accounts balances. The calculation will deal with mismatch dates using the most recent past balance at a given date.
+
+The follow example show the history chart for two groups with two accounts each. 
+
+![History](docs/history.gif)
 
 # Wrapping up
 _What to expect?_
