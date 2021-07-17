@@ -57,6 +57,17 @@ The follow example show the history chart for two groups with two accounts each.
 
 ![History](docs/history.gif)
 
+# Runtime
+_How production works?_
+
+Balance is a traditional single page application. The production artifacts are one HTML and some JavaScript files. I use [Firebase hosting](https://firebase.google.com/docs/hosting) to serve them, but any other web server will do just fine.
+
+To arrive at that production code, Balance takes advantage of the JavaScript thriving open source ecosystem. [React](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Chart.js](https://www.chartjs.org/) are the UI backbone. [RxJS](https://rxjs.dev/) supports the state management. [Playwright](https://playwright.dev/) and [Jest](https://jestjs.io/) enable unit and e2e testing. The [package.json](package.json) file lists the many others libraries I was fortune to have access.
+
+The web app relies on two serverless services provided by [Firebase](https://firebase.google.com/). [Firestore](https://firebase.google.com/docs/firestore) to save data related to accounts, groups, and balances and [Firebase Auth](https://firebase.google.com/docs/auth) supports user authentication.
+
+The next sections will cover how to run your own instance of Balance locally and in production, but you will need to [create and set up](https://firebase.google.com/docs/web/setup) a Firebase project for that.
+
 # Wrapping up
 _What to expect?_
 
@@ -70,20 +81,10 @@ Made by [João Melo](https://twitter.com/joaomeloplus) and licensed under the GN
 ## --- IGNORE THE TEXT BELOW ---
 **from here on, everything are notes to help complete the final README**
 
-# Runtime
+# Development
 _describe the runtime architecture?_
 _what are the production artifacts?_
 _what is the main tech stack behind the scenes?_
-
-Attaché is a combination of two serverless functions that run periodically. The first is the `snapshotsScheduledService` which saves Snapshots for every Stake's Terms in the database.
-
-The second is the `tracksScheduledService`. It dispatches email reports with Rankings and Trends data for every Stake.
-
-Both services run in [Cloud Functions for Firebase](https://firebase.google.com/docs/functions) and use [Cloud Firestore](https://firebase.google.com/docs/firestore) as database. It likewise relies upon [Scale SERP](https://www.scaleserp.com/) to run organic searches and [Send Grid](https://sendgrid.com/) to dispatch emails.
-
-Attaché is developed using Javascript and takes advantage of the language thriving open source library ecosystem. All project dependencies are available in the [package.json](package.json) file.
-
-# Development
 _How to run it locally?_
 _How to develop it?_
 

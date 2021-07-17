@@ -1,3 +1,5 @@
 codecov
 Vuex
 Melo
+Firestore
+RxJS
