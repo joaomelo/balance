@@ -1,4 +1,4 @@
-import { query } from '../../libs/query';
+import { query } from '../../app/query';
 import { attachDriver } from './query';
 
 export function queryRepoWithUser (userIdSelector, driver) {

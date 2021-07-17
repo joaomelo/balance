@@ -1,4 +1,4 @@
-import { del } from '../../libs/request';
+import { del } from '../../app/request';
 
 export async function initFirestore (app, firestoreEmulator) {
   const firestore = app.firestore();

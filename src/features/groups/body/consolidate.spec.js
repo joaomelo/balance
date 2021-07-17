@@ -1,5 +1,5 @@
 import { groups, accounts, balances } from '../../../../tests/fixtures';
-import { isSameDay } from '../../../libs/helpers';
+import { isSameDay } from '../../../app/helpers';
 import { consolidateGroupsBalances } from './consolidate';
 
 describe('groups balance consolidation', () => {

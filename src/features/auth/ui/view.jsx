@@ -23,8 +23,8 @@ import { useToggle } from '../../../components/switch';
 import { Form } from '../../../components/form';
 import { ErrorAlert } from '../../../components/error-alert';
 import { ProgressDivider } from '../../../components/progress-divider';
-import { useI18n } from '../../../libs/i18n';
-import { createErrorReport } from '../../../libs/errors';
+import { useI18n } from '../../../app/i18n';
+import { createErrorReport } from '../../../app/errors';
 
 export function SignInPageView ({ onSignIn, error, isLoading }) {
   const t = useI18n();

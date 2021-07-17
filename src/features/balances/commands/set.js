@@ -1,4 +1,4 @@
-import { createUuid } from '../../../libs/helpers';
+import { createUuid } from '../../../app/helpers';
 import { validateBalance } from '../body';
 
 export async function setBalanceCommand (

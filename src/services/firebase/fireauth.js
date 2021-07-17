@@ -1,5 +1,5 @@
 import { credentials } from '../../../tests/fixtures';
-import { del } from '../../libs/request';
+import { del } from '../../app/request';
 
 export async function initFireauth (app, authEmulator) {
   const fireauth = app.auth();

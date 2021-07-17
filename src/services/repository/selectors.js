@@ -1,4 +1,4 @@
-import { select } from '../../libs/query';
+import { select } from '../../app/query';
 
 export function selectItemById (query, id) {
   return select(query, current => current[id]);

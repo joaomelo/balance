@@ -1,4 +1,4 @@
-import { query, select } from '../../libs/query';
+import { query, select } from '../../app/query';
 
 export function queryUser (fireauth) {
   const userQuery = query(null);

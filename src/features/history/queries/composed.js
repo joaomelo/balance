@@ -1,4 +1,4 @@
-import { select } from '../../../libs/query';
+import { select } from '../../../app/query';
 import { projectComposedHistory } from '../body';
 
 export function selectComposedHistory (

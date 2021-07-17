@@ -1,4 +1,4 @@
-import { createUuid } from '../../../libs/helpers';
+import { createUuid } from '../../../app/helpers';
 import { validateGroup } from '../body';
 
 export async function setGroupCommand (dependencies, payload) {

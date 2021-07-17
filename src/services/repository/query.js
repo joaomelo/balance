@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { query } from '../../libs/query';
+import { query } from '../../app/query';
 
 export function queryRepository (driver) {
   const itemsQuery = query({});

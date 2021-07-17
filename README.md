@@ -96,6 +96,35 @@ user: sofia@email.com
 password: password
 ```
 
+# Development
+_How to change it?_
+
+Making changes is straightforward after you already set the local environment. Let me just cover a few more things. First let us familiarize with the project folder structure.
+
+``` js
+📂balance
+  *.*             // project config files
+  📁.github       // github actions ci/cd pipeline
+  📁dist          // bundled code for production
+  📁src
+    📁app         // general app logic
+    📁components  // ui shared components
+    📁features    // core business
+    📁services    // external services abstractions
+    📁main        // glues everything
+  📁tests         // support test files
+```
+
+The code spread in those folders takes advantage of the JavaScript thriving open source ecosystem. [React](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Chart.js](https://www.chartjs.org/) are the UI backbone. [RxJS](https://rxjs.dev/) supports the state management. [Playwright](https://playwright.dev/) and [Jest](https://jestjs.io/) enable unit and e2e testing. The [package.json](package.json) file lists the many others libraries I was fortune to have access to.
+
+To support the development effort we have both unit and e2e tests. To run all the tests in watch mode, just type `npm test`.
+
+The project uses [Jest](https://jestjs.io/) for testing. By executing `npm start`, you turn on tests in watch mode and can begin coding. It is easy to focus on a particular module applying file patterns through Jest CLI options.
+
+But be aware these tests don't massage the final serverless functions. These functions are tiny and take care only of putting together dependencies. Nevertheless, If you want to run them locally, type the command `npm run shell`.
+
+The [shell interface](https://firebase.google.com/docs/functions/local-shell) enables local interactive invoke of Firebase functions from the command line.
+
 # Wrapping up
 _What to expect?_
 
@@ -108,38 +137,6 @@ Made by [João Melo](https://twitter.com/joaomeloplus) and licensed under the GN
 
 ## --- IGNORE THE TEXT BELOW ---
 **from here on, everything are notes to help complete the final README**
-
-# Development
-_describe the runtime architecture?_
-_what are the production artifacts?_
-_what is the main tech stack behind the scenes?_
-_How to run it locally?_
-_How to develop it?_
-
-Now you can get familiar with the project directories and files.
-
-``` js
-📂attache
-  *.*         // project files
-  📁.github   // github actions for ci/cd pipeline
-  📁dist      // bundled code for production
-  📁src       
-    📁app     // services and i/o
-    📁domain  // business core
-    📁helpers // generic functions
-    📁main    // glues everything into serverless functions
-  📁tests     // support test files
-```
-
-To arrive at that production code, Balance takes advantage of the JavaScript thriving open source ecosystem. [React](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Chart.js](https://www.chartjs.org/) are the UI backbone. [RxJS](https://rxjs.dev/) supports the state management. [Playwright](https://playwright.dev/) and [Jest](https://jestjs.io/) enable unit and e2e testing. The [package.json](package.json) file lists the many others libraries I was fortune to have access to.
-
-## Engine Start
-
-The project uses [Jest](https://jestjs.io/) for testing. By executing `npm start`, you turn on tests in watch mode and can begin coding. It is easy to focus on a particular module applying file patterns through Jest CLI options.
-
-But be aware these tests don't massage the final serverless functions. These functions are tiny and take care only of putting together dependencies. Nevertheless, If you want to run them locally, type the command `npm run shell`.
-
-The [shell interface](https://firebase.google.com/docs/functions/local-shell) enables local interactive invoke of Firebase functions from the command line.
 
 # Deploy
 _How to deploy to production from my machine?_

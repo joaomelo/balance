@@ -1,4 +1,4 @@
-import { AppError } from '../../../libs/errors';
+import { AppError } from '../../../app/errors';
 
 export function validatePassword (password) {
   if (typeof password !== 'string' || password.length < 8 || password.length > 64) {

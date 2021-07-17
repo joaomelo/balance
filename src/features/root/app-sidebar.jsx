@@ -15,7 +15,7 @@ import {
   GroupWorkTwoTone,
   MeetingRoomTwoTone
 } from '@material-ui/icons';
-import { camelCase } from '../../libs/helpers';
+import { camelCase } from '../../app/helpers';
 
 export function AppSidebar ({
   isOpen,
