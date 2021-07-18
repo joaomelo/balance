@@ -1,6 +1,6 @@
 {
   "name": "balance",
-  "version": "0.32.7",
+  "version": "0.32.8",
   "description": "Balance records accounts balances (from credit cards or loans for example) and show their evolution in a chart.",
   "main": "dist/index.html",
   "scripts": {
