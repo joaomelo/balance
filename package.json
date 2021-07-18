@@ -1,7 +1,7 @@
 {
   "name": "balance",
   "version": "0.32.7",
-  "description": "Balance is a personal finance tracking software based only on account balances.",
+  "description": "Balance records accounts balances (from credit cards or loans for example) and show their evolution in a chart.",
   "main": "dist/index.html",
   "scripts": {
     "start": "npm run dev:local",

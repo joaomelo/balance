@@ -1,6 +1,6 @@
 export const credentials = [
   {
-    email: 'sofia@email.com',
+    email: 'user@email.com',
     password: 'password'
   }
 ];
