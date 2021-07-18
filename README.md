@@ -60,7 +60,7 @@ Balance is a traditional web single-page application. After compilation, the pro
 
 The app relies on two serverless services provided by [Firebase](https://firebase.google.com/). [Firestore](https://firebase.google.com/docs/firestore) saves data related to accounts, groups, and balances and [Firebase Auth](https://firebase.google.com/docs/auth) supports user authentication.
 
-The source structure attempts to express the design choices as clear as possible. Here a Bird's-eye view of the project folders.
+The source structure attempts to express the design choices as clear as possible. Here is a Bird's-eye view of the project folders.
 
 ``` js
 📂balance
@@ -145,7 +145,7 @@ CODECOV_TOKEN
 # Contribution
 _How can I help?_
 
-Pending.
+Bug reports and feature requests are welcome in the form of issues. However, I decided to keep the project closed to pull requests contributions.
 
 # Wrapping up
 _What to expect?_
