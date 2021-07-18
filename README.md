@@ -4,14 +4,14 @@
 # TL;DR
 _What problem it solves?_
 
-Balance records accounts balances (from credit cards or loans for example) and show their evolution in a chart.
+It is a web app that records accounts' balances (from credit cards or loans for example) and shows their evolution in a chart.
 
-It is an unsophisticated software which tries to settle the need for minimal financial self-management for someone ~~too lazy~~ unable to do the correct tracking based on individual transactions, category analysis and accounts reconciliation. 
+It tries to settle the need for minimal financial self-management for someone ~~too lazy~~ unable to do the correct tracking based on individual transactions, category analysis and accounts reconciliation. 
 
 # Motivation
 _Why it was built?_
 
-The problem can surely be solved with some spreadsheet shenanigans. Though, why lose some hours learning how to implement an algorithm in Excel if you can burn dozens more coding your own software?
+The problem can surely be solved with some spreadsheet shenanigans. Though, why lose some hours learning how to implement an algorithm in Excel if you can burn dozens more coding?
 
 Seriously, I built the project mainly to explore some techs and practices in a front-end web app. Mostly:
 - feasibility of replacing traditional backend with serverless services;
@@ -23,17 +23,17 @@ Seriously, I built the project mainly to explore some techs and practices in a f
 # Usage
 _What are the features?_
 
-The main output is a time series chart to assess the net balance evolution from accounts and groups. But the first step is to feed the relevant data.
+The main output is a time series chart to assess the net balance evolution of accounts and accounts groups. But the first step is to feed the relevant data.
 
 ## Accounts
 
-Accounts can be used to represent things like savings, credit cards, loans, long term investments and assets as houses or cars. Bellow an example on how to create an account in the app.
+Accounts can be used to represent things like savings, credit cards, loans, long-term investments, and assets as houses or cars. Below is an example of how to create an account in the app.
 
 ![Add accounts](docs/add-accounts.gif)
 
 ## Balances
 
-A balance states the net value for one account at a given day. Here we create some balance records:
+A balance states the net value for one account on a given day. Here we create some balance records:
 
 ![Add balances](docs/add-balances.gif)
 
@@ -45,22 +45,22 @@ Accounts can be optionally grouped. Every group will appear as an additional tim
 
 ## History Chart
 
-The history chart shows the balance progression for every account and group. The chart is interactive and series can be hidden to facilitate analysis.
+The history chart shows the balance progression for every account and group. The chart is interactive and time series can be hidden to facilitate analysis.
 
-Groups balances are the sum of its accounts balances. The calculation will deal with mismatch dates using the most recent past balance at a given day.
+Groups' balances are the sum of their accounts values. The calculation will deal with mismatch dates using the most recent past balance on a given day.
 
-The follow example show the history chart for two groups with two accounts each. 
+The following example shows the history chart for two groups with two accounts each.  
 
 ![History](docs/history.gif)
 
 # Architecture
 _What it is made of?_
 
-Balance is a traditional web single page application. After compilation, the production artifacts are a couple of HTML and JavaScript files. I use [Firebase hosting](https://firebase.google.com/docs/hosting) to serve them, but any other web server will do just fine.
+Balance is a traditional web single-page application. After compilation, the production artifacts are a couple of HTML and JavaScript files. I use [Firebase hosting](https://firebase.google.com/docs/hosting) to serve them, but any other web server will do just fine.
 
 The app relies on two serverless services provided by [Firebase](https://firebase.google.com/). [Firestore](https://firebase.google.com/docs/firestore) saves data related to accounts, groups, and balances and [Firebase Auth](https://firebase.google.com/docs/auth) supports user authentication.
 
-The source structure attempts to express the design choices as clear as possible. Here a bird's eye view of the project folders.
+The source structure attempts to express the design choices as clear as possible. Here a Bird's-eye view of the project folders.
 
 ``` js
 📂balance
@@ -76,12 +76,12 @@ The source structure attempts to express the design choices as clear as possible
   📁tests         // support test files
 ```
 
-The code spread in those folders takes advantage of the JavaScript thriving open source ecosystem. [React](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Chart.js](https://www.chartjs.org/) are the UI backbone. [RxJS](https://rxjs.dev/) supports the state management. [Playwright](https://playwright.dev/) and [Jest](https://jestjs.io/) enable unit and e2e testing. The [package.json](package.json) file lists the many others libraries I was fortune to have access to.
+The code spread in those folders takes advantage of the JavaScript thriving open source ecosystem. [React](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Chart.js](https://www.chartjs.org/) are the UI backbone. [RxJS](https://rxjs.dev/) supports state management. [Playwright](https://playwright.dev/) and [Jest](https://jestjs.io/) enable unit and e2e testing. The [package.json](package.json) file lists the many others libraries I was fortunate to have access to.
 
 # Development
 _How to run locally?_
 
-The first step to run Balance in your local machine is download the project. GitHub offers many ways to do that. For example, you could clone the repo with git.
+The first step to run Balance in your local machine is to download the project. GitHub offers many ways to do that. For example, you could clone the repo with git.
 
 ``` bash
 git clone https://github.com/joaomelo/balance.git
@@ -100,7 +100,7 @@ Now link the directory to a Firebase project you already [created and set up](ht
 firebase use some-project-id
 ```
 
-Rename the `.env.exampe` file to just `.env`. For the local environment this is enough, but the `.env` file will need further updates if we want to deploy to the cloud later.
+Rename the `.env.exampe` file to just `.env`. For the local environment, this is enough, but the `.env` file will need further updates if we want to deploy to the cloud later.
 
 Type `npm start` to run Balance. It will be available at `http://localhost:8181`. The default local user credentials are:
 
@@ -109,7 +109,7 @@ user: user@email.com
 password: password
 ```
 
-Finally, we have both unit and e2e tests to support the development effort. With the app running, type `npm t` to run all of those tests in watch mode.
+Finally, we have both unit and e2e tests to support the development effort. With the app running, type `npm t` to execute all tests in watch mode.
 
 # Deploy
 _How to push to production?_
@@ -118,9 +118,9 @@ _How to push to production?_
 
 The following steps assume you already set your local environment according to [these steps](#development).
 
-We will need to go back to that `.env` file and replace all the “…” placeholders with the actual values from the Firebase project you want to deploy to.
+We will need to go back to that `.env` file and replace all the “…” placeholders with the actual values from the Firebase project you want to deploy into.
 
-Now execute `npm run prod:local:deploy` and the script will run all tests and, if they succeed, do a full deploy.
+Now execute `npm run prod:local:deploy`. The script will run all tests and, if they succeed, do a full deployment.
 
 ## From GitHub actions
 
@@ -128,7 +128,7 @@ There is also a workflow to deploy automatically from GitHub using GitHub Action
 
 This pipeline additionally uploads test reports to [Codecov]( https://about.codecov.io) service. You can create a free account and obtain a token on their website. Alternately, remove the corresponding steps from the workflow.
 
-Going back to GitHub Actions, we need to create a GitHub secret for every workflow variable for things to work correctly. The secrets required are listed below.
+Going back to GitHub Actions, we need to create a GitHub secret for every workflow variable. Below is the list of the required secrets:
 
 ```
 APP_ENV_API_KEY
