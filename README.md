@@ -150,7 +150,7 @@ Bug reports and feature requests are welcome in the form of issues. However, I d
 # Wrapping up
 _What to expect?_
 
-The project has very limited ambitions. Although some bugs will undoubtedly come, there are not many more things to do as long as I can see. If you need any help, I'm glad to listen. Just contact me via [Twitter](https://twitter.com/joaomeloplus).
+The project has very limited ambitions. Although some bugs will undoubtedly come, there are not many more things to do as long as I can see. If you need any help, I'm glad to listen. Open an issue or contact me via [Twitter](https://twitter.com/joaomeloplus).
 
 🖖 Live long and prosper.
 
