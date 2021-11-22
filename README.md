@@ -124,7 +124,7 @@ Now execute `npm run prod:local:deploy`. The script will run all tests and, if t
 
 ## From GitHub actions
 
-There is also a workflow to deploy automatically from GitHub using GitHub Actions. The workflow will ignite after every push to the “main” branch.
+There is also a workflow to deploy automatically from GitHub using GitHub Actions. The workflow will ignite after every push to the `main` branch.
 
 This pipeline additionally uploads test reports to [Codecov]( https://about.codecov.io) service. You can create a free account and obtain a token on their website. Alternately, remove the corresponding steps from the workflow.
 
