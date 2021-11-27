@@ -1,4 +1,4 @@
-const fireEmulators = {
+const firebaseEmulators = {
   name: "firebase-emulators",
   styles: ["bgYellow", "whiteBright"],
   command: "firebase emulators:start",
@@ -15,7 +15,7 @@ const webServerLocal = {
 
 export const serversLocal = {
   name: "servers-local",
-  rally: [fireEmulators, webServerLocal],
+  rally: [firebaseEmulators, webServerLocal],
 };
 
 const testTemplateDevLocal = (params) => ({
