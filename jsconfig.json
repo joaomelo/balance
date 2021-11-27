@@ -5,7 +5,7 @@
     "checkJs": false,
     "baseUrl": "./"
   },
-  "typeAcquisition": { 
-      "include": [ "jest", "playwright" ] 
+  "typeAcquisition": {
+    "include": ["jest", "playwright"]
   }
 }
