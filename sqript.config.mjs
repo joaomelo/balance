@@ -18,18 +18,34 @@ export const serversLocal = {
   rally: [fireEmulators, webServerLocal],
 };
 
-const testTemplate = {
+const testTemplateDevLocal = (params) => ({
   styles: ["bgGreenBright", "whiteBright"],
-};
+  command: `jest --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js ${params}`,
+});
 
 export const testWatchLocal = {
   name: "test-watch-local",
-  rally: [
+  rally: [serversLocal, testTemplateDevLocal("--watchAll")],
+};
+
+export const testDebugLocal = {
+  name: "test-debug-local",
+  race: [
     serversLocal,
     {
-      ...testTemplate,
-      command:
-        "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
+      ...testTemplateDevLocal("--testTimeout=5000000"),
+      env: { PWDEBUG: 1 },
     },
   ],
+};
+
+const lint = {
+  name: "lint",
+  command: "eslint --ext .js,.jsx src/",
+};
+
+export const deployFromLocal = {
+  // "npm run prod:local:lint && npm run prod:local:test && npm run prod:local:build && firebase deploy",
+  name: "deploy-from-local",
+  rally: [lint],
 };
