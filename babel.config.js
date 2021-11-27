@@ -3,18 +3,18 @@ module.exports = function (api) {
 
   return {
     plugins: [
-      'babel-plugin-styled-components',
-      '@babel/plugin-proposal-class-properties'
+      "babel-plugin-styled-components",
+      "@babel/plugin-proposal-class-properties",
     ],
     presets: [
-      '@babel/env',
+      "@babel/env",
       [
-        '@babel/preset-react',
+        "@babel/preset-react",
         {
-          runtime: 'automatic',
-          development: api.env() === 'development'
-        }
-      ]
-    ]
+          runtime: "automatic",
+          development: api.env() === "development",
+        },
+      ],
+    ],
   };
 };
