@@ -1,11 +1,11 @@
 const fireEmulators = {
-  name: "emulators",
+  name: "firebase-emulators",
   styles: ["bgYellow", "whiteBright"],
   command: "firebase emulators:start",
 };
 
-const serverLocal = {
-  name: "server-local",
+const webServerLocal = {
+  name: "web-server-local",
   styles: ["bgWhiteBright", "blueBright"],
   relay: [
     { command: "rimraf dist/*" },
@@ -13,14 +13,23 @@ const serverLocal = {
   ],
 };
 
-export const devLocal = {
-  name: "dev-local",
-  rally: [fireEmulators, serverLocal],
+export const serversLocal = {
+  name: "servers-local",
+  rally: [fireEmulators, webServerLocal],
 };
 
-// "dev:local:test": "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
-export const testLocal = {
-  name: "test-local",
-  command:
-    "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
+const testTemplate = {
+  styles: ["bgGreenBright", "whiteBright"],
+};
+
+export const testWatchLocal = {
+  name: "test-watch-local",
+  rally: [
+    serversLocal,
+    {
+      ...testTemplate,
+      command:
+        "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
+    },
+  ],
 };

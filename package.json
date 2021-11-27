@@ -4,9 +4,7 @@
   "description": "Balance records accounts balances (from credit cards or loans for example) and show their evolution in a chart.",
   "main": "dist/index.html",
   "scripts": {
-    "start": "npx sqript --length=7 --name=dev-local",
-    "test": "npm run dev:local:test",
-    "dev:local:test": "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
+    "start": "npx sqript --length=7",
     "dev:local:test:debug": "cross-env PWDEBUG=1 jest --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js --testTimeout=5000000",
     "prod:local:lint": "eslint --ext .js,.jsx src/",
     "prod:local:test": "concurrently -n \"servr,tests\" -k -s \"first\" -c \"bgMagenta.bold,bgGreen.bold\" \"npm:dev:local:server\" \"npm:prod:local:test:exec\"",
