@@ -1,9 +1,3 @@
-/* 
-  "start": "npm run dev:local",
-    "dev:local": "concurrently -n \"firebs,server\" -c \"bgMagenta.bold,bgGreen.bold\" \"firebase emulators:start\" \"npm:dev:local:server\"",
-      "dev:local:server": "rimraf dist/* && webpack serve --config webpack.config.js --env devLocal",
-*/
-
 const fireEmulators = {
   name: "emulators",
   styles: ["bgYellow", "whiteBright"],
@@ -12,16 +6,21 @@ const fireEmulators = {
 
 const serverLocal = {
   name: "server-local",
+  styles: ["bgWhiteBright", "blueBright"],
   relay: [
-    { name: "clean", command: "rimraf dist/*" },
-    {
-      name: "webpack",
-      command: "webpack serve --config webpack.config.js --env devLocal",
-    },
+    { command: "rimraf dist/*" },
+    { command: "webpack serve --config webpack.config.js --env devLocal" },
   ],
 };
 
 export const devLocal = {
   name: "dev-local",
-  race: [fireEmulators, serverLocal],
+  rally: [fireEmulators, serverLocal],
+};
+
+// "dev:local:test": "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
+export const testLocal = {
+  name: "test-local",
+  command:
+    "jest --watchAll --detectOpenHandles --coverage=false --setupTestFrameworkScriptFile=./tests/config/dev-local.js",
 };
