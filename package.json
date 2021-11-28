@@ -5,13 +5,9 @@
   "main": "dist/index.html",
   "scripts": {
     "start": "npx sqript --length=7",
-    "prod:local:test": "concurrently -n \"servr,tests\" -k -s \"first\" -c \"bgMagenta.bold,bgGreen.bold\" \"npm:dev:local:server\" \"npm:prod:local:test:exec\"",
-    "dev:local:server": "rimraf dist/* && webpack serve --config webpack.config.js --env devLocal",
-    "prod:local:test:exec": "firebase emulators:exec -- \"wait-on http://localhost:8181 && jest --forceExit --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-local.js\"",
-    "prod:local:build": "rimraf dist/* && webpack --config webpack.config.js --env prodLocal",
     "dev:ci:server": "rimraf dist/* && webpack serve --config webpack.config.js --env devCi",
     "prod:ci:test": "concurrently -k -s \"first\" -c \"bgMagenta.bold,bgGreen.bold\" \"npm:dev:ci:server\" \"npm:prod:ci:test:exec\"",
-    "prod:ci:test:exec": "firebase emulators:exec -- \"wait-on http://localhost:8181 && jest --forceExit --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/prod-ci.js\"",
+    "prod:ci:test:exec": "firebase emulators:exec -- \"wait-on http://localhost:8181 && jest --forceExit --coverage --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/ci.js\"",
     "prod:ci:build": "rimraf dist/* && webpack --config webpack.config.js --env prodCi",
     "prod:ci:deploy": "npm run prod:local:lint && npm run prod:ci:test && npm run prod:ci:build && firebase deploy"
   },
@@ -89,7 +85,7 @@
     "prettier": "^2.5.0",
     "react-refresh": "^0.9.0",
     "rimraf": "^3.0.2",
-    "sqript": "^0.10.0",
+    "sqript": "^0.11.0",
     "style-loader": "^2.0.0",
     "wait-on": "^5.3.0",
     "webpack": "^5.27.2",
