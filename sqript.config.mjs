@@ -1,71 +1,90 @@
 const webpackTemplate = (params) => ({
   styles: ["bgWhiteBright", "blueBright"],
   relay: [
-    { command: "rimraf dist/*" },
-    { command: `webpack ${params} --config webpack.config.js` },
+    { name: "clean-dist", command: "rimraf dist/*" },
+    {
+      name: "webpack",
+      command: `webpack ${params} --config webpack.config.js`,
+    },
   ],
 });
 
-export const serversLocal = {
+const serversTemplate = (params) => ({
   rally: [
     {
+      name: "firebase-emulators",
       styles: ["bgYellow", "whiteBright"],
       command: "firebase emulators:start",
     },
-    webpackTemplate("serve --env devLocal"),
+    webpackTemplate(`serve ${params}`),
   ],
-};
+});
+const serversLocal = serversTemplate("--env devLocal");
+const serversCi = serversTemplate("--env devCi");
 
-const testTemplateLocal = (params = "", env = {}) => ({
+const testTemplate = (params = "", env = {}) => ({
+  relay: [
+    {
+      name: "wait-on",
+      command: "wait-on http://localhost:8181",
+    },
+    {
+      name: "jest",
+      styles: ["bgGreenBright", "whiteBright"],
+      command: `jest --detectOpenHandles ${params}`,
+      env,
+    },
+  ],
+});
+const testTemplateLocal = (params, env) => ({
   race: [
     serversLocal,
-    {
-      relay: [
-        { command: "wait-on http://localhost:8181" },
-        {
-          styles: ["bgGreenBright", "whiteBright"],
-          command: `jest --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/local.js ${params}`,
-          env,
-        },
-      ],
-    },
+    testTemplate(
+      `--setupTestFrameworkScriptFile=./tests/config/local.js ${params}`,
+      env
+    ),
   ],
 });
-export const testLocal = testTemplateLocal();
-export const testLocalWatch = testTemplateLocal("--watchAll");
-export const testLocalDebug = testTemplateLocal("--testTimeout=5000000", {
+const testLocal = testTemplateLocal("--forceExit");
+const testLocalWatch = testTemplateLocal("--watchAll");
+const testLocalDebug = testTemplateLocal("--testTimeout=5000000", {
   PWDEBUG: 1,
 });
-
-const lint = { command: "eslint --ext .js,.jsx src/" };
-
-export const deployFromLocal = {
-  relay: [
-    lint,
-    testLocal,
-    {
-      name: "buid",
-      ...webpackTemplate("--env prodLocal"),
-    },
-    {
-      name: "deploy",
-      command: "firebase deploy",
-    },
+const testCi = {
+  race: [
+    serversCi,
+    testTemplate(
+      "--forceExit --coverage --setupTestFrameworkScriptFile=./tests/config/ci.js"
+    ),
   ],
 };
 
-export const deployFromCi = {
-  // "npm run prod:local:lint && npm run prod:ci:test && npm run prod:ci:build && firebase deploy",
+const lint = { name: "lint", command: "eslint --ext .js,.jsx src/" };
+const deploy = { name: "deploy", command: "firebase deploy" };
+
+const deployFromLocal = {
   relay: [
     lint,
     testLocal,
-    {
-      name: "buid",
-      ...webpackTemplate("--env prodLocal"),
-    },
-    {
-      name: "deploy",
-      command: "firebase deploy",
-    },
+    { name: "build", ...webpackTemplate("--env prodLocal") },
+    deploy,
   ],
+};
+
+const deployFromCi = {
+  relay: [
+    lint,
+    testCi,
+    { name: "build", ...webpackTemplate("--env prodCi") },
+    deploy,
+  ],
+};
+
+export {
+  serversLocal,
+  testLocal,
+  testLocalWatch,
+  testLocalDebug,
+  deployFromLocal,
+  deployFromCi,
 };
