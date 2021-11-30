@@ -1,9 +1,9 @@
 const webpackTemplate = (params) => ({
-  styles: ["bgWhiteBright", "blueBright"],
   relay: [
     { name: "clean-dist", command: "rimraf dist/*" },
     {
       name: "webpack",
+      styles: ["bgWhiteBright", "blueBright"],
       command: `webpack ${params} --config webpack.config.js`,
     },
   ],
@@ -59,26 +59,21 @@ const testCi = {
   ],
 };
 
-const lint = { name: "lint", command: "eslint --ext .js,.jsx src/" };
-const deploy = { name: "deploy", command: "firebase deploy" };
-
-const deployFromLocal = {
+const deployTemplate = (...scripts) => ({
   relay: [
-    lint,
-    testLocal,
-    { name: "build", ...webpackTemplate("--env prodLocal") },
-    deploy,
+    { name: "lint", command: "eslint --ext .js,.jsx src/" },
+    ...scripts,
+    { name: "deploy", command: "firebase deploy" },
   ],
-};
-
-const deployFromCi = {
-  relay: [
-    lint,
-    testCi,
-    { name: "build", ...webpackTemplate("--env prodCi") },
-    deploy,
-  ],
-};
+});
+const deployFromLocal = deployTemplate(testLocal, {
+  name: "build",
+  ...webpackTemplate("--env prodLocal"),
+});
+const deployFromCi = deployTemplate(testCi, {
+  name: "build",
+  ...webpackTemplate("--env prodCi"),
+});
 
 export {
   serversLocal,

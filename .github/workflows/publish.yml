@@ -15,15 +15,15 @@ jobs:
       - run: sed -n 3p ./package.json
       - uses: "actions/setup-node@v2"
         with:
-          node-version: '14'
+          node-version: "14"
       - name: "version bump"
         uses: "phips28/gh-action-bump-version@master"
         with:
-          tag-prefix: ''
+          tag-prefix: ""
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: sed -n 3p ./package.json
-  
+
   deploy:
     needs: [bump]
     runs-on: ubuntu-latest
@@ -37,7 +37,7 @@ jobs:
       APP_ENV_FIREAUTH_EMULATOR_HOST: ${{ secrets.APP_ENV_FIREAUTH_EMULATOR_HOST }}
       APP_ENV_FIRESTORE_EMULATOR_HOST: ${{ secrets.APP_ENV_FIRESTORE_EMULATOR_HOST }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }} 
+      FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - uses: actions/checkout@v2
@@ -45,15 +45,15 @@ jobs:
           ref: main
       - uses: "actions/setup-node@v2"
         with:
-          node-version: '14'
-      - run: npm install -g firebase-tools@9.12.1          
+          node-version: "14"
+      - run: npm install -g firebase-tools@9.12.1
       - run: firebase use --add $FIREBASE_PROJECT
       - uses: actions/cache@v2
         id: cache-emulators
         with:
           path: /home/runner/.cache/firebase/emulators
           key: ${{ runner.os }}-firebase-cli-v9.12.1
-      - run: npm ci
-      - run: npm run prod:ci:deploy
+      - run: npm i
+      - run: npx sqript --name=deploy-from-ci
       - run: npm i -g codecov
-      - run: codecov
+      - run: codecov --disable=gcov
