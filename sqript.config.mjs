@@ -9,7 +9,7 @@ const webpackTemplate = (params) => ({
   ],
 });
 
-const serversTemplate = (params) => ({
+const serversTemplate = (params, extraEnv) => ({
   rally: [
     {
       name: "firebase-emulators",
@@ -18,8 +18,16 @@ const serversTemplate = (params) => ({
     },
     webpackTemplate(`serve ${params}`),
   ],
+  env: [
+    extraEnv,
+    {
+      APP_ENV_MODE: "DEVELOPMENT",
+      APP_ENV_FIREAUTH_EMULATOR_HOST: "http://localhost:9099",
+      APP_ENV_FIRESTORE_EMULATOR_HOST: "8080",
+    },
+  ],
 });
-const serversLocal = serversTemplate("--env devLocal");
+const serversLocal = serversTemplate("--env devLocal", ".env");
 const serversCi = serversTemplate("--env devCi");
 
 const testTemplate = (params = "", env = {}) => ({
@@ -65,6 +73,9 @@ const deployTemplate = (...scripts) => ({
     ...scripts,
     { name: "deploy", command: "firebase deploy" },
   ],
+  env: {
+    APP_ENV_MODE: "PRODUCTION",
+  },
 });
 const deployFromLocal = deployTemplate(testLocal, {
   name: "build",
