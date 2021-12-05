@@ -9,26 +9,27 @@ const webpackTemplate = (params) => ({
   ],
 });
 
-const serversTemplate = (params, extraEnv) => ({
+const serversTemplate = (extraEnv) => ({
   rally: [
     {
       name: "firebase-emulators",
       styles: ["bgYellow", "whiteBright"],
       command: "firebase emulators:start",
     },
-    webpackTemplate(`serve ${params}`),
+    webpackTemplate("serve"),
   ],
   env: [
     extraEnv,
     {
       APP_ENV_MODE: "DEVELOPMENT",
+      APP_ENV_ENTRY_FILE: "web-fixtured.js",
       APP_ENV_FIREAUTH_EMULATOR_HOST: "http://localhost:9099",
       APP_ENV_FIRESTORE_EMULATOR_HOST: "8080",
     },
   ],
 });
-const serversLocal = serversTemplate("--env devLocal", ".env");
-const serversCi = serversTemplate("--env devCi");
+const serversLocal = serversTemplate(".env");
+const serversCi = serversTemplate();
 
 const testTemplate = (params = "", env = {}) => ({
   relay: [

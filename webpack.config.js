@@ -17,6 +17,7 @@ module.exports = () => {
   const mode = isProd ? "production" : "development";
   console.info(`Webpack build for mode "${mode}" with mode "${mode}"`);
 
+  const entryFile = process.env.APP_ENV_ENTRY_FILE || "web-online.js";
   const envPlugin = createEnvVariablesPlugin();
 
   return {
@@ -26,7 +27,7 @@ module.exports = () => {
     resolve: {
       extensions: [".js", ".jsx", ".json"],
     },
-    entry: path.resolve(PATHS.SRC, "main", "index.js"),
+    entry: path.resolve(PATHS.SRC, "main", entryFile),
     output: {
       publicPath: "/",
       path: PATHS.BUILD,
@@ -113,49 +114,18 @@ module.exports = () => {
   };
 };
 
-function establishEnvironment(envArgs) {
-  if (envArgs.prodLocal) return "prodLocal";
-  if (envArgs.prodCi) return "prodCi";
-  if (envArgs.devCi) return "devCi";
-  return "devLocal";
-}
-
-function createEnvVariablesPlugin(environment) {
-  if (environment.toLowerCase().includes("local")) {
-    pushEnvVarsToMemory(".env");
-  }
-
+function createEnvVariablesPlugin() {
   const appEnvVars = pullEnvVarsFromMemory();
-  const envVarsWithEmulatorsTreated = treatEmulatorsEnvVars(
-    environment,
-    appEnvVars
-  );
-  const envVarsStringified = stringifyEnvVars(envVarsWithEmulatorsTreated);
-
+  const envVarsStringified = stringifyEnvVars(appEnvVars);
   return new DefinePlugin(envVarsStringified);
 }
 
-function pushEnvVarsToMemory(file) {
-  const envFile = path.resolve(process.cwd(), file);
-  dotenv.config({ path: envFile });
-}
-
 function pullEnvVarsFromMemory(filter) {
+  console.info('injecting into bundle env vars in memory with "APP_ENV_"');
   return Object.keys(process.env).reduce((acc, key) => {
     if (key.includes("APP_ENV_")) {
       acc[key] = process.env[key];
     }
-    return acc;
-  }, {});
-}
-
-function treatEmulatorsEnvVars(environment, envVars) {
-  if (environment.toLowerCase().includes("dev")) {
-    return envVars;
-  }
-
-  return Object.entries(envVars).reduce((acc, [key, value]) => {
-    acc[key] = key.includes("EMULATOR") ? null : value;
     return acc;
   }, {});
 }
