@@ -2,17 +2,17 @@ import { credentials } from "../../../tests/fixtures";
 import { initFirebaseSuite, plugEmulators } from "../services/firebase";
 import { webMainBase } from "./web-base";
 import {
-  collectFirebaseConfigFromEnv,
-  collectEmulatorsConfigFromEnv,
-} from "./services";
+  collectFirebaseConfig,
+  collectEmulatorsConfig,
+} from "./firebase-config";
 
 webMainFixtured();
 
 async function webMainFixtured() {
-  const firebaseConfig = collectFirebaseConfigFromEnv();
+  const firebaseConfig = collectFirebaseConfig();
   const { firestore, fireauth } = initFirebaseSuite(firebaseConfig);
 
-  const { authHost, firestoreHost } = collectEmulatorsConfigFromEnv();
+  const { authHost, firestoreHost } = collectEmulatorsConfig();
   await plugEmulators({ firestore, fireauth, authHost, firestoreHost });
 
   const dependencies = await webMainBase({

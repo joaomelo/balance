@@ -1,4 +1,4 @@
-export function collectFirebaseConfigFromEnv() {
+export function collectFirebaseConfig() {
   return {
     apiKey: process.env.APP_ENV_API_KEY,
     authDomain: process.env.APP_ENV_AUTH_DOMAIN,
@@ -9,7 +9,7 @@ export function collectFirebaseConfigFromEnv() {
   };
 }
 
-export function collectEmulatorsConfigFromEnv() {
+export function collectEmulatorsConfig() {
   return {
     authHost: process.env.APP_ENV_FIREAUTH_EMULATOR_HOST,
     firestoreHost: process.env.APP_ENV_FIRESTORE_EMULATOR_HOST,
