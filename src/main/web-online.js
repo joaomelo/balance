@@ -1,11 +1,12 @@
-import { initFirebaseSuiteFromEnv } from "../services/firebase";
+import { initFirebaseSuite } from "../services/firebase";
 import { webMainBase } from "./web-base";
-
-async function webMainOnline() {
-  const { firestore: dbService, fireauth: authService } =
-    await initFirebaseSuiteFromEnv();
-
-  await webMainBase({ dbService, authService });
-}
+import { collectFirebaseConfigFromEnv } from "./services";
 
 webMainOnline();
+
+async function webMainOnline() {
+  const config = collectFirebaseConfigFromEnv();
+  const { firestore: dbService, fireauth: authService } =
+    initFirebaseSuite(config);
+  await webMainBase({ dbService, authService });
+}
