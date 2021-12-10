@@ -1,11 +1,9 @@
-import { useQuery } from '../../../app/query';
-import { HistoryPageView } from './view';
+import { useStream } from "../../../libs/stream";
+import { HistoryPageView } from "./view";
 
-export function HistoryPagePresenter ({ dependencies }) {
+export function HistoryPagePresenter({ dependencies }) {
   const { composedHistorySelector } = dependencies;
-  const history = useQuery(composedHistorySelector);
+  const history = useStream(composedHistorySelector);
 
-  return (
-    <HistoryPageView history={history}/>
-  );
+  return <HistoryPageView history={history} />;
 }

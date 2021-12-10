@@ -1,43 +1,41 @@
-import { useCommand } from '../../../components/command';
-import { useQuery } from '../../../app/query';
-import { setBalanceCommand, delBalanceCommand } from '../commands';
-import { BalancesPageView } from './view-page';
+import { useCommand } from "../../../components/command";
+import { useStream } from "../../../libs/stream";
+import { setBalanceCommand, delBalanceCommand } from "../commands";
+import { BalancesPageView } from "./view-page";
 
-export function BalancesPagePresenter ({ dependencies }) {
+export function BalancesPagePresenter({ dependencies }) {
   const {
     accountsWithRelationshipsSelector,
     balancesWithRelationshipsSelector,
     userIdSelector,
-    balancesMutations
+    balancesMutations,
   } = dependencies;
 
-  const accounts = useQuery(accountsWithRelationshipsSelector);
-  const balances = useQuery(balancesWithRelationshipsSelector);
-  const userId = useQuery(userIdSelector);
+  const accounts = useStream(accountsWithRelationshipsSelector);
+  const balances = useStream(balancesWithRelationshipsSelector);
+  const userId = useStream(userIdSelector);
 
   const commandsDependencies = {
     balancesMutations,
     accounts,
     balances,
-    userId
+    userId,
   };
 
-  const [
-    onAdd,
-    isAdding,
-    errorAdd
-  ] = useCommand(commandsDependencies, setBalanceCommand);
+  const [onAdd, isAdding, errorAdd] = useCommand(
+    commandsDependencies,
+    setBalanceCommand
+  );
 
-  const [
-    onEdit,
-    isEditing,
-    errorEdit
-  ] = useCommand(commandsDependencies, setBalanceCommand);
+  const [onEdit, isEditing, errorEdit] = useCommand(
+    commandsDependencies,
+    setBalanceCommand
+  );
 
-  const [
-    onDel,
-    isDeleting
-  ] = useCommand(commandsDependencies, delBalanceCommand);
+  const [onDel, isDeleting] = useCommand(
+    commandsDependencies,
+    delBalanceCommand
+  );
 
   return (
     <BalancesPageView

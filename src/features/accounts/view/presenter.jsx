@@ -1,33 +1,42 @@
-import { useCommand } from '../../../components/command';
-import { useQuery } from '../../../app/query';
-import { setAccountCommand, delAccountCommand } from '../commands';
-import { AccountsPageView } from './view-page';
+import { useCommand } from "../../../components/command";
+import { useStream } from "../../../libs/stream";
+import { setAccountCommand, delAccountCommand } from "../commands";
+import { AccountsPageView } from "./view-page";
 
-export function AccountsPagePresenter ({ dependencies }) {
+export function AccountsPagePresenter({ dependencies }) {
   const {
     accountsWithRelationshipsSelector,
     balancesWithRelationshipsSelector,
     groupsWithRelationshipsSelector,
     accountsMutations,
     balancesMutations,
-    userIdSelector
+    userIdSelector,
   } = dependencies;
 
-  const accounts = useQuery(accountsWithRelationshipsSelector);
-  const balances = useQuery(balancesWithRelationshipsSelector);
-  const groups = useQuery(groupsWithRelationshipsSelector);
-  const userId = useQuery(userIdSelector);
+  const accounts = useStream(accountsWithRelationshipsSelector);
+  const balances = useStream(balancesWithRelationshipsSelector);
+  const groups = useStream(groupsWithRelationshipsSelector);
+  const userId = useStream(userIdSelector);
 
   const commandsDependencies = {
     accounts,
     balances,
     userId,
     accountsMutations,
-    balancesMutations
+    balancesMutations,
   };
-  const [onAdd, isAdding, errorAdd] = useCommand(commandsDependencies, setAccountCommand);
-  const [onEdit, isEditing, errorEdit] = useCommand(commandsDependencies, setAccountCommand);
-  const [onDel, isDeleting] = useCommand(commandsDependencies, delAccountCommand);
+  const [onAdd, isAdding, errorAdd] = useCommand(
+    commandsDependencies,
+    setAccountCommand
+  );
+  const [onEdit, isEditing, errorEdit] = useCommand(
+    commandsDependencies,
+    setAccountCommand
+  );
+  const [onDel, isDeleting] = useCommand(
+    commandsDependencies,
+    delAccountCommand
+  );
 
   return (
     <AccountsPageView

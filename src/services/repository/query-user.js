@@ -1,12 +1,12 @@
-import { query } from '../../app/query';
-import { attachDriver } from './query';
+import { query } from "../../libs/stream";
+import { attachDriver } from "./query";
 
-export function queryRepoWithUser (userIdSelector, driver) {
+export function queryRepoWithUser(userIdSelector, driver) {
   const itemsQuery = query({});
 
-  userIdSelector.subscribe(userId => {
+  userIdSelector.subscribe((userId) => {
     if (userId) {
-      const driverWithUser = driver.where('user', '==', userId);
+      const driverWithUser = driver.where("user", "==", userId);
       attachDriver(itemsQuery, driverWithUser);
     } else {
       itemsQuery.onDouse();

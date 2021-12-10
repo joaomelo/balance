@@ -1,15 +1,11 @@
-import { select } from '../../../app/query';
-import { projectBalancesWithRelationships } from '../body';
+import { select } from "../../../libs/stream";
+import { projectBalancesWithRelationships } from "../body";
 
-export function selectBalancesWithRelationships (
+export function selectBalancesWithRelationships(
   balancesSelector,
   accountsSelector
 ) {
-  return select(
-    [
-      balancesSelector,
-      accountsSelector
-    ],
-    values => projectBalancesWithRelationships(...values)
+  return select([balancesSelector, accountsSelector], (values) =>
+    projectBalancesWithRelationships(...values)
   );
 }
