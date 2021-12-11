@@ -1,7 +1,7 @@
-import { isSameDay } from '../../../app/helpers';
-import { AppError } from '../../../app/errors';
+import { isSameDay } from "../../../app/helpers";
+import { AppError } from "../../../libs/errors";
 
-export function validateBalance (context, balanceData) {
+export function validateBalance(context, balanceData) {
   const { accounts, balances } = context;
   const { id, amount, date, accountId } = balanceData;
 
@@ -9,7 +9,7 @@ export function validateBalance (context, balanceData) {
     throw new DateInvalidError();
   }
 
-  if (typeof amount !== 'number') {
+  if (typeof amount !== "number") {
     throw new AmountInvalidError();
   }
 
@@ -17,10 +17,8 @@ export function validateBalance (context, balanceData) {
     throw new AccountInvalidError();
   }
 
-  const collidingDate = b => {
-    return b.id !== id &&
-    b.accountId === accountId &&
-    isSameDay(b.date, date);
+  const collidingDate = (b) => {
+    return b.id !== id && b.accountId === accountId && isSameDay(b.date, date);
   };
 
   if (balances.find(collidingDate)) {
@@ -29,40 +27,40 @@ export function validateBalance (context, balanceData) {
 }
 
 export class AccountInvalidError extends AppError {
-  constructor () {
+  constructor() {
     super({
-      code: 'BALANCES/ACCOUNT_INVALID',
-      isOperational: true
+      code: "BALANCES/ACCOUNT_INVALID",
+      isOperational: true,
     });
     Error.captureStackTrace(this, AccountInvalidError);
   }
 }
 
 export class DateInvalidError extends AppError {
-  constructor () {
+  constructor() {
     super({
-      code: 'BALANCES/DATE_INVALID',
-      isOperational: true
+      code: "BALANCES/DATE_INVALID",
+      isOperational: true,
     });
     Error.captureStackTrace(this, DateInvalidError);
   }
 }
 
 export class DateCollidingError extends AppError {
-  constructor () {
+  constructor() {
     super({
-      code: 'BALANCES/DATE_COLLIDING',
-      isOperational: true
+      code: "BALANCES/DATE_COLLIDING",
+      isOperational: true,
     });
     Error.captureStackTrace(this, DateCollidingError);
   }
 }
 
 export class AmountInvalidError extends AppError {
-  constructor () {
+  constructor() {
     super({
-      code: 'BALANCES/AMOUNT_INVALID',
-      isOperational: true
+      code: "BALANCES/AMOUNT_INVALID",
+      isOperational: true,
     });
     Error.captureStackTrace(this, AmountInvalidError);
   }

@@ -15,7 +15,7 @@ const PATHS = {
 module.exports = () => {
   const isProd = process.env.APP_ENV_MODE === "PRODUCTION";
   const mode = isProd ? "production" : "development";
-  console.info(`Webpack build for mode "${mode}" with mode "${mode}"`);
+  console.info(`Webpack build for mode "${mode}"`);
 
   const entryFile = process.env.APP_ENV_ENTRY_FILE || "web-online.js";
   const envPlugin = createEnvVariablesPlugin();
@@ -100,9 +100,12 @@ module.exports = () => {
       new CopyPlugin({
         patterns: [
           {
-            from: path.resolve(PATHS.SRC, "app", "images"),
+            from: path.resolve(PATHS.SRC, "assets"),
             to: path.resolve(PATHS.BUILD, "public"),
             toType: "dir",
+            globOptions: {
+              ignore: ["*.html"],
+            },
           },
         ],
       }),

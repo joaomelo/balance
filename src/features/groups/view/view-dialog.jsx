@@ -1,17 +1,17 @@
-import { TextField } from '@material-ui/core';
-import { usePayload } from '../../../components/payload';
-import { ErrorAlert } from '../../../components/error-alert';
-import { ItemDialog } from '../../../components/item-dialog';
-import { useI18n } from '../../../app/i18n';
-import { createErrorReport } from '../../../app/errors';
+import { TextField } from "@material-ui/core";
+import { usePayload } from "../../../components/payload";
+import { ErrorAlert } from "../../../components/error-alert";
+import { ItemDialog } from "../../../components/item-dialog";
+import { useI18n } from "../../../app/i18n";
+import { createErrorReport } from "../../../libs/errors";
 
-export function GroupDialogView ({
+export function GroupDialogView({
   initialPayload,
   error,
   onSubmit,
   isOpen,
   onClose,
-  isLoading
+  isLoading,
 }) {
   const t = useI18n();
   const { payload, bind, reset } = usePayload(initialPayload);
@@ -24,35 +24,32 @@ export function GroupDialogView ({
   };
 
   const errorReport = createErrorReport(error, {
-    name: ['GROUPS/NAME_INVALID', 'GROUPS/NON_UNIQUE_NAME']
+    name: ["GROUPS/NAME_INVALID", "GROUPS/NON_UNIQUE_NAME"],
   });
 
   return (
     <ItemDialog
-      title='Group'
+      title="Group"
       isLoading={isLoading}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
-      <NameField
-        error={t(errorReport.name)}
-        {...bind('name')}
-      />
+      <NameField error={t(errorReport.name)} {...bind("name")} />
       <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
     </ItemDialog>
   );
 }
 
-function NameField ({ error, ...rest }) {
+function NameField({ error, ...rest }) {
   return (
     <TextField
-      id='inputName'
+      id="inputName"
       autoFocus
-      label='Name'
-      variant='outlined'
+      label="Name"
+      variant="outlined"
       fullWidth
-      margin='normal'
+      margin="normal"
       required
       error={!!error}
       helperText={error}

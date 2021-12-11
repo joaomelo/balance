@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   Button,
   Card,
@@ -9,31 +9,31 @@ import {
   Divider,
   IconButton,
   InputAdornment,
-  TextField
-} from '@material-ui/core';
+  TextField,
+} from "@material-ui/core";
 import {
   EmailTwoTone,
   LaunchTwoTone,
   VpnKeyTwoTone,
   VisibilityTwoTone,
-  VisibilityOffTwoTone
-} from '@material-ui/icons';
-import { usePayload } from '../../../components/payload';
-import { useToggle } from '../../../components/switch';
-import { Form } from '../../../components/form';
-import { ErrorAlert } from '../../../components/error-alert';
-import { ProgressDivider } from '../../../components/progress-divider';
-import { useI18n } from '../../../app/i18n';
-import { createErrorReport } from '../../../app/errors';
+  VisibilityOffTwoTone,
+} from "@material-ui/icons";
+import { usePayload } from "../../../components/payload";
+import { useToggle } from "../../../components/switch";
+import { Form } from "../../../components/form";
+import { ErrorAlert } from "../../../components/error-alert";
+import { ProgressDivider } from "../../../components/progress-divider";
+import { useI18n } from "../../../app/i18n";
+import { createErrorReport } from "../../../libs/errors";
 
-export function SignInPageView ({ onSignIn, error, isLoading }) {
+export function SignInPageView({ onSignIn, error, isLoading }) {
   const t = useI18n();
-  const initialPayload = { email: '', password: '' };
+  const initialPayload = { email: "", password: "" };
   const { payload, bind } = usePayload(initialPayload);
 
   const errorReport = createErrorReport(error, {
-    email: 'AUTH/EMAIL_INVALID',
-    password: 'AUTH/PASSWORD_INVALID'
+    email: "AUTH/EMAIL_INVALID",
+    password: "AUTH/PASSWORD_INVALID",
   });
 
   return (
@@ -41,17 +41,11 @@ export function SignInPageView ({ onSignIn, error, isLoading }) {
       <CardHeader title="Sign In" />
       <Divider />
       <CardContent>
-        <EmailField
-          {...bind('email')}
-          error={t(errorReport.email)}
-        />
-        <PasswordField
-          {...bind('password')}
-          error={t(errorReport.password)}
-        />
+        <EmailField {...bind("email")} error={t(errorReport.email)} />
+        <PasswordField {...bind("password")} error={t(errorReport.password)} />
         <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
       </CardContent>
-      <ProgressDivider isLoading={isLoading}/>
+      <ProgressDivider isLoading={isLoading} />
       <CardActionsStyled>
         <Button
           id="buttonSignIn"
@@ -68,19 +62,17 @@ export function SignInPageView ({ onSignIn, error, isLoading }) {
   );
 }
 
-function FormWrapper ({ onSubmit, children }) {
+function FormWrapper({ onSubmit, children }) {
   return (
     <Form onSubmit={onSubmit}>
       <Container maxWidth="xs">
-        <Card>
-          { children }
-        </Card>
+        <Card>{children}</Card>
       </Container>
     </Form>
   );
 }
 
-function EmailField ({ error, ...rest }) {
+function EmailField({ error, ...rest }) {
   const EmailAdornment = () => (
     <InputAdornment position="start">
       <EmailTwoTone />
@@ -104,13 +96,13 @@ function EmailField ({ error, ...rest }) {
   );
 }
 
-function PasswordField ({ error, ...rest }) {
+function PasswordField({ error, ...rest }) {
   const [showPassword, toggleShowPassword] = useToggle();
 
   const PasswordToggleAdornment = ({ onClick }) => (
     <InputAdornment position="end">
       <IconButton onClick={onClick}>
-        { showPassword ? <VisibilityTwoTone /> : <VisibilityOffTwoTone /> }
+        {showPassword ? <VisibilityTwoTone /> : <VisibilityOffTwoTone />}
       </IconButton>
     </InputAdornment>
   );
@@ -126,7 +118,7 @@ function PasswordField ({ error, ...rest }) {
       id="inputPassword"
       label="Password"
       variant="outlined"
-      type={showPassword ? 'text' : 'password'}
+      type={showPassword ? "text" : "password"}
       fullWidth
       margin="normal"
       required
@@ -134,7 +126,7 @@ function PasswordField ({ error, ...rest }) {
       helperText={error}
       InputProps={{
         startAdornment: <PasswordInfoAdornment />,
-        endAdornment: <PasswordToggleAdornment onClick={toggleShowPassword}/>
+        endAdornment: <PasswordToggleAdornment onClick={toggleShowPassword} />,
       }}
       {...rest}
     />

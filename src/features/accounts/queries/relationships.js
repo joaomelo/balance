@@ -1,4 +1,4 @@
-import { select } from "../../../libs/stream";
+import { select } from "@joaomelo/stream";
 import { projectAccountsWithRelationships } from "../body";
 
 export function selectAccountsWithRelationships(

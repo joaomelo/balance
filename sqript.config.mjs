@@ -1,31 +1,31 @@
-const webpackTemplate = (params) => ({
+const webpackTemplate = (params = "", env = {}) => ({
   relay: [
     { name: "clean-dist", command: "rimraf dist/*" },
     {
       name: "webpack",
       styles: ["bgWhiteBright", "blueBright"],
       command: `webpack ${params} --config webpack.config.js`,
+      env,
     },
   ],
 });
 
-const serversTemplate = (extraEnv) => ({
+const serversTemplate = (extraEnv = {}) => ({
   rally: [
     {
       name: "firebase-emulators",
       styles: ["bgYellow", "whiteBright"],
       command: "firebase emulators:start",
     },
-    webpackTemplate("serve"),
-  ],
-  env: [
-    extraEnv,
-    {
-      APP_ENV_MODE: "DEVELOPMENT",
-      APP_ENV_ENTRY_FILE: "web-fixtured.js",
-      APP_ENV_FIREAUTH_EMULATOR_HOST: "http://localhost:9099",
-      APP_ENV_FIRESTORE_EMULATOR_HOST: "8080",
-    },
+    webpackTemplate("serve", [
+      {
+        APP_ENV_MODE: "DEVELOPMENT",
+        APP_ENV_ENTRY_FILE: "web-fixtured.js",
+        APP_ENV_FIREAUTH_EMULATOR_HOST: "http://localhost:9099",
+        APP_ENV_FIRESTORE_EMULATOR_HOST: "8080",
+      },
+      extraEnv,
+    ]),
   ],
 });
 const serversLocal = serversTemplate(".env");
@@ -68,26 +68,23 @@ const testCi = {
   ],
 };
 
+const buildTemplate = (extraEnv = {}) =>
+  webpackTemplate("", [{ APP_ENV_MODE: "PRODUCTION" }, extraEnv]);
+const buildCi = buildTemplate();
+const buildLocal = buildTemplate(".env");
+
 const deployTemplate = (...scripts) => ({
   relay: [
     { name: "lint", command: "eslint --ext .js,.jsx src/" },
     ...scripts,
     { name: "deploy", command: "firebase deploy" },
   ],
-  env: {
-    APP_ENV_MODE: "PRODUCTION",
-  },
 });
-const deployFromLocal = deployTemplate(testLocal, {
-  name: "build",
-  ...webpackTemplate("--env prodLocal"),
-});
-const deployFromCi = deployTemplate(testCi, {
-  name: "build",
-  ...webpackTemplate("--env prodCi"),
-});
+const deployFromLocal = deployTemplate(testLocal, buildLocal);
+const deployFromCi = deployTemplate(testCi, buildCi);
 
 export {
+  buildLocal,
   serversLocal,
   testLocal,
   testLocalWatch,

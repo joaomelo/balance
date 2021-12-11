@@ -1,20 +1,20 @@
-import { MenuItem, TextField } from '@material-ui/core';
-import { KeyboardDatePicker } from '@material-ui/pickers';
-import NumberFormat from 'react-number-format';
-import { usePayload } from '../../../components/payload';
-import { ErrorAlert } from '../../../components/error-alert';
-import { ItemDialog } from '../../../components/item-dialog';
-import { useI18n } from '../../../app/i18n';
-import { createErrorReport } from '../../../app/errors';
+import { MenuItem, TextField } from "@material-ui/core";
+import { KeyboardDatePicker } from "@material-ui/pickers";
+import NumberFormat from "react-number-format";
+import { usePayload } from "../../../components/payload";
+import { ErrorAlert } from "../../../components/error-alert";
+import { ItemDialog } from "../../../components/item-dialog";
+import { useI18n } from "../../../app/i18n";
+import { createErrorReport } from "../../../libs/errors";
 
-export function BalanceDialogView ({
+export function BalanceDialogView({
   initialPayload,
   accounts,
   error,
   onSubmit,
   isOpen,
   onClose,
-  isLoading
+  isLoading,
 }) {
   const t = useI18n();
   const { payload, bind, reset } = usePayload(initialPayload);
@@ -27,14 +27,14 @@ export function BalanceDialogView ({
   };
 
   const errorReport = createErrorReport(error, {
-    account: 'BALANCES/ACCOUNT_INVALID',
-    date: ['BALANCES/DATE_INVALID', 'BALANCES/DATE_COLLIDING'],
-    amount: 'BALANCES/AMOUNT_INVALID'
+    account: "BALANCES/ACCOUNT_INVALID",
+    date: ["BALANCES/DATE_INVALID", "BALANCES/DATE_COLLIDING"],
+    amount: "BALANCES/AMOUNT_INVALID",
   });
 
   return (
     <ItemDialog
-      title='Balance'
+      title="Balance"
       isLoading={isLoading}
       isOpen={isOpen}
       onClose={onClose}
@@ -43,22 +43,16 @@ export function BalanceDialogView ({
       <AccountField
         accounts={accounts}
         error={t(errorReport.account)}
-        {...bind('accountId')}
+        {...bind("accountId")}
       />
-      <DateField
-        error={t(errorReport.date)}
-        {...bind('date')}
-      />
-      <AmountField
-        error={t(errorReport.amount)}
-        {...bind('amount')}
-      />
+      <DateField error={t(errorReport.date)} {...bind("date")} />
+      <AmountField error={t(errorReport.amount)} {...bind("amount")} />
       <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
     </ItemDialog>
   );
 }
 
-function AccountField ({ accounts, error, ...rest }) {
+function AccountField({ accounts, error, ...rest }) {
   return (
     <TextField
       id="inputAccount"
@@ -73,11 +67,8 @@ function AccountField ({ accounts, error, ...rest }) {
       helperText={error}
       {...rest}
     >
-      {accounts.map(a => (
-        <MenuItem
-          key={a.id}
-          value={a.id}
-        >
+      {accounts.map((a) => (
+        <MenuItem key={a.id} value={a.id}>
           {a.name}
         </MenuItem>
       ))}
@@ -85,11 +76,9 @@ function AccountField ({ accounts, error, ...rest }) {
   );
 }
 
-function DateField ({ error, value, onChange, ...rest }) {
-  const handleChange = luxonDate => {
-    const date = luxonDate?.isValid
-      ? luxonDate.endOf('day').toJSDate()
-      : null;
+function DateField({ error, value, onChange, ...rest }) {
+  const handleChange = (luxonDate) => {
+    const date = luxonDate?.isValid ? luxonDate.endOf("day").toJSDate() : null;
     onChange(date);
   };
 
@@ -112,11 +101,11 @@ function DateField ({ error, value, onChange, ...rest }) {
   );
 }
 
-function AmountField ({ error, value, onChange, ...rest }) {
+function AmountField({ error, value, onChange, ...rest }) {
   return (
     <TextField
       id="inputAmount"
-      value={value || ''}
+      value={value || ""}
       onChange={onChange}
       label="Amount"
       variant="outlined"
@@ -131,7 +120,7 @@ function AmountField ({ error, value, onChange, ...rest }) {
   );
 }
 
-function NumberFormatCustom ({ inputRef, onChange, ...other }) {
+function NumberFormatCustom({ inputRef, onChange, ...other }) {
   return (
     <NumberFormat
       getInputRef={inputRef}
@@ -144,4 +133,4 @@ function NumberFormatCustom ({ inputRef, onChange, ...other }) {
       {...other}
     />
   );
-};
+}

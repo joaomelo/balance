@@ -1,4 +1,4 @@
-import { select } from "../../../libs/stream";
+import { select } from "@joaomelo/stream";
 import { projectComposedHistory } from "../body";
 
 export function selectComposedHistory(groupsSelector, accountsSelector) {
