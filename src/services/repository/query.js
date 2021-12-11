@@ -1,8 +1,8 @@
 import firebase from "firebase/app";
-import { query } from "../../libs/stream";
+import { store } from "@joaomelo/stream";
 
 export function queryRepository(driver) {
-  const itemsQuery = query({});
+  const itemsQuery = store({});
   attachDriver(itemsQuery, driver);
   return itemsQuery;
 }

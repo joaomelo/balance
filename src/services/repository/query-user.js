@@ -1,8 +1,8 @@
-import { query } from "../../libs/stream";
+import { store } from "@joaomelo/stream";
 import { attachDriver } from "./query";
 
 export function queryRepoWithUser(userIdSelector, driver) {
-  const itemsQuery = query({});
+  const itemsQuery = store({});
 
   userIdSelector.subscribe((userId) => {
     if (userId) {

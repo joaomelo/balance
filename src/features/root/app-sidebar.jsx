@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   Box,
   Divider,
@@ -6,28 +6,20 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Drawer
-} from '@material-ui/core';
+  Drawer,
+} from "@material-ui/core";
 import {
   AccountBalanceTwoTone,
   AccountBalanceWalletTwoTone,
   AssessmentTwoTone,
   GroupWorkTwoTone,
-  MeetingRoomTwoTone
-} from '@material-ui/icons';
-import { camelCase } from '../../app/helpers';
+  MeetingRoomTwoTone,
+} from "@material-ui/icons";
+import { camelCase } from "../../libs/helpers";
 
-export function AppSidebar ({
-  isOpen,
-  onClose,
-  onSignOut
-}) {
+export function AppSidebar({ isOpen, onClose, onSignOut }) {
   return (
-    <Drawer
-      open={isOpen}
-      onClose={onClose}
-      onClick={onClose}
-    >
+    <Drawer open={isOpen} onClose={onClose} onClick={onClose}>
       <Box width={250}>
         <List>
           <ListLink
@@ -40,11 +32,7 @@ export function AppSidebar ({
             text="Accounts"
             to="/i/accounts"
           />
-          <ListLink
-            icon={<GroupWorkTwoTone />}
-            text="Groups"
-            to="/i/groups"
-          />
+          <ListLink icon={<GroupWorkTwoTone />} text="Groups" to="/i/groups" />
           <ListLink
             icon={<AssessmentTwoTone />}
             text="History"
@@ -62,15 +50,10 @@ export function AppSidebar ({
   );
 }
 
-function ListLink ({ icon, text, to }) {
+function ListLink({ icon, text, to }) {
   return (
     <li>
-      <ListItem
-        id={camelCase('nav', text)}
-        button
-        component={Link}
-        to={to}
-      >
+      <ListItem id={camelCase("nav", text)} button component={Link} to={to}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItem>
@@ -78,7 +61,7 @@ function ListLink ({ icon, text, to }) {
   );
 }
 
-function ListAction ({ icon, text, onClick }) {
+function ListAction({ icon, text, onClick }) {
   return (
     <li>
       <ListItem button onClick={onClick}>

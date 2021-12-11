@@ -1,7 +1,7 @@
-import { query, select } from "../../libs/stream";
+import { store, select } from "@joaomelo/stream";
 
 export function queryUser(fireauth) {
-  const userQuery = query(null);
+  const userQuery = store(null);
   fireauth.onAuthStateChanged((driverUser) =>
     updateUser(userQuery, driverUser)
   );

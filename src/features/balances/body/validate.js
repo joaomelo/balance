@@ -1,4 +1,4 @@
-import { isSameDay } from "../../../app/helpers";
+import { isSameDay } from "../../../libs/helpers";
 import { AppError } from "../../../libs/errors";
 
 export function validateBalance(context, balanceData) {

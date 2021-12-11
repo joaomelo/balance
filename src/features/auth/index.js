@@ -1,3 +1,3 @@
-export * from './ui';
-export * from './commands';
-export * from './i18n';
+export * from "./view";
+export * from "./commands";
+export * from "./i18n";

@@ -1,23 +1,20 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 import {
   AppBar,
   Box,
   IconButton,
   Link,
   Toolbar,
-  Typography
-} from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
-import { appName, appVersion } from '../../app/helpers';
+  Typography,
+} from "@material-ui/core";
+import { Menu } from "@material-ui/icons";
+import { appName, appVersion } from "../../libs/helpers";
 
-export function AppTopbar ({ showHamburger, onHamburgerClick }) {
+export function AppTopbar({ showHamburger, onHamburgerClick }) {
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <Hamburger
-          show={showHamburger}
-          onClick={onHamburgerClick}
-        />
+        <Hamburger show={showHamburger} onClick={onHamburgerClick} />
         <AppName />
         <AppVersion />
       </Toolbar>
@@ -25,54 +22,32 @@ export function AppTopbar ({ showHamburger, onHamburgerClick }) {
   );
 }
 
-function Hamburger ({ show, onClick }) {
+function Hamburger({ show, onClick }) {
   if (!show) return null;
 
   return (
     <Box mr={1}>
-      <IconButton
-        id="buttonNav"
-        edge="start"
-        color="inherit"
-        onClick={onClick}
-      >
+      <IconButton id="buttonNav" edge="start" color="inherit" onClick={onClick}>
         <Menu />
       </IconButton>
     </Box>
   );
 }
 
-function AppName () {
+function AppName() {
   return (
-    <Typography
-      component="h1"
-      variant="h6"
-    >
-      <Link
-        to='/'
-        component={RouterLink}
-        color='inherit'
-        underline='none'
-      >
+    <Typography component="h1" variant="h6">
+      <Link to="/" component={RouterLink} color="inherit" underline="none">
         {appName().toUpperCase()}
       </Link>
     </Typography>
   );
 }
 
-function AppVersion () {
+function AppVersion() {
   return (
-    <Box
-      position="absolute"
-      bottom={0}
-      right={0}
-      marginRight={1}
-    >
-      <Typography
-        variant="caption"
-      >
-        v{appVersion()}
-      </Typography>
+    <Box position="absolute" bottom={0} right={0} marginRight={1}>
+      <Typography variant="caption">v{appVersion()}</Typography>
     </Box>
   );
 }

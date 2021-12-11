@@ -1,4 +1,4 @@
-import { select } from "../../libs/stream";
+import { select } from "@joaomelo/stream";
 
 export function selectItemById(query, id) {
   return select(query, (current) => current[id]);

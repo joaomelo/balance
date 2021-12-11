@@ -1,19 +1,15 @@
-import { createUuid } from '../../../app/helpers';
-import { validateGroup } from '../body';
+import { createUuid } from "../../../libs/helpers";
+import { validateGroup } from "../body";
 
-export async function setGroupCommand (dependencies, payload) {
-  const {
-    groupsMutations,
-    groups,
-    userId
-  } = dependencies;
+export async function setGroupCommand(dependencies, payload) {
+  const { groupsMutations, groups, userId } = dependencies;
 
   validateGroup({ groups }, payload);
 
   const group = {
     id: createUuid(),
     user: userId,
-    ...payload
+    ...payload,
   };
 
   await groupsMutations.set(group);
