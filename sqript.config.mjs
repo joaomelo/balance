@@ -12,11 +12,11 @@ const webpackTemplate = (params = "", env = {}) => ({
 
 const serversTemplate = (extraEnv = {}) => ({
   rally: [
-    {
-      name: "firebase-emulators",
-      styles: ["bgYellow", "whiteBright"],
-      command: "firebase emulators:start",
-    },
+    // {
+    //   name: "firebase-emulators",
+    //   styles: ["bgYellow", "whiteBright"],
+    //   command: "firebase emulators:start",
+    // },
     webpackTemplate("serve", [
       {
         APP_ENV_MODE: "DEVELOPMENT",
@@ -84,7 +84,6 @@ const deployFromLocal = deployTemplate(testLocal, buildLocal);
 const deployFromCi = deployTemplate(testCi, buildCi);
 
 export {
-  buildLocal,
   serversLocal,
   testLocal,
   testLocalWatch,

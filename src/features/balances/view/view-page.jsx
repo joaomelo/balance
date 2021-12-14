@@ -1,9 +1,9 @@
-import { PageHeader } from '../../../components/page-header';
-import { PageContent } from '../../../components/page-content';
-import { BalanceAddView } from './view-add';
-import { BalancesListView } from './view-list';
+import { PageHeader } from "../../../libs/components/page-header";
+import { PageContent } from "../../../libs/components/page-content";
+import { BalanceAddView } from "./view-add";
+import { BalancesListView } from "./view-list";
 
-export function BalancesPageView ({
+export function BalancesPageView({
   balances,
   accounts,
   onAdd,
@@ -11,7 +11,7 @@ export function BalancesPageView ({
   onEdit,
   errorEdit,
   onDel,
-  isLoading
+  isLoading,
 }) {
   return (
     <>

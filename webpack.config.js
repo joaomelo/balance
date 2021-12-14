@@ -101,16 +101,15 @@ module.exports = () => {
         patterns: [
           {
             from: path.resolve(PATHS.SRC, "assets"),
-            to: path.resolve(PATHS.BUILD, "public"),
-            toType: "dir",
+            to: "public",
             globOptions: {
-              ignore: ["*.html"],
+              ignore: ["**/*.html"],
             },
           },
         ],
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(PATHS.SRC, "main", "index.html"),
+        template: path.resolve(PATHS.SRC, "assets", "index.html"),
       }),
       ...(isProd ? [] : [new ReactRefreshWebpackPlugin()]),
     ],

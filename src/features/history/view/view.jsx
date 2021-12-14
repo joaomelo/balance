@@ -1,19 +1,13 @@
-import { PageHeader } from '../../../components/page-header';
-import { PageContent } from '../../../components/page-content';
-import { DateChart } from '../../../components/date-chart';
+import { PageHeader } from "../../../libs/components/page-header";
+import { PageContent } from "../../../libs/components/page-content";
+import { DateChart } from "../../../libs/components/date-chart";
 
-export function HistoryPageView ({ history }) {
+export function HistoryPageView({ history }) {
   return (
     <>
       <PageHeader title="History" />
-      <PageContent
-        justifyContent="center"
-        alignItems="center"
-      >
-        <DateChart
-          id="balance-history"
-          datasets={history}
-        />
+      <PageContent justifyContent="center" alignItems="center">
+        <DateChart id="balance-history" datasets={history} />
       </PageContent>
     </>
   );

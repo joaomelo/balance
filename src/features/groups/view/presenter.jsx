@@ -1,4 +1,4 @@
-import { useCommand } from "../../../components/command";
+import { useCommand } from "../../../libs/components/command";
 import { useStream } from "../../../libs/stream";
 import { setGroupCommand, delGroupCommand } from "../commands";
 import { GroupsPageView } from "./view-page";

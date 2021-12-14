@@ -1,9 +1,9 @@
-import { PageHeader } from '../../../components/page-header';
-import { PageContent } from '../../../components/page-content';
-import { AccountsListView } from './view-list';
-import { AccountAddView } from './view-add';
+import { PageHeader } from "../../../libs/components/page-header";
+import { PageContent } from "../../../libs/components/page-content";
+import { AccountsListView } from "./view-list";
+import { AccountAddView } from "./view-add";
 
-export function AccountsPageView ({
+export function AccountsPageView({
   accounts,
   groups,
   onAdd,
@@ -11,17 +11,17 @@ export function AccountsPageView ({
   onEdit,
   errorEdit,
   onDel,
-  isLoading
+  isLoading,
 }) {
   return (
     <>
       <PageHeader title="Accounts">
         <AccountAddView
-            groups={groups}
-            onAdd={onAdd}
-            error={errorAdd}
-            isLoading={isLoading}
-          />
+          groups={groups}
+          onAdd={onAdd}
+          error={errorAdd}
+          isLoading={isLoading}
+        />
       </PageHeader>
       <PageContent>
         <AccountsListView

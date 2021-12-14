@@ -1,27 +1,15 @@
-import { Link as RouterLink } from 'react-router-dom';
-import { Typography, Box, Link } from '@material-ui/core';
-import { PageContent } from '../../../components/page-content';
-import NotFoundSvg from './not-found.svg';
+import { Link as RouterLink } from "react-router-dom";
+import { Typography, Box, Link } from "@material-ui/core";
+import { PageContent } from "../../../libs/components/page-content";
+import NotFoundSvg from "./not-found.svg";
 
-export function NotFoundPageView () {
+export function NotFoundPageView() {
   return (
-    <PageContent
-      maxWidth={500}
-      justifyContent="center"
-      alignItems="center"
-    >
+    <PageContent maxWidth={500} justifyContent="center" alignItems="center">
       <NotFoundSvg />
-      <Box
-        mt={2}
-        textAlign="center"
-      >
-        <Typography variant="h6">
-          404 | Page Not Found
-        </Typography>
-        <Link
-          component={RouterLink}
-          to="/"
-        >
+      <Box mt={2} textAlign="center">
+        <Typography variant="h6">404 | Page Not Found</Typography>
+        <Link component={RouterLink} to="/">
           Go to Home Page
         </Link>
       </Box>

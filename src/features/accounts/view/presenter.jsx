@@ -1,4 +1,4 @@
-import { useCommand } from "../../../components/command";
+import { useCommand } from "../../../libs/components/command";
 import { useStream } from "../../../libs/stream";
 import { setAccountCommand, delAccountCommand } from "../commands";
 import { AccountsPageView } from "./view-page";

@@ -1,7 +1,7 @@
-import { MuiProvider } from "../../app/mui";
+import { MuiProvider } from "../../libs/mui";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useStream } from "../../libs/stream";
-import { useCommand } from "../../components/command";
+import { useCommand } from "../../libs/components/command";
 import { signOutCommand } from "../auth";
 import { WrapperRoot } from "./wrapper-root";
 import { WrapperPage } from "./wrapper-page";

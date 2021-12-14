@@ -1,25 +1,21 @@
-import { PageHeader } from '../../../components/page-header';
-import { PageContent } from '../../../components/page-content';
-import { GroupAddView } from './view-add';
-import { GroupsListView } from './view-list';
+import { PageHeader } from "../../../libs/components/page-header";
+import { PageContent } from "../../../libs/components/page-content";
+import { GroupAddView } from "./view-add";
+import { GroupsListView } from "./view-list";
 
-export function GroupsPageView ({
+export function GroupsPageView({
   groups,
   onAdd,
   errorAdd,
   onEdit,
   errorEdit,
   onDel,
-  isLoading
+  isLoading,
 }) {
   return (
     <>
       <PageHeader title="Groups">
-        <GroupAddView
-          onAdd={onAdd}
-          error={errorAdd}
-          isLoading={isLoading}
-        />
+        <GroupAddView onAdd={onAdd} error={errorAdd} isLoading={isLoading} />
       </PageHeader>
       <PageContent>
         <GroupsListView

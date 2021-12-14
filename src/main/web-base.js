@@ -1,7 +1,7 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import { initI18nProvider, messagesCommon } from "../app/i18n";
+import { initI18nProvider, messagesCommon } from "../libs/i18n";
 import {
   createIdentityMutations,
   queryUser,

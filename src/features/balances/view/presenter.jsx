@@ -1,4 +1,4 @@
-import { useCommand } from "../../../components/command";
+import { useCommand } from "../../../libs/components/command";
 import { useStream } from "../../../libs/stream";
 import { setBalanceCommand, delBalanceCommand } from "../commands";
 import { BalancesPageView } from "./view-page";

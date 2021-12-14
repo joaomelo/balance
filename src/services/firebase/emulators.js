@@ -1,4 +1,4 @@
-import { del } from "../../app/request";
+import { del } from "../../libs/request";
 
 export async function plugEmulators({
   firestore,
