@@ -1,18 +1,18 @@
-import { credentials } from "../../../tests/fixtures";
+import { credentials } from "../../tests/fixtures";
 import { initFirebaseSuite, plugEmulators } from "../services/firebase";
 import { webMainBase } from "./web-base";
 import {
-  collectFirebaseConfig,
-  collectEmulatorsConfig,
+  collectFirebaseConfigFromEnv,
+  collectEmulatorsConfigFromEnv,
 } from "./firebase-config";
 
 webMainFixtured();
 
 async function webMainFixtured() {
-  const firebaseConfig = collectFirebaseConfig();
-  const { firestore, fireauth } = initFirebaseSuite(firebaseConfig);
+  const config = collectFirebaseConfigFromEnv();
+  const { firestore, fireauth } = initFirebaseSuite(config);
 
-  const { authHost, firestoreHost } = collectEmulatorsConfig();
+  const { authHost, firestoreHost } = collectEmulatorsConfigFromEnv();
   await plugEmulators({ firestore, fireauth, authHost, firestoreHost });
 
   const dependencies = await webMainBase({
@@ -20,18 +20,22 @@ async function webMainFixtured() {
     authService: fireauth,
   });
 
-  await injectFixtures(dependencies);
+  await injectFixtures({ firestore, fireauth, ...dependencies });
   window.$dependencies = dependencies;
 }
 
-async function injectFixtures(dependencies) {
-  console.log("fixtures");
-  console.log(credentials);
+async function injectFixtures({ fireauth }) {
+  console.info("injecting fixtures");
   await createDefaultUser(fireauth, credentials[0]);
+  await populatingCollections();
 }
 
 async function createDefaultUser(fireauth, userCredentials) {
   const { email, password } = userCredentials;
   await fireauth.createUserWithEmailAndPassword(email, password);
   await fireauth.signOut();
+}
+
+function populatingCollections() {
+  // todo
 }

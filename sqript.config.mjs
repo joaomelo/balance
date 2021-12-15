@@ -12,20 +12,28 @@ const webpackTemplate = (params = "", env = {}) => ({
 
 const serversTemplate = (extraEnv = {}) => ({
   rally: [
-    // {
-    //   name: "firebase-emulators",
-    //   styles: ["bgYellow", "whiteBright"],
-    //   command: "firebase emulators:start",
-    // },
-    webpackTemplate("serve", [
-      {
-        APP_ENV_MODE: "DEVELOPMENT",
-        APP_ENV_ENTRY_FILE: "web-fixtured.js",
-        APP_ENV_FIREAUTH_EMULATOR_HOST: "http://localhost:9099",
-        APP_ENV_FIRESTORE_EMULATOR_HOST: "8080",
-      },
-      extraEnv,
-    ]),
+    {
+      name: "firebase-emulators",
+      styles: ["bgYellow", "whiteBright"],
+      command: "firebase emulators:start",
+    },
+    {
+      relay: [
+        {
+          name: "wait-on-emulators",
+          command: "wait-on http://localhost:4400",
+        },
+        webpackTemplate("serve", [
+          {
+            APP_ENV_MODE: "DEVELOPMENT",
+            APP_ENV_ENTRY_FILE: "web-fixtured.js",
+            APP_ENV_FIREAUTH_EMULATOR_HOST: "http://localhost:9099",
+            APP_ENV_FIRESTORE_EMULATOR_HOST: "8080",
+          },
+          extraEnv,
+        ]),
+      ],
+    },
   ],
 });
 const serversLocal = serversTemplate(".env");
@@ -34,7 +42,7 @@ const serversCi = serversTemplate();
 const testTemplate = (params = "", env = {}) => ({
   relay: [
     {
-      name: "wait-on",
+      name: "wait-on-web",
       command: "wait-on http://localhost:8181",
     },
     {
