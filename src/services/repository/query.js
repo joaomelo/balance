@@ -8,11 +8,11 @@ export function queryRepository(driver) {
 }
 
 export function attachDriver(itemsQuery, driver) {
-  itemsQuery.onDouse();
+  itemsQuery.close();
   const repoUnsub = driver.onSnapshot((snapshot) =>
     updateItems(itemsQuery, snapshot)
   );
-  itemsQuery.onDouse = repoUnsub;
+  itemsQuery.onClose = repoUnsub;
 }
 
 function updateItems(query, snapshot) {

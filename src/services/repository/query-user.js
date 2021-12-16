@@ -9,7 +9,7 @@ export function queryRepoWithUser(userIdSelector, driver) {
       const driverWithUser = driver.where("user", "==", userId);
       attachDriver(itemsQuery, driverWithUser);
     } else {
-      itemsQuery.onDouse();
+      itemsQuery.close();
       itemsQuery.update({});
     }
   });
