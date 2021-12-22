@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GridToolbar, DataGrid } from "@material-ui/data-grid";
 import { DateTime } from "luxon";
 import { ActionCell } from "../../../libs/components/action-cell";
-import { useSwitch } from "../../../libs/components/switch";
+import { useSwitch } from "../../../libs/hooks/switch";
 import { BalanceDialogView } from "./view-dialog";
 
 export function BalancesListView({

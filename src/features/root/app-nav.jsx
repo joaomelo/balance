@@ -1,4 +1,4 @@
-import { useSwitch } from "../../libs/components/switch";
+import { useSwitch } from "../../libs/hooks/switch";
 import { AppTopbar } from "./app-topbar";
 import { AppSidebar } from "./app-sidebar";
 

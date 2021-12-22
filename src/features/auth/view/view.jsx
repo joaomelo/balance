@@ -18,8 +18,8 @@ import {
   VisibilityTwoTone,
   VisibilityOffTwoTone,
 } from "@material-ui/icons";
-import { usePayload } from "../../../libs/components/payload";
-import { useToggle } from "../../../libs/components/switch";
+import { usePayload } from "../../../libs/hooks/payload";
+import { useToggle } from "../../../libs/hooks/switch";
 import { Form } from "../../../libs/components/form";
 import { ErrorAlert } from "../../../libs/components/error-alert";
 import { ProgressDivider } from "../../../libs/components/progress-divider";

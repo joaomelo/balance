@@ -1,4 +1,4 @@
-import { useStream } from "../../../libs/stream";
+import { useStream } from "../../../libs/hooks/stream";
 import { HistoryPageView } from "./view";
 
 export function HistoryPagePresenter({ dependencies }) {

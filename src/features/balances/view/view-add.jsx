@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { Button } from "@material-ui/core";
-import { useSwitch } from "../../../libs/components/switch";
+import { useSwitch } from "../../../libs/hooks/switch";
 import { BalanceDialogView } from "./view-dialog";
 
 export function BalanceAddView({ accounts, onAdd, error, isLoading }) {
