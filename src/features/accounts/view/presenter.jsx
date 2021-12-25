@@ -14,6 +14,7 @@ export function AccountsPagePresenter({ dependencies }) {
   } = dependencies;
 
   const accounts = useStream(accountsWithRelationshipsSelector);
+  console.log({ accounts, accountsWithRelationshipsSelector });
   const balances = useStream(balancesWithRelationshipsSelector);
   const groups = useStream(groupsWithRelationshipsSelector);
   const userId = useStream(userIdSelector);

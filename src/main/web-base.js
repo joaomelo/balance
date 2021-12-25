@@ -50,6 +50,10 @@ export async function webMainBase({ dbService, authService }) {
     accountsCollection.orderBy("name")
   );
   const activeAccountsSelector = selectActiveItems(accountsQuery);
+  console.log({
+    activeAccountsSelector: activeAccountsSelector.current,
+    accountsQuery: accountsQuery.current,
+  });
 
   const balancesCollection = dbService.collection("balances");
   const balancesMutations = createRepositoryMutations(balancesCollection);
@@ -71,11 +75,19 @@ export async function webMainBase({ dbService, authService }) {
     activeBalancesSelector,
     activeAccountsSelector
   );
+
   const accountsWithRelationshipsSelector = selectAccountsWithRelationships(
     activeAccountsSelector,
     activeGroupsSelector,
     activeBalancesSelector
   );
+  console.log({
+    accountsWithRelationshipsSelector,
+    activeAccountsSelector,
+    activeGroupsSelector,
+    activeBalancesSelector,
+  });
+
   const groupsWithRelationshipsSelector = selectGroupsWithRelationships(
     activeGroupsSelector,
     activeAccountsSelector,

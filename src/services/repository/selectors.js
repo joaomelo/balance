@@ -9,7 +9,9 @@ export function selectAllItems(query) {
 }
 
 export function selectActiveItems(query) {
-  return select(query, (current) =>
-    Object.values(current).filter((i) => !i._deleted)
-  );
+  const temp = select(query, (current) => {
+    return Object.values(current).filter((i) => !i._deleted);
+  });
+  console.log({ query: Object.values(query.current), temp });
+  return temp;
 }
