@@ -1,8 +1,8 @@
-import { validateCredentials } from '../body';
+import { validateCredentials } from "../body";
 
-export async function signInCommand (dependencies, credentials) {
-  const { identityMutations } = dependencies;
+export async function signInCommand(dependencies, credentials) {
+  const { identityService } = dependencies;
 
   validateCredentials(credentials);
-  await identityMutations.signIn(credentials);
+  await identityService.signIn(credentials);
 }

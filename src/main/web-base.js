@@ -2,12 +2,7 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 import { initI18nProvider, messagesCommon } from "../libs/i18n";
-import {
-  createIdentityMutations,
-  queryUser,
-  selectUserId,
-  selectIsSignedIn,
-} from "../services/identity";
+import { createIdentityService } from "../services/identity";
 import {
   createRepositoryMutations,
   queryRepoWithUser,
@@ -29,7 +24,7 @@ import {
 } from "../features/groups";
 import { selectComposedHistory } from "../features/history";
 
-export async function webMainBase({ dbService, authService }) {
+export async function webMainBase({ dbDriver, identityDriver }) {
   await initI18nProvider([
     messagesCommon,
     messagesAuth,
@@ -38,35 +33,28 @@ export async function webMainBase({ dbService, authService }) {
     messagesGroups,
   ]);
 
-  const identityMutations = createIdentityMutations(authService);
-  const userQuery = queryUser(authService);
-  const userIdSelector = selectUserId(userQuery);
-  const isSignedInSelector = selectIsSignedIn(userQuery);
+  const identityService = createIdentityService(identityDriver);
 
-  const accountsCollection = dbService.collection("accounts");
+  const accountsCollection = dbDriver.collection("accounts");
   const accountsMutations = createRepositoryMutations(accountsCollection);
   const accountsQuery = queryRepoWithUser(
-    userIdSelector,
+    identityService.userIdStream,
     accountsCollection.orderBy("name")
   );
   const activeAccountsSelector = selectActiveItems(accountsQuery);
-  console.log({
-    activeAccountsSelector: activeAccountsSelector.current,
-    accountsQuery: accountsQuery.current,
-  });
 
-  const balancesCollection = dbService.collection("balances");
+  const balancesCollection = dbDriver.collection("balances");
   const balancesMutations = createRepositoryMutations(balancesCollection);
   const balancesQuery = queryRepoWithUser(
-    userIdSelector,
+    identityService.userIdStream,
     balancesCollection.orderBy("date", "desc")
   );
   const activeBalancesSelector = selectActiveItems(balancesQuery);
 
-  const groupsCollection = dbService.collection("groups");
+  const groupsCollection = dbDriver.collection("groups");
   const groupsMutations = createRepositoryMutations(groupsCollection);
   const groupsQuery = queryRepoWithUser(
-    userIdSelector,
+    identityService.userIdStream,
     groupsCollection.orderBy("name")
   );
   const activeGroupsSelector = selectActiveItems(groupsQuery);
@@ -100,9 +88,7 @@ export async function webMainBase({ dbService, authService }) {
   );
 
   const dependencies = {
-    identityMutations,
-    userIdSelector,
-    isSignedInSelector,
+    identityService,
     accountsMutations,
     accountsWithRelationshipsSelector,
     balancesMutations,

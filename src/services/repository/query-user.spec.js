@@ -1,44 +1,44 @@
-import { credentials } from '../../../tests/fixtures';
-import { initFirebaseSuiteFromEnv } from '../firebase';
-import { queryUser, selectUserId, createIdentityMutations } from '../identity';
-import { createSet } from './set';
-import { queryRepoWithUser } from './query-user';
+import { credentials } from "../../../tests/fixtures";
+import { initFirebaseSuiteFromEnv } from "../firebase";
+import { userStream, selectUserId, createIdentityService } from "../identity";
+import { createSet } from "./set";
+import { queryRepoWithUser } from "./query-user";
 
-describe('query with user awareness', () => {
-  let app, itemsQuery, set, userIdSelector, signIn;
+describe("query with user awareness", () => {
+  let app, itemsQuery, set, userIdStream, signIn;
 
   beforeEach(async () => {
     const suite = await initFirebaseSuiteFromEnv();
     const fireauth = suite.fireauth;
     app = suite.app;
 
-    const collection = suite.firestore.collection('test');
+    const collection = suite.firestore.collection("test");
     set = createSet(collection);
 
-    userIdSelector = selectUserId(queryUser(fireauth));
-    const driver = collection.where('id', '==', 'test-id');
-    itemsQuery = queryRepoWithUser(userIdSelector, driver);
+    userIdStream = selectUserId(userStream(fireauth));
+    const driver = collection.where("id", "==", "test-id");
+    itemsQuery = queryRepoWithUser(userIdStream, driver);
 
-    const identityMutations = createIdentityMutations(fireauth);
-    signIn = () => identityMutations.signIn(credentials[0]);
+    const identityService = createIdentityService(fireauth);
+    signIn = () => identityService.signIn(credentials[0]);
   });
 
   afterAll(() => app.delete());
 
-  it('query is always empty while no user is signed in', async () => {
-    const item = { id: 'test-id', name: 'test name' };
+  it("query is always empty while no user is signed in", async () => {
+    const item = { id: "test-id", name: "test name" };
     await set(item);
 
     expect(itemsQuery.current).toMatchObject({});
   });
 
-  it('query shows user data after sign in', async () => {
+  it("query shows user data after sign in", async () => {
     await signIn();
 
     const item = {
-      id: 'test-id',
-      name: 'test name',
-      user: userIdSelector.current
+      id: "test-id",
+      name: "test name",
+      user: userIdStream.current,
     };
     await set(item);
 

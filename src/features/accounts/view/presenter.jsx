@@ -10,14 +10,14 @@ export function AccountsPagePresenter({ dependencies }) {
     groupsWithRelationshipsSelector,
     accountsMutations,
     balancesMutations,
-    userIdSelector,
+    userIdStream,
   } = dependencies;
 
   const accounts = useStream(accountsWithRelationshipsSelector);
   console.log({ accounts, accountsWithRelationshipsSelector });
   const balances = useStream(balancesWithRelationshipsSelector);
   const groups = useStream(groupsWithRelationshipsSelector);
-  const userId = useStream(userIdSelector);
+  const userId = useStream(userIdStream);
 
   const commandsDependencies = {
     accounts,

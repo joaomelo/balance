@@ -1,4 +1,4 @@
-export async function signOutCommand (dependencies) {
-  const { identityMutations } = dependencies;
-  await identityMutations.signOut();
+export async function signOutCommand(dependencies) {
+  const { identityService } = dependencies;
+  await identityService.signOut();
 }

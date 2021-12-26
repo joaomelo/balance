@@ -7,13 +7,13 @@ export function BalancesPagePresenter({ dependencies }) {
   const {
     accountsWithRelationshipsSelector,
     balancesWithRelationshipsSelector,
-    userIdSelector,
+    userIdStream,
     balancesMutations,
   } = dependencies;
 
   const accounts = useStream(accountsWithRelationshipsSelector);
   const balances = useStream(balancesWithRelationshipsSelector);
-  const userId = useStream(userIdSelector);
+  const userId = useStream(userIdStream);
 
   const commandsDependencies = {
     balancesMutations,

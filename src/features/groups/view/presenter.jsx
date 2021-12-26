@@ -9,12 +9,12 @@ export function GroupsPagePresenter({ dependencies }) {
     accountsWithRelationshipsSelector,
     groupsMutations,
     groupsWithRelationshipsSelector,
-    userIdSelector,
+    userIdStream,
   } = dependencies;
 
   const accounts = useStream(accountsWithRelationshipsSelector);
   const groups = useStream(groupsWithRelationshipsSelector);
-  const userId = useStream(userIdSelector);
+  const userId = useStream(userIdStream);
 
   const commandsDependencies = {
     accountsMutations,

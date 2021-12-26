@@ -1,10 +1,10 @@
 import { store } from "@joaomelo/stream";
 import { attachDriver } from "./query";
 
-export function queryRepoWithUser(userIdSelector, driver) {
+export function queryRepoWithUser(userIdStream, driver) {
   const itemsQuery = store({});
 
-  userIdSelector.subscribe((userId) => {
+  userIdStream.subscribe((userId) => {
     if (userId) {
       const driverWithUser = driver.where("user", "==", userId);
       attachDriver(itemsQuery, driverWithUser);

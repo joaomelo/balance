@@ -16,8 +16,8 @@ async function webMainFixtured() {
   await plugEmulators({ firestore, fireauth, authHost, firestoreHost });
 
   const dependencies = await webMainBase({
-    dbService: firestore,
-    authService: fireauth,
+    dbDriver: firestore,
+    identityDriver: fireauth,
   });
 
   await injectFixtures({ firestore, fireauth, ...dependencies });

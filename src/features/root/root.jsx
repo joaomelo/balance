@@ -9,8 +9,8 @@ import { AppNav } from "./app-nav";
 import { CurrentPage } from "./current-page";
 
 export function Root({ dependencies }) {
-  const { isSignedInSelector } = dependencies;
-  const isSignedIn = useStream(isSignedInSelector);
+  const { isSignedInStream } = dependencies;
+  const isSignedIn = useStream(isSignedInStream);
   const [onSignOut] = useCommand(dependencies, signOutCommand);
 
   return (
