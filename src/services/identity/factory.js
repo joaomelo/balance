@@ -1,10 +1,10 @@
 import { streamAuth } from "@joaomelo/stream-fire";
-import { createSignIn } from "./sign-in";
+import { signIn } from "./sign-in";
 
 export function createIdentityService(fireauth) {
   return {
     ...streamAuth(fireauth.onAuthStateChanged),
-    signIn: createSignIn(fireauth),
+    signIn: (credentials) => signIn(fireauth, credentials),
     signOut: () => fireauth.signOut(),
   };
 }
