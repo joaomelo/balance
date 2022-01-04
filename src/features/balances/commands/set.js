@@ -2,7 +2,7 @@ import { createUuid } from "../../../libs/helpers";
 import { validateBalance } from "../body";
 
 export async function setBalanceCommand(dependencies, payload) {
-  const { balancesMutations, accounts, balances, userId } = dependencies;
+  const { balancesActions, accounts, balances, userId } = dependencies;
 
   validateBalance(
     {
@@ -18,5 +18,5 @@ export async function setBalanceCommand(dependencies, payload) {
     ...payload,
   };
 
-  await balancesMutations.set(balance);
+  await balancesActions.set(balance);
 }

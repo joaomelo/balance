@@ -4,7 +4,7 @@ import "regenerator-runtime/runtime";
 import { initI18nProvider, messagesCommon } from "../libs/i18n";
 import { createIdentityService } from "../services/identity";
 import {
-  createRepositoryMutations,
+  createActions,
   queryRepoWithUser,
   selectActiveItems,
 } from "../services/repository";
@@ -12,6 +12,7 @@ import { mountRoot } from "../features/root";
 import { messagesAuth } from "../features/auth";
 import {
   messagesAccount,
+  createFlatAccountsQuery,
   selectAccountsWithRelationships,
 } from "../features/accounts";
 import {
@@ -36,15 +37,14 @@ export async function webMainBase({ dbDriver, identityDriver }) {
   const identityService = createIdentityService(identityDriver);
 
   const accountsCollection = dbDriver.collection("accounts");
-  const accountsMutations = createRepositoryMutations(accountsCollection);
-  const accountsQuery = queryRepoWithUser(
-    identityService.userIdStream,
-    accountsCollection.orderBy("name")
+  const accountsActions = createActions(accountsCollection);
+  const flatAccountsQuery = createFlatAccountsQuery(
+    accountsCollection,
+    identityDriver
   );
-  const activeAccountsSelector = selectActiveItems(accountsQuery);
 
   const balancesCollection = dbDriver.collection("balances");
-  const balancesMutations = createRepositoryMutations(balancesCollection);
+  const balancesActions = createActions(balancesCollection);
   const balancesQuery = queryRepoWithUser(
     identityService.userIdStream,
     balancesCollection.orderBy("date", "desc")
@@ -52,7 +52,7 @@ export async function webMainBase({ dbDriver, identityDriver }) {
   const activeBalancesSelector = selectActiveItems(balancesQuery);
 
   const groupsCollection = dbDriver.collection("groups");
-  const groupsMutations = createRepositoryMutations(groupsCollection);
+  const groupsMutations = createActions(groupsCollection);
   const groupsQuery = queryRepoWithUser(
     identityService.userIdStream,
     groupsCollection.orderBy("name")
@@ -61,24 +61,18 @@ export async function webMainBase({ dbDriver, identityDriver }) {
 
   const balancesWithRelationshipsSelector = selectBalancesWithRelationships(
     activeBalancesSelector,
-    activeAccountsSelector
+    flatAccountsQuery
   );
 
   const accountsWithRelationshipsSelector = selectAccountsWithRelationships(
-    activeAccountsSelector,
+    flatAccountsQuery,
     activeGroupsSelector,
     activeBalancesSelector
   );
-  console.log({
-    accountsWithRelationshipsSelector,
-    activeAccountsSelector,
-    activeGroupsSelector,
-    activeBalancesSelector,
-  });
 
   const groupsWithRelationshipsSelector = selectGroupsWithRelationships(
     activeGroupsSelector,
-    activeAccountsSelector,
+    flatAccountsQuery,
     activeBalancesSelector
   );
 
@@ -89,9 +83,9 @@ export async function webMainBase({ dbDriver, identityDriver }) {
 
   const dependencies = {
     identityService,
-    accountsMutations,
+    accountsActions,
     accountsWithRelationshipsSelector,
-    balancesMutations,
+    balancesActions,
     balancesWithRelationshipsSelector,
     groupsMutations,
     groupsWithRelationshipsSelector,

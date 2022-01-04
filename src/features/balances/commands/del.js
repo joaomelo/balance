@@ -1,7 +1,5 @@
-export async function delBalanceCommand (dependencies, payload) {
-  const {
-    balancesMutations
-  } = dependencies;
+export async function delBalanceCommand(dependencies, payload) {
+  const { balancesActions } = dependencies;
   const { id } = payload;
-  await balancesMutations.del(id);
+  await balancesActions.del(id);
 }

@@ -1,16 +1,19 @@
 import { createUuid } from "../../../libs/helpers";
 import { validateAccount } from "../body";
 
-export async function setAccountCommand(dependencies, payload) {
-  const { accountsMutations, accounts, userId } = dependencies;
+export function createSetAccount(dependencies) {
+  const { accountsActions, accountsQuery, userIdStream } = dependencies;
 
-  validateAccount({ accounts }, payload);
+  return async (payload) => {
+    const accounts = accountsQuery.current;
+    validateAccount(payload, { accounts });
 
-  const account = {
-    id: createUuid(),
-    user: userId,
-    ...payload,
+    const account = {
+      id: createUuid(),
+      user: userIdStream.current,
+      ...payload,
+    };
+
+    await accountsActions.set(account);
   };
-
-  await accountsMutations.set(account);
 }

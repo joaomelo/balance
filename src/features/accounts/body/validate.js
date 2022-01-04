@@ -1,6 +1,6 @@
 import { AppError } from "../../../libs/errors";
 
-export function validateAccount(context, accountData) {
+export function validateAccount(accountData, context) {
   const { accounts } = context;
   const { id, name } = accountData;
 

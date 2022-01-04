@@ -5,7 +5,7 @@ import { GroupsPageView } from "./view-page";
 
 export function GroupsPagePresenter({ dependencies }) {
   const {
-    accountsMutations,
+    accountsActions,
     accountsWithRelationshipsSelector,
     groupsMutations,
     groupsWithRelationshipsSelector,
@@ -17,7 +17,7 @@ export function GroupsPagePresenter({ dependencies }) {
   const userId = useStream(userIdStream);
 
   const commandsDependencies = {
-    accountsMutations,
+    accountsActions,
     accounts,
     groupsMutations,
     groups,
