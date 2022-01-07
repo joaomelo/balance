@@ -1,4 +1,4 @@
-import { select } from "@joaomelo/stream";
+import { select } from "../../../libs/stream";
 import { projectAccounts } from "../body";
 
 export function createAccountsQuery(

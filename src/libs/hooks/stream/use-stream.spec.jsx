@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen, act } from "@testing-library/react";
-import { store } from "@joaomelo/stream";
+import { store } from "../../stream";
 import { useStream } from "./use-stream";
 
 describe("useStream hook", () => {
