@@ -28,16 +28,10 @@ function resolveFixtureLevel() {
   return fixtureLevel;
 }
 
-async function injectFixtures({ fireauth }) {
+async function injectFixtures({ authCommands }) {
   console.info("injecting fixtures");
-  await createDefaultUser(fireauth, credentials[0]);
+  await authCommands.createUser(credentials[0]);
   await populatingCollections();
-}
-
-async function createDefaultUser(fireauth, userCredentials) {
-  const { email, password } = userCredentials;
-  await fireauth.createUserWithEmailAndPassword(email, password);
-  await fireauth.signOut();
 }
 
 function populatingCollections() {
