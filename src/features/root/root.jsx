@@ -2,21 +2,20 @@ import { MuiProvider } from "../../libs/mui";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useStream } from "../../libs/hooks/stream";
 import { useCommand } from "../../libs/hooks/command";
-import { signOutCommand } from "../auth";
 import { WrapperRoot } from "./wrapper-root";
 import { WrapperPage } from "./wrapper-page";
 import { AppNav } from "./app-nav";
 import { CurrentPage } from "./current-page";
 
 export function Root({ dependencies }) {
-  const { isSignedInStream } = dependencies;
-  const isSignedIn = useStream(isSignedInStream);
-  const [onSignOut] = useCommand(dependencies, signOutCommand);
+  const { isSignedInQuery, authCommands } = dependencies;
+  const isSignedIn = useStream(isSignedInQuery);
+  const [signOut] = useCommand(authCommands.signOut);
 
   return (
     <Providers>
       <WrapperRoot>
-        <AppNav isSignedIn={isSignedIn} onSignOut={onSignOut} />
+        <AppNav isSignedIn={isSignedIn} onSignOut={signOut} />
         <WrapperPage>
           <CurrentPage isSignedIn={isSignedIn} dependencies={dependencies} />
         </WrapperPage>

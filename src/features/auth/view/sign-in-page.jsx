@@ -18,6 +18,7 @@ import {
   VisibilityTwoTone,
   VisibilityOffTwoTone,
 } from "@material-ui/icons";
+import { useCommand } from "../../../libs/hooks/command";
 import { usePayload } from "../../../libs/hooks/payload";
 import { useToggle } from "../../../libs/hooks/switch";
 import { Form } from "../../../libs/components/form";
@@ -26,18 +27,21 @@ import { ProgressDivider } from "../../../libs/components/progress-divider";
 import { useI18n } from "../../../libs/i18n";
 import { createErrorReport } from "../../../libs/errors";
 
-export function SignInPageView({ onSignIn, error, isLoading }) {
+export function SignInPageView({ dependencies }) {
   const t = useI18n();
-  const initialPayload = { email: "", password: "" };
-  const { payload, bind } = usePayload(initialPayload);
 
+  const { authCommands } = dependencies;
+  const [signIn, isLoading, error] = useCommand(authCommands.signIn);
   const errorReport = createErrorReport(error, {
     email: "AUTH/EMAIL_INVALID",
     password: "AUTH/PASSWORD_INVALID",
   });
 
+  const initialPayload = { email: "", password: "" };
+  const { payload, bind } = usePayload(initialPayload);
+
   return (
-    <FormWrapper onSubmit={() => onSignIn(payload)}>
+    <FormWrapper onSubmit={() => signIn(payload)}>
       <CardHeader title="Sign In" />
       <Divider />
       <CardContent>

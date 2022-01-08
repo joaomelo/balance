@@ -17,7 +17,7 @@ async function webMainFixtured() {
 
   const dependencies = await webMainBase({
     dbDriver: firestore,
-    identityDriver: fireauth,
+    authDriver: fireauth,
   });
 
   await injectFixtures({ firestore, fireauth, ...dependencies });

@@ -1,4 +1,7 @@
-export async function signOutCommand(dependencies) {
-  const { identityService } = dependencies;
-  await identityService.signOut();
+export function createSignOut(dependencies) {
+  const { authDriver } = dependencies;
+
+  return async () => {
+    await authDriver.signOut();
+  };
 }

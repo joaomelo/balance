@@ -2,14 +2,14 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 import { initI18nProvider, messagesCommon } from "../libs/i18n";
-import { createIdentityService } from "../services/identity";
 import {
   createActions,
   queryRepoWithUser,
   selectActiveItems,
 } from "../services/repository";
+
 import { mountRoot } from "../features/root";
-import { messagesAuth } from "../features/auth";
+import { messagesAuth, createAuthCommands } from "../features/auth";
 import {
   messagesAccount,
   createFlatAccountsQuery,
@@ -25,7 +25,7 @@ import {
 } from "../features/groups";
 import { selectComposedHistory } from "../features/history";
 
-export async function webMainBase({ dbDriver, identityDriver }) {
+export async function webMainBase({ dbDriver, authDriver }) {
   await initI18nProvider([
     messagesCommon,
     messagesAuth,
@@ -34,13 +34,13 @@ export async function webMainBase({ dbDriver, identityDriver }) {
     messagesGroups,
   ]);
 
-  const identityService = createIdentityService(identityDriver);
+  const authCommands = createAuthCommands({ authDriver });
 
   const accountsCollection = dbDriver.collection("accounts");
   const accountsActions = createActions(accountsCollection);
   const flatAccountsQuery = createFlatAccountsQuery(
     accountsCollection,
-    identityDriver
+    authDriver
   );
 
   const balancesCollection = dbDriver.collection("balances");
@@ -82,7 +82,7 @@ export async function webMainBase({ dbDriver, identityDriver }) {
   );
 
   const dependencies = {
-    identityService,
+    authCommands,
     accountsActions,
     accountsWithRelationshipsSelector,
     balancesActions,

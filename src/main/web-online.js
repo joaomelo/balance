@@ -6,7 +6,7 @@ webMainOnline();
 
 async function webMainOnline() {
   const config = collectFirebaseConfigFromEnv();
-  const { firestore: dbDriver, fireauth: identityDriver } =
+  const { firestore: dbDriver, fireauth: authDriver } =
     initFirebaseSuite(config);
-  await webMainBase({ dbDriver, identityDriver });
+  await webMainBase({ dbDriver, authDriver });
 }

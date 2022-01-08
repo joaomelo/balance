@@ -17,7 +17,7 @@ import {
 } from "@material-ui/icons";
 import { camelCase } from "../../libs/helpers";
 
-export function AppSidebar({ isOpen, onClose, onSignOut }) {
+export function AppSidebar({ isOpen, onClose, signOut }) {
   return (
     <Drawer open={isOpen} onClose={onClose} onClick={onClose}>
       <Box width={250}>
@@ -42,7 +42,7 @@ export function AppSidebar({ isOpen, onClose, onSignOut }) {
           <ListAction
             icon={<MeetingRoomTwoTone />}
             text="Sign Out"
-            onClick={onSignOut}
+            onClick={signOut}
           />
         </List>
       </Box>
