@@ -20,7 +20,7 @@ import { createAuthCommands, createUserQueries } from "../features/auth";
 // } from "../features/groups";
 // import { selectComposedHistory } from "../features/history";
 
-export async function createDependencies({ dbDriver, authDriver }) {
+export function createDependencies({ dbDriver, authDriver }) {
   const authCommands = createAuthCommands({ authDriver });
   const userQueries = createUserQueries({ authDriver });
 

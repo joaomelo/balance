@@ -2,7 +2,7 @@ import { store, select } from "../../../libs/stream";
 
 export function createUserQueries(dependencies) {
   const { authDriver } = dependencies;
-  const userStream = storeUser(authDriver.onAuthStateChanged);
+  const userStream = storeUser(authDriver);
   const userIdStream = selectUserId(userStream);
   const authStatusStream = selectAuthStatus(userStream);
   const isSignedInStream = selectIsSignedIn(userStream);
@@ -15,9 +15,9 @@ export function createUserQueries(dependencies) {
   };
 }
 
-function storeUser(onAuthStateChanged) {
+function storeUser(authDriver) {
   const userStream = store(undefined);
-  onAuthStateChanged((user) => userStream.update(user));
+  authDriver.onAuthStateChanged((user) => userStream.update(user));
   return userStream;
 }
 

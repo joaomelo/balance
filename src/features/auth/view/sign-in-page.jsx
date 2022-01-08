@@ -32,6 +32,7 @@ export function SignInPage({ dependencies }) {
 
   const { authCommands } = dependencies;
   const [signIn, isLoading, error] = useCommand(authCommands.signIn);
+
   const errorReport = createErrorReport(error, {
     email: "AUTH/EMAIL_INVALID",
     password: "AUTH/PASSWORD_INVALID",

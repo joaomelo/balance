@@ -8,8 +8,8 @@ import { AppNav } from "./app-nav";
 import { CurrentPage } from "./current-page";
 
 export function Root({ dependencies }) {
-  const { isSignedInQuery, authCommands } = dependencies;
-  const isSignedIn = useStream(isSignedInQuery);
+  const { userQueries, authCommands } = dependencies;
+  const isSignedIn = useStream(userQueries.isSignedInStream);
   const [signOut] = useCommand(authCommands.signOut);
 
   return (

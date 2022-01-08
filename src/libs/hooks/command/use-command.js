@@ -1,14 +1,19 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
-export function useCommand (dependencies, command) {
+export function useCommand(command) {
   const [isActing, setIsActing] = useState(false);
   const [error, setError] = useState(null);
 
-  // isMounted prevents state updates after the component unmount
+  // isMounted prevents state updates after the component unmounts
   const isMounted = useRef(true);
-  useEffect(() => () => { isMounted.current = false; }, []);
+  useEffect(
+    () => () => {
+      isMounted.current = false;
+    },
+    []
+  );
 
-  const act = async payload => {
+  const act = async (payload) => {
     if (isActing) return;
 
     setIsActing(true);
@@ -16,7 +21,7 @@ export function useCommand (dependencies, command) {
 
     let success;
     try {
-      await command(dependencies, payload);
+      await command(payload);
       success = true;
     } catch (error) {
       success = false;
