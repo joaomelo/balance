@@ -1,27 +1,31 @@
 import { credentials } from "../../tests/fixtures";
-import { initFirebaseSuite, plugEmulators } from "../services/firebase";
-import { webMainBase } from "./web-base";
 import {
-  collectFirebaseConfigFromEnv,
   collectEmulatorsConfigFromEnv,
-} from "./firebase-config";
+  plugEmulators,
+} from "../services/firebase";
 
-webMainFixtured();
+export async function fixtureEnvironment(dependencies) {
+  const fixtureLevel = resolveFixtureLevel();
+  if (!["base", "full"].includes(fixtureLevel)) return;
 
-async function webMainFixtured() {
-  const config = collectFirebaseConfigFromEnv();
-  const { firestore, fireauth } = initFirebaseSuite(config);
-
+  const { firestore, fireauth } = dependencies;
   const { authHost, firestoreHost } = collectEmulatorsConfigFromEnv();
   await plugEmulators({ firestore, fireauth, authHost, firestoreHost });
 
-  const dependencies = await webMainBase({
-    dbDriver: firestore,
-    authDriver: fireauth,
-  });
+  if (fixtureLevel !== "full") return;
 
-  await injectFixtures({ firestore, fireauth, ...dependencies });
-  window.$dependencies = dependencies;
+  await injectFixtures(dependencies);
+}
+
+function resolveFixtureLevel() {
+  let fixtureLevel;
+  try {
+    fixtureLevel = process.env.APP_ENV_FIXTURE_LEVEL;
+  } catch {
+    fixtureLevel = "none";
+  }
+
+  return fixtureLevel;
 }
 
 async function injectFixtures({ fireauth }) {

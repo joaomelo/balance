@@ -17,7 +17,6 @@ module.exports = () => {
   const mode = isProd ? "production" : "development";
   console.info(`Webpack build for mode "${mode}"`);
 
-  const entryFile = process.env.APP_ENV_ENTRY_FILE || "web-online.js";
   const envPlugin = createEnvVariablesPlugin();
 
   return {
@@ -27,7 +26,7 @@ module.exports = () => {
     resolve: {
       extensions: [".js", ".jsx", ".json"],
     },
-    entry: path.resolve(PATHS.SRC, "main", entryFile),
+    entry: path.resolve(PATHS.SRC, "main", "web.js"),
     output: {
       publicPath: "/",
       path: PATHS.BUILD,

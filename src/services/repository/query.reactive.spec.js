@@ -1,5 +1,5 @@
 import { initFirebase } from "../tests/firebase/init.js";
-import { streamAuth } from "./auth.js";
+import { streamUser } from "./auth.js";
 import { streamReactiveQuery } from "./query.js";
 
 describe("firestore base streams", () => {
@@ -14,7 +14,7 @@ describe("firestore base streams", () => {
   const itemOne = { id: idOne, meta: "one" };
 
   it("stream holds initial state when observable pushes falsy values", async () => {
-    const { userIdStream } = streamAuth(fb.onAuthStateChanged);
+    const { userIdStream } = streamUser(fb.onAuthStateChanged);
     const { listStream } = streamReactiveQuery(
       userIdStream,
       fb.createOnSnapshot
@@ -29,7 +29,7 @@ describe("firestore base streams", () => {
   const itemTwo = { id: idTwo, meta: "two" };
 
   it("query reflects observable updates", async () => {
-    const { userIdStream } = streamAuth(fb.onAuthStateChanged);
+    const { userIdStream } = streamUser(fb.onAuthStateChanged);
     const { listStream, indexedStream } = streamReactiveQuery(
       userIdStream,
       fb.createOnSnapshot

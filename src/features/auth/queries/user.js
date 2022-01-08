@@ -1,7 +1,8 @@
 import { store, select } from "currentjs";
 
-export function streamAuth(onAuthStateChanged) {
-  const userStream = storeUser(onAuthStateChanged);
+export function streamUser(dependencies) {
+  const { authDriver } = dependencies;
+  const userStream = storeUser(authDriver.onAuthStateChanged);
   const userIdStream = selectUserId(userStream);
   const authStatusStream = selectAuthStatus(userStream);
   const isSignedInStream = selectIsSignedIn(userStream);

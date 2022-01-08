@@ -1,5 +1,5 @@
 import { initFirebase } from "../tests/firebase/init.js";
-import { streamAuth } from "./auth.js";
+import { streamUser } from "./auth.js";
 
 describe("auth streams", () => {
   let fb;
@@ -16,7 +16,7 @@ describe("auth streams", () => {
 
   test("can correctly represent initial state", () => {
     const { userStream, userIdStream, authStatusStream, isSignedInStream } =
-      streamAuth(fb.onAuthStateChanged);
+      streamUser(fb.onAuthStateChanged);
 
     expect(authStatusStream.current).toBe("UNSOLVED");
     expect(userIdStream.current).toBeUndefined();
@@ -26,7 +26,7 @@ describe("auth streams", () => {
 
   test("can correctly represent a signed in user", async () => {
     const { userStream, userIdStream, authStatusStream, isSignedInStream } =
-      streamAuth(fb.onAuthStateChanged);
+      streamUser(fb.onAuthStateChanged);
 
     await fb.signUp();
 
@@ -41,7 +41,7 @@ describe("auth streams", () => {
 
   test("can correctly represent the sign out state", async () => {
     const { userStream, userIdStream, authStatusStream, isSignedInStream } =
-      streamAuth(fb.onAuthStateChanged);
+      streamUser(fb.onAuthStateChanged);
 
     await fb.signUp();
     await fb.signOut();
