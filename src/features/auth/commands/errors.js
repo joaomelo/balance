@@ -1,4 +1,4 @@
-import { AppError } from "../../libs/errors";
+import { AppError } from "../../../libs/errors";
 
 export class EmailAlreadyInUseError extends AppError {
   constructor() {

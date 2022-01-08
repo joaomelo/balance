@@ -24,10 +24,10 @@ import { useToggle } from "../../../libs/hooks/switch";
 import { Form } from "../../../libs/components/form";
 import { ErrorAlert } from "../../../libs/components/error-alert";
 import { ProgressDivider } from "../../../libs/components/progress-divider";
-import { useI18n } from "../../../libs/i18n";
+import { useI18n } from "../../../libs/hooks/i18n";
 import { createErrorReport } from "../../../libs/errors";
 
-export function SignInPageView({ dependencies }) {
+export function SignInPage({ dependencies }) {
   const t = useI18n();
 
   const { authCommands } = dependencies;

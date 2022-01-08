@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import { usePayload } from "../../../libs/hooks/payload";
 import { ErrorAlert } from "../../../libs/components/error-alert";
 import { ItemDialog } from "../../../libs/components/item-dialog";
-import { useI18n } from "../../../libs/i18n";
+import { useI18n } from "../../../libs/hooks/i18n";
 import { createErrorReport } from "../../../libs/errors";
 
 export function GroupDialogView({

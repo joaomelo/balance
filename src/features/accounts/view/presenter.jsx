@@ -1,7 +1,6 @@
 import { useCommand } from "../../../libs/hooks/command";
 import { useStream } from "../../../libs/hooks/stream";
-import { setAccountCommand, delAccountCommand } from "../commands";
-import { AccountsPageView } from "./view-page";
+import { AccountsPageView } from "./page";
 
 export function AccountsPagePresenter({ dependencies }) {
   const {
@@ -25,18 +24,9 @@ export function AccountsPagePresenter({ dependencies }) {
     accountsActions,
     balancesActions,
   };
-  const [onAdd, isAdding, errorAdd] = useCommand(
-    commandsDependencies,
-    setAccountCommand
-  );
-  const [onEdit, isEditing, errorEdit] = useCommand(
-    commandsDependencies,
-    setAccountCommand
-  );
-  const [onDel, isDeleting] = useCommand(
-    commandsDependencies,
-    delAccountCommand
-  );
+  const [onAdd, isAdding, errorAdd] = useCommand(commandsDependencies);
+  const [onEdit, isEditing, errorEdit] = useCommand(commandsDependencies);
+  const [onDel, isDeleting] = useCommand(commandsDependencies);
 
   return (
     <AccountsPageView

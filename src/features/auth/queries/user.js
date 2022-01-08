@@ -1,6 +1,6 @@
-import { store, select } from "currentjs";
+import { store, select } from "../../../libs/stream";
 
-export function streamUser(dependencies) {
+export function createUserQueries(dependencies) {
   const { authDriver } = dependencies;
   const userStream = storeUser(authDriver.onAuthStateChanged);
   const userIdStream = selectUserId(userStream);

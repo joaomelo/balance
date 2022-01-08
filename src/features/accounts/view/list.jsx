@@ -3,7 +3,7 @@ import { GridToolbar, DataGrid } from "@material-ui/data-grid";
 import { DateTime } from "luxon";
 import { ActionCell } from "../../../libs/components/action-cell";
 import { useSwitch } from "../../../libs/hooks/switch";
-import { AccountDialogView } from "./view-dialog";
+import { AccountDialogView } from "./dialog";
 
 export function AccountsListView({
   accounts,

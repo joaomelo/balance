@@ -1,7 +1,7 @@
 import { PageHeader } from "../../../libs/components/page-header";
 import { PageContent } from "../../../libs/components/page-content";
-import { AccountsListView } from "./view-list";
-import { AccountAddView } from "./view-add";
+import { AccountsListView } from "./list";
+import { AccountAddView } from "./add";
 
 export function AccountsPageView({
   accounts,

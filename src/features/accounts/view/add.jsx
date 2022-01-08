@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import { useSwitch } from "../../../libs/hooks/switch";
-import { AccountDialogView } from "./view-dialog";
+import { AccountDialogView } from "./dialog";
 
 export function AccountAddView({ groups, onAdd, error, isLoading }) {
   const initialPayload = { name: "", groupId: null };
