@@ -16,8 +16,12 @@ import {
   MeetingRoomTwoTone,
 } from "@material-ui/icons";
 import { camelCase } from "../../libs/helpers";
+import { useCommand } from "../../libs/hooks/command";
 
-export function AppSidebar({ isOpen, onClose, signOut }) {
+export function AppSidebar({ isOpen, onClose, dependencies }) {
+  const { authCommands } = dependencies;
+  const [signOut] = useCommand(authCommands.signOut);
+
   return (
     <Drawer open={isOpen} onClose={onClose} onClick={onClose}>
       <Box width={250}>

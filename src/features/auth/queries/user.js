@@ -17,7 +17,8 @@ export function createUserQueries(dependencies) {
 
 function storeUser(authDriver) {
   const userStream = store(undefined);
-  authDriver.onAuthStateChanged((user) => userStream.update(user));
+  const update = (user) => userStream.update(user);
+  authDriver.onAuthStateChanged(update);
   return userStream;
 }
 
