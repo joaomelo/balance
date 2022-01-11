@@ -1,85 +1,28 @@
-// import {
-//   createActions,
-//   queryRepoWithUser,
-//   selectActiveItems,
-// } from "../services/repository";
+import { createActions } from "../services/firestore";
 
-import { createAuthCommands, createUserQueries } from "../features/auth";
-// import {
-//   messagesAccount,
-//   createFlatAccountsQuery,
-//   selectAccountsWithRelationships,
-// } from "../features/accounts";
-// import {
-//   messagesBalance,
-//   selectBalancesWithRelationships,
-// } from "../features/balances";
-// import {
-//   messagesGroups,
-//   createGroupsQuery,
-// } from "../features/groups";
-// import { createHistoryQuery } from "../features/history";
+import { createAuthCommands } from "../features/auth";
+import { createAccountsCommands } from "../features/accounts";
+import { createBalancesCommands } from "../features/balances";
+import { createGroupsCommands } from "../features/groups";
 
 export function createCommands({ dbDriver, authDriver }) {
   const authCommands = createAuthCommands({ authDriver });
-  const userQueries = createUserQueries({ authDriver });
 
-  // const accountsCollection = dbDriver.collection("accounts");
-  // const accountsActions = createActions(accountsCollection);
-  // const flatAccountsQuery = createFlatAccountsQuery(
-  //   accountsCollection,
-  //   authDriver
-  // );
+  const col = (name) => dbDriver.collection(name);
 
-  // const balancesCollection = dbDriver.collection("balances");
-  // const balancesActions = createActions(balancesCollection);
-  // const balancesQuery = queryRepoWithUser(
-  //   identityService.userIdStream,
-  //   balancesCollection.orderBy("date", "desc")
-  // );
-  // const flatBalancesQuery = selectActiveItems(balancesQuery);
+  const accountsActions = createActions(col("accounts"));
+  const accountsCommands = createAccountsCommands(accountsActions);
 
-  // const groupsCollection = dbDriver.collection("groups");
-  // const groupsMutations = createActions(groupsCollection);
-  // const groupsQuery = queryRepoWithUser(
-  //   identityService.userIdStream,
-  //   groupsCollection.orderBy("name")
-  // );
-  // const flatGroupsQuery = selectActiveItems(groupsQuery);
+  const balancesActions = createActions(col("balances"));
+  const balancesCommands = createBalancesCommands(balancesActions);
 
-  // const balancesQuery = selectBalancesWithRelationships(
-  //   flatBalancesQuery,
-  //   flatAccountsQuery
-  // );
+  const groupsActions = createActions(col("groups"));
+  const groupsCommands = createGroupsCommands(groupsActions);
 
-  // const accountsQuery = selectAccountsWithRelationships(
-  //   flatAccountsQuery,
-  //   flatGroupsQuery,
-  //   flatBalancesQuery
-  // );
-
-  // const groupsQuery = createGroupsQuery(
-  //   flatGroupsQuery,
-  //   flatAccountsQuery,
-  //   flatBalancesQuery
-  // );
-
-  // const historyQuery = createHistoryQuery(
-  //   groupsQuery,
-  //   accountsQuery
-  // );
-
-  const dependencies = {
+  return {
     authCommands,
-    userQueries,
-    // accountsActions,
-    // accountsQuery,
-    // balancesActions,
-    // balancesQuery,
-    // groupsMutations,
-    // groupsQuery,
-    // historyQuery,
+    accountsCommands,
+    balancesCommands,
+    groupsCommands,
   };
-
-  return dependencies;
 }
