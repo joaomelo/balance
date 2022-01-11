@@ -3,12 +3,16 @@ import "regenerator-runtime/runtime";
 
 import { initI18nProvider } from "../services/i18n";
 import { messagesAuth } from "../features/auth";
+import { messagesAccounts } from "../features/accounts";
+import { messagesBalances } from "../features/balances";
+import { messagesGroups } from "../features/groups";
 import { mountRoot } from "../features/root";
 import {
   initFirebaseSuite,
   collectFirebaseConfigFromEnv,
 } from "../services/firebase";
-import { createDependencies } from "./dependencies";
+import { createQueries } from "./queries";
+import { createCommands } from "./commands";
 import { fixtureEnvironment } from "./fixtures";
 
 main();
@@ -20,17 +24,23 @@ async function main() {
 
   await initI18nProvider([
     messagesAuth,
-    // messagesBalance,
-    // messagesAccount,
-    // messagesGroups,
+    messagesAccounts,
+    messagesBalances,
+    messagesGroups,
   ]);
 
-  const dependencies = createDependencies({
+  const queries = createQueries({
     dbDriver: firestore,
     authDriver: fireauth,
   });
+  const commands = createCommands({
+    dbDriver: firestore,
+    authDriver: fireauth,
+  });
+
   mountRoot({
     element: "root",
-    dependencies,
+    ...queries,
+    ...commands,
   });
 }

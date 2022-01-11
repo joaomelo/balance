@@ -1,8 +1,8 @@
 import { streamWhereUser } from "../../../services/firestore";
 
-export function createFlatAccountsQuery(dbDriver, userIdStream) {
+export function createFlatGroupsQuery(dbDriver, userIdStream) {
   const activeAccounts = dbDriver
-    .collection("accounts")
+    .collection("groups")
     .where("_deleted", "=", false)
     .orderBy("name");
 

@@ -1,13 +1,13 @@
 import { select } from "../../../libs/stream";
-import { projectGroupsWithRelationships } from "../body";
+import { projectGroups } from "../body";
 
-export function selectGroupsWithRelationships(
+export function createGroupsQuery(
   groupsSelector,
   accountsSelector,
   balancesSelector
 ) {
   return select(
     [groupsSelector, accountsSelector, balancesSelector],
-    (values) => projectGroupsWithRelationships(...values)
+    (values) => projectGroups(...values)
   );
 }

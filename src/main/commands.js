@@ -16,11 +16,11 @@ import { createAuthCommands, createUserQueries } from "../features/auth";
 // } from "../features/balances";
 // import {
 //   messagesGroups,
-//   selectGroupsWithRelationships,
+//   createGroupsQuery,
 // } from "../features/groups";
-// import { selectComposedHistory } from "../features/history";
+// import { createHistoryQuery } from "../features/history";
 
-export function createDependencies({ dbDriver, authDriver }) {
+export function createCommands({ dbDriver, authDriver }) {
   const authCommands = createAuthCommands({ authDriver });
   const userQueries = createUserQueries({ authDriver });
 
@@ -37,7 +37,7 @@ export function createDependencies({ dbDriver, authDriver }) {
   //   identityService.userIdStream,
   //   balancesCollection.orderBy("date", "desc")
   // );
-  // const activeBalancesSelector = selectActiveItems(balancesQuery);
+  // const flatBalancesQuery = selectActiveItems(balancesQuery);
 
   // const groupsCollection = dbDriver.collection("groups");
   // const groupsMutations = createActions(groupsCollection);
@@ -45,40 +45,40 @@ export function createDependencies({ dbDriver, authDriver }) {
   //   identityService.userIdStream,
   //   groupsCollection.orderBy("name")
   // );
-  // const activeGroupsSelector = selectActiveItems(groupsQuery);
+  // const flatGroupsQuery = selectActiveItems(groupsQuery);
 
-  // const balancesWithRelationshipsSelector = selectBalancesWithRelationships(
-  //   activeBalancesSelector,
+  // const balancesQuery = selectBalancesWithRelationships(
+  //   flatBalancesQuery,
   //   flatAccountsQuery
   // );
 
-  // const accountsWithRelationshipsSelector = selectAccountsWithRelationships(
+  // const accountsQuery = selectAccountsWithRelationships(
   //   flatAccountsQuery,
-  //   activeGroupsSelector,
-  //   activeBalancesSelector
+  //   flatGroupsQuery,
+  //   flatBalancesQuery
   // );
 
-  // const groupsWithRelationshipsSelector = selectGroupsWithRelationships(
-  //   activeGroupsSelector,
+  // const groupsQuery = createGroupsQuery(
+  //   flatGroupsQuery,
   //   flatAccountsQuery,
-  //   activeBalancesSelector
+  //   flatBalancesQuery
   // );
 
-  // const composedHistorySelector = selectComposedHistory(
-  //   groupsWithRelationshipsSelector,
-  //   accountsWithRelationshipsSelector
+  // const historyQuery = createHistoryQuery(
+  //   groupsQuery,
+  //   accountsQuery
   // );
 
   const dependencies = {
     authCommands,
     userQueries,
     // accountsActions,
-    // accountsWithRelationshipsSelector,
+    // accountsQuery,
     // balancesActions,
-    // balancesWithRelationshipsSelector,
+    // balancesQuery,
     // groupsMutations,
-    // groupsWithRelationshipsSelector,
-    // composedHistorySelector,
+    // groupsQuery,
+    // historyQuery,
   };
 
   return dependencies;

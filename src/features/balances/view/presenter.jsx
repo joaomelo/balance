@@ -4,15 +4,11 @@ import { setBalanceCommand, delBalanceCommand } from "../commands";
 import { BalancesPageView } from "./view-page";
 
 export function BalancesPagePresenter({ dependencies }) {
-  const {
-    accountsWithRelationshipsSelector,
-    balancesWithRelationshipsSelector,
-    userIdStream,
-    balancesActions,
-  } = dependencies;
+  const { accountsQuery, balancesQuery, userIdStream, balancesActions } =
+    dependencies;
 
-  const accounts = useStream(accountsWithRelationshipsSelector);
-  const balances = useStream(balancesWithRelationshipsSelector);
+  const accounts = useStream(accountsQuery);
+  const balances = useStream(balancesQuery);
   const userId = useStream(userIdStream);
 
   const commandsDependencies = {

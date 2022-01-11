@@ -1,5 +1,5 @@
-import en from './messages-en';
+import en from "./messages-en";
 
-export const messagesAccount = {
-  en
+export const messagesAccounts = {
+  en,
 };

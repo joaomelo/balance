@@ -4,17 +4,17 @@ import { AccountsPageView } from "./page";
 
 export function AccountsPagePresenter({ dependencies }) {
   const {
-    accountsWithRelationshipsSelector,
-    balancesWithRelationshipsSelector,
-    groupsWithRelationshipsSelector,
+    accountsQuery,
+    balancesQuery,
+    groupsQuery,
     accountsActions,
     balancesActions,
     userIdStream,
   } = dependencies;
 
-  const accounts = useStream(accountsWithRelationshipsSelector);
-  const balances = useStream(balancesWithRelationshipsSelector);
-  const groups = useStream(groupsWithRelationshipsSelector);
+  const accounts = useStream(accountsQuery);
+  const balances = useStream(balancesQuery);
+  const groups = useStream(groupsQuery);
   const userId = useStream(userIdStream);
 
   const commandsDependencies = {

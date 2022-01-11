@@ -1,5 +1,5 @@
-import en from './messages-en';
+import en from "./messages-en";
 
-export const messagesBalance = {
-  en
+export const messagesBalances = {
+  en,
 };

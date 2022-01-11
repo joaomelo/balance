@@ -6,14 +6,14 @@ import { GroupsPageView } from "./view-page";
 export function GroupsPagePresenter({ dependencies }) {
   const {
     accountsActions,
-    accountsWithRelationshipsSelector,
+    accountsQuery,
     groupsMutations,
-    groupsWithRelationshipsSelector,
+    groupsQuery,
     userIdStream,
   } = dependencies;
 
-  const accounts = useStream(accountsWithRelationshipsSelector);
-  const groups = useStream(groupsWithRelationshipsSelector);
+  const accounts = useStream(accountsQuery);
+  const groups = useStream(groupsQuery);
   const userId = useStream(userIdStream);
 
   const commandsDependencies = {
