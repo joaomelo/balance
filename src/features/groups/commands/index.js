@@ -1,2 +1,1 @@
-export * from './del';
-export * from './set';
+export * from "./factory";

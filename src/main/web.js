@@ -40,7 +40,9 @@ async function main() {
 
   mountRoot({
     element: "root",
-    ...queries,
-    ...commands,
+    dependencies: {
+      ...queries,
+      ...commands,
+    },
   });
 }

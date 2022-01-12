@@ -1,37 +1,16 @@
 import { useCommand } from "../../../libs/hooks/command";
 import { useStream } from "../../../libs/hooks/stream";
-import { setBalanceCommand, delBalanceCommand } from "../commands";
 import { BalancesPageView } from "./view-page";
 
 export function BalancesPagePresenter({ dependencies }) {
-  const { accountsQuery, balancesQuery, userIdStream, balancesActions } =
-    dependencies;
+  const { accountsQuery, balancesQuery, balancesCommands } = dependencies;
 
   const accounts = useStream(accountsQuery);
   const balances = useStream(balancesQuery);
-  const userId = useStream(userIdStream);
 
-  const commandsDependencies = {
-    balancesActions,
-    accounts,
-    balances,
-    userId,
-  };
-
-  const [onAdd, isAdding, errorAdd] = useCommand(
-    commandsDependencies,
-    setBalanceCommand
-  );
-
-  const [onEdit, isEditing, errorEdit] = useCommand(
-    commandsDependencies,
-    setBalanceCommand
-  );
-
-  const [onDel, isDeleting] = useCommand(
-    commandsDependencies,
-    delBalanceCommand
-  );
+  const [onAdd, isAdding, errorAdd] = useCommand(balancesCommands.set);
+  const [onEdit, isEditing, errorEdit] = useCommand(balancesCommands.set);
+  const [onDel, isDeleting] = useCommand(balancesCommands.del);
 
   return (
     <BalancesPageView

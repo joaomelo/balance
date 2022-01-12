@@ -3,30 +3,14 @@ import { useStream } from "../../../libs/hooks/stream";
 import { AccountsPageView } from "./page";
 
 export function AccountsPagePresenter({ dependencies }) {
-  const {
-    accountsQuery,
-    balancesQuery,
-    groupsQuery,
-    accountsActions,
-    balancesActions,
-    userIdStream,
-  } = dependencies;
+  const { accountsQuery, accountsCommands, groupsQuery } = dependencies;
 
   const accounts = useStream(accountsQuery);
-  const balances = useStream(balancesQuery);
   const groups = useStream(groupsQuery);
-  const userId = useStream(userIdStream);
 
-  const commandsDependencies = {
-    accounts,
-    balances,
-    userId,
-    accountsActions,
-    balancesActions,
-  };
-  const [onAdd, isAdding, errorAdd] = useCommand(commandsDependencies);
-  const [onEdit, isEditing, errorEdit] = useCommand(commandsDependencies);
-  const [onDel, isDeleting] = useCommand(commandsDependencies);
+  const [onAdd, isAdding, errorAdd] = useCommand(accountsCommands.set);
+  const [onEdit, isEditing, errorEdit] = useCommand(accountsCommands.set);
+  const [onDel, isDeleting] = useCommand(accountsCommands.del);
 
   return (
     <AccountsPageView

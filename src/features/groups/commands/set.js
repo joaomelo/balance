@@ -1,16 +1,18 @@
 import { createUuid } from "../../../libs/helpers";
 import { validateGroup } from "../body";
 
-export async function setGroupCommand(dependencies, payload) {
-  const { groupsMutations, groups, userId } = dependencies;
+export function createSetGroup(dependencies) {
+  const { groupsActions, groupsQuery, userIdStream } = dependencies;
 
-  validateGroup({ groups }, payload);
+  return async (payload) => {
+    validateGroup(payload, { groups: groupsQuery.current });
 
-  const group = {
-    id: createUuid(),
-    user: userId,
-    ...payload,
+    const group = {
+      id: createUuid(),
+      user: userIdStream.current,
+      ...payload,
+    };
+
+    await groupsActions.set(group);
   };
-
-  await groupsMutations.set(group);
 }

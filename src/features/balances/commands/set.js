@@ -1,22 +1,22 @@
 import { createUuid } from "../../../libs/helpers";
 import { validateBalance } from "../body";
 
-export async function setBalanceCommand(dependencies, payload) {
-  const { balancesActions, accounts, balances, userId } = dependencies;
+export function createSetBalance(dependencies) {
+  const { balancesActions, accountsQuery, balancesQuery, userIdStream } =
+    dependencies;
 
-  validateBalance(
-    {
-      accounts,
-      balances,
-    },
-    payload
-  );
+  return async (payload) => {
+    validateBalance(payload, {
+      accounts: accountsQuery.current,
+      balances: balancesQuery.current,
+    });
 
-  const balance = {
-    id: createUuid(),
-    user: userId,
-    ...payload,
+    const balance = {
+      id: createUuid(),
+      user: userIdStream.current,
+      ...payload,
+    };
+
+    await balancesActions.set(balance);
   };
-
-  await balancesActions.set(balance);
 }

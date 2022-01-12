@@ -1,7 +1,7 @@
 import { isSameDay } from "../../../libs/helpers";
 import { AppError } from "../../../libs/errors";
 
-export function validateBalance(context, balanceData) {
+export function validateBalance(balanceData, context) {
   const { accounts, balances } = context;
   const { id, amount, date, accountId } = balanceData;
 
