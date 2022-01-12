@@ -1,8 +1,8 @@
 import { Button } from "@material-ui/core";
 import { useSwitch } from "../../../libs/hooks/switch";
-import { GroupDialogView } from "./view-dialog";
+import { GroupDialog } from "./dialog";
 
-export function GroupAddView({ accounts, onAdd, error, isLoading }) {
+export function GroupAdd({ accounts, onAdd, error, isLoading }) {
   const initialPayload = { name: "" };
   const [isOpen, open, close] = useSwitch();
 
@@ -17,7 +17,7 @@ export function GroupAddView({ accounts, onAdd, error, isLoading }) {
         Add Group
       </Button>
       {isOpen && (
-        <GroupDialogView
+        <GroupDialog
           initialPayload={initialPayload}
           error={error}
           onSubmit={onAdd}

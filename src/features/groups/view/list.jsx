@@ -1,52 +1,35 @@
 import { useState } from "react";
 import { GridToolbar, DataGrid } from "@material-ui/data-grid";
-import { DateTime } from "luxon";
 import { ActionCell } from "../../../libs/components/action-cell";
 import { useSwitch } from "../../../libs/hooks/switch";
-import { BalanceDialogView } from "./view-dialog";
+import { GroupDialog } from "./dialog";
 
-export function BalancesListView({
-  accounts,
-  balances,
-  onDel,
-  onEdit,
-  errorEdit,
-  isLoading,
-}) {
+export function GroupsList({ groups, onDel, onEdit, error, isLoading }) {
   const [initialPayload, setInitialPayload] = useState({});
   const [isOpen, open, close] = useSwitch();
 
   const handleEditClick = (id) => {
-    const { accountId, amount, date } = balances.find((b) => b.id === id);
-    setInitialPayload({ id, accountId, amount, date });
+    const { name } = groups.find((a) => a.id === id);
+    setInitialPayload({ id, name });
     open();
   };
 
+  const rows = groups.map((g) => {
+    const { accounts, ...groupData } = g;
+    const accountsNames = accounts.map(({ name }) => name).join(", ");
+    return { accountsNames, ...groupData };
+  });
+
   const columns = [
     {
-      field: "accountName",
-      headerName: "Account",
+      field: "name",
+      headerName: "Group",
       flex: 1,
     },
     {
-      field: "date",
-      type: "date",
-      headerName: "Date",
+      field: "accountsNames",
+      headerName: "Accounts",
       flex: 1,
-      valueFormatter: (params) => DateTime.fromJSDate(params.value).toISODate(),
-    },
-    {
-      field: "amount",
-      type: "number",
-      headerName: "Amount",
-      flex: 1,
-      valueFormatter: (params) => {
-        const formatter = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        });
-        return formatter.format(params.value);
-      },
     },
     {
       field: "actions",
@@ -71,19 +54,18 @@ export function BalancesListView({
   return (
     <>
       <DataGrid
-        rows={balances}
+        rows={rows}
         columns={columns}
         autoPageSize
         density="compact"
         components={{ Toolbar: GridToolbar }}
-        sortModel={[{ field: "date", sort: "desc" }]}
+        sortModel={[{ field: "name", sort: "asc" }]}
         disableSelectionOnClick
       />
       {isOpen && (
-        <BalanceDialogView
+        <GroupDialog
           initialPayload={initialPayload}
-          accounts={accounts}
-          error={errorEdit}
+          error={error}
           onSubmit={onEdit}
           isOpen={isOpen}
           onClose={close}

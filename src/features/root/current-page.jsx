@@ -1,11 +1,11 @@
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import { useStream } from "../../libs/hooks/stream";
-import { AccountsPagePresenter } from "../accounts";
-import { BalancesPagePresenter } from "../balances";
-import { GroupsPagePresenter } from "../groups";
-import { HistoryPagePresenter } from "../history";
+import { AccountsPage } from "../accounts";
+import { BalancesPage } from "../balances";
+import { GroupsPage } from "../groups";
+import { HistoryPage } from "../history";
 import { UnsolvedPage, SignInPage } from "../auth";
-import { NotFoundPageView } from "../not-found";
+import { NotFoundPage } from "../not-found";
 
 export function CurrentPage(props) {
   const { userQueries } = props.dependencies;
@@ -23,7 +23,7 @@ export function CurrentPage(props) {
         <InPage {...props} />
       </Route>
       <Route path="/not-found">
-        <NotFoundPageView />
+        <NotFoundPage />
       </Route>
       <Redirect to="/not-found" />
     </Switch>
@@ -37,16 +37,16 @@ function InPage(props) {
   return (
     <Switch>
       <Route path={`${path}/accounts`}>
-        <AccountsPagePresenter {...props} />
+        <AccountsPage {...props} />
       </Route>
       <Route path={`${path}/balances`}>
-        <BalancesPagePresenter {...props} />
+        <BalancesPage {...props} />
       </Route>
       <Route path={`${path}/groups`}>
-        <GroupsPagePresenter {...props} />
+        <GroupsPage {...props} />
       </Route>
       <Route path={`${path}/history`}>
-        <HistoryPagePresenter {...props} />
+        <HistoryPage {...props} />
       </Route>
       <Redirect to={defaultInRoute} />
     </Switch>

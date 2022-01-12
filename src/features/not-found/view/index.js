@@ -1,1 +1,1 @@
-export * from './view-page';
+export * from "./not-found-page";

@@ -3,9 +3,9 @@ import { GridToolbar, DataGrid } from "@material-ui/data-grid";
 import { DateTime } from "luxon";
 import { ActionCell } from "../../../libs/components/action-cell";
 import { useSwitch } from "../../../libs/hooks/switch";
-import { AccountDialogView } from "./dialog";
+import { AccountDialog } from "./dialog";
 
-export function AccountsListView({
+export function AccountsList({
   accounts,
   groups,
   onDel,
@@ -94,7 +94,7 @@ export function AccountsListView({
         disableSelectionOnClick
       />
       {isOpen && (
-        <AccountDialogView
+        <AccountDialog
           initialPayload={initialPayload}
           groups={groups}
           error={error}

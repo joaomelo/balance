@@ -1,9 +1,9 @@
 import { DateTime } from "luxon";
 import { Button } from "@material-ui/core";
 import { useSwitch } from "../../../libs/hooks/switch";
-import { BalanceDialogView } from "./view-dialog";
+import { BalanceDialog } from "./dialog";
 
-export function BalanceAddView({ accounts, onAdd, error, isLoading }) {
+export function BalanceAdd({ accounts, onAdd, error, isLoading }) {
   const initialPayload = {
     date: DateTime.now().endOf("day").toJSDate(),
     accountId: accounts[0]?.id || "",
@@ -22,7 +22,7 @@ export function BalanceAddView({ accounts, onAdd, error, isLoading }) {
         Add Balance
       </Button>
       {isOpen && (
-        <BalanceDialogView
+        <BalanceDialog
           initialPayload={initialPayload}
           accounts={accounts}
           error={error}

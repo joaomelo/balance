@@ -1,8 +1,8 @@
 import { Button } from "@material-ui/core";
 import { useSwitch } from "../../../libs/hooks/switch";
-import { AccountDialogView } from "./dialog";
+import { AccountDialog } from "./dialog";
 
-export function AccountAddView({ groups, onAdd, error, isLoading }) {
+export function AccountAdd({ groups, onAdd, error, isLoading }) {
   const initialPayload = { name: "", groupId: null };
   const [isOpen, open, close] = useSwitch();
 
@@ -17,7 +17,7 @@ export function AccountAddView({ groups, onAdd, error, isLoading }) {
         Add Account
       </Button>
       {isOpen && (
-        <AccountDialogView
+        <AccountDialog
           initialPayload={initialPayload}
           groups={groups}
           error={error}

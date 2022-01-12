@@ -3,7 +3,7 @@ import { Typography, Box, Link } from "@material-ui/core";
 import { PageContent } from "../../../libs/components/page-content";
 import NotFoundSvg from "./not-found.svg";
 
-export function NotFoundPageView() {
+export function NotFoundPage() {
   return (
     <PageContent maxWidth={500} justifyContent="center" alignItems="center">
       <NotFoundSvg />

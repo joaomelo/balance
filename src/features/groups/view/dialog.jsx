@@ -5,7 +5,7 @@ import { ItemDialog } from "../../../libs/components/item-dialog";
 import { useI18n } from "../../../libs/hooks/i18n";
 import { createErrorReport } from "../../../libs/errors";
 
-export function GroupDialogView({
+export function GroupDialog({
   initialPayload,
   error,
   onSubmit,
