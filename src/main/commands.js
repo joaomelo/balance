@@ -9,23 +9,38 @@ export function createCommands({
   dbDriver,
   authDriver,
   groupsQuery,
+  accountsQuery,
+  balancesQuery,
   userQueries,
 }) {
   const authCommands = createAuthCommands({ authDriver });
 
   const col = (name) => dbDriver.collection(name);
+  const { userIdStream } = userQueries;
 
   const accountsActions = createActions(col("accounts"));
-  const accountsCommands = createAccountsCommands(accountsActions);
-
   const balancesActions = createActions(col("balances"));
-  const balancesCommands = createBalancesCommands(balancesActions);
-
   const groupsActions = createActions(col("groups"));
+
+  const accountsCommands = createAccountsCommands({
+    accountsQuery,
+    accountsActions,
+    balancesQuery,
+    balancesActions,
+    userIdStream,
+  });
+  const balancesCommands = createBalancesCommands({
+    accountsQuery,
+    balancesQuery,
+    balancesActions,
+    userIdStream,
+  });
   const groupsCommands = createGroupsCommands({
+    accountsQuery,
+    accountsActions,
     groupsActions,
     groupsQuery,
-    userIdStream: userQueries.userIdStream,
+    userIdStream,
   });
 
   return {

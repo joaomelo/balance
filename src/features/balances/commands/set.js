@@ -6,17 +6,20 @@ export function createSetBalance(dependencies) {
     dependencies;
 
   return async (payload) => {
-    validateBalance(payload, {
-      accounts: accountsQuery.current,
-      balances: balancesQuery.current,
+    const newBalancesData = Array.isArray(payload) ? payload : [payload];
+    const newBalances = newBalancesData.map((balanceData) => {
+      validateBalance(balanceData, {
+        accounts: accountsQuery.current,
+        balances: balancesQuery.current,
+      });
+
+      return {
+        id: createUuid(),
+        user: userIdStream.current,
+        ...balanceData,
+      };
     });
 
-    const balance = {
-      id: createUuid(),
-      user: userIdStream.current,
-      ...payload,
-    };
-
-    await balancesActions.set(balance);
+    await balancesActions.set(newBalances);
   };
 }

@@ -5,15 +5,16 @@ export function createSetAccount(dependencies) {
   const { accountsActions, accountsQuery, userIdStream } = dependencies;
 
   return async (payload) => {
-    const accounts = accountsQuery.current;
-    validateAccount(payload, { accounts });
+    const newAccountsData = Array.isArray(payload) ? payload : [payload];
+    const newAccounts = newAccountsData.map((accountData) => {
+      validateAccount(accountData, { accounts: accountsQuery.current });
+      return {
+        id: createUuid(),
+        user: userIdStream.current,
+        ...accountData,
+      };
+    });
 
-    const account = {
-      id: createUuid(),
-      user: userIdStream.current,
-      ...payload,
-    };
-
-    await accountsActions.set(account);
+    await accountsActions.set(newAccounts);
   };
 }
