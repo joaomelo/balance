@@ -68,7 +68,7 @@ function ListLink({ icon, text, to }) {
 function ListAction({ icon, text, onClick }) {
   return (
     <li>
-      <ListItem button onClick={onClick}>
+      <ListItem id={camelCase("nav", text)} button onClick={onClick}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItem>

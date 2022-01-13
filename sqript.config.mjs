@@ -48,19 +48,13 @@ const testTemplate = (params = "", env = {}) => ({
     {
       name: "jest",
       styles: ["bgGreenBright", "whiteBright"],
-      command: `jest --detectOpenHandles ${params}`,
+      command: `jest --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/config.js ${params}`,
       env,
     },
   ],
 });
-const testTemplateLocal = (params, env) => ({
-  race: [
-    serversLocal,
-    testTemplate(
-      `--setupTestFrameworkScriptFile=./tests/config/local.js ${params}`,
-      env
-    ),
-  ],
+const testTemplateLocal = (params = "", extraEnv = {}) => ({
+  race: [serversLocal, testTemplate(params, [".env", extraEnv])],
 });
 const testLocal = testTemplateLocal("--forceExit");
 const testLocalWatch = testTemplateLocal("--watchAll");
@@ -68,12 +62,7 @@ const testLocalDebug = testTemplateLocal("--testTimeout=5000000", {
   PWDEBUG: 1,
 });
 const testCi = {
-  race: [
-    serversCi,
-    testTemplate(
-      "--forceExit --coverage --setupTestFrameworkScriptFile=./tests/config/ci.js"
-    ),
-  ],
+  race: [serversCi, testTemplate("--forceExit --coverage")],
 };
 
 const buildTemplate = (extraEnv = {}) =>
