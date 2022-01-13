@@ -32,7 +32,7 @@ export function CurrentPage(props) {
 
 function InPage(props) {
   const { path } = useRouteMatch();
-  const defaultInRoute = `${path}/accounts`;
+  const defaultInRoute = `${path}/balances`;
 
   return (
     <Switch>
