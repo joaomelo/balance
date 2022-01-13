@@ -18,8 +18,8 @@ function streamIndexed(userIdStream, query) {
   userIdStream.subscribe((userId) => {
     unsubscribe();
     if (userId) {
-      const onSnapshot = query.where("user", "==", userId).onSnapshot;
-      unsubscribe = onSnapshot(updateStore);
+      const userQuery = query.where("user", "==", userId);
+      unsubscribe = userQuery.onSnapshot(updateStore);
     } else {
       unsubscribe = () => null;
       indexedStore.update({});

@@ -5,7 +5,12 @@ import { createAccountsCommands } from "../features/accounts";
 import { createBalancesCommands } from "../features/balances";
 import { createGroupsCommands } from "../features/groups";
 
-export function createCommands({ dbDriver, authDriver }) {
+export function createCommands({
+  dbDriver,
+  authDriver,
+  groupsQuery,
+  userQueries,
+}) {
   const authCommands = createAuthCommands({ authDriver });
 
   const col = (name) => dbDriver.collection(name);
@@ -17,7 +22,11 @@ export function createCommands({ dbDriver, authDriver }) {
   const balancesCommands = createBalancesCommands(balancesActions);
 
   const groupsActions = createActions(col("groups"));
-  const groupsCommands = createGroupsCommands(groupsActions);
+  const groupsCommands = createGroupsCommands({
+    groupsActions,
+    groupsQuery,
+    userIdStream: userQueries.userIdStream,
+  });
 
   return {
     authCommands,

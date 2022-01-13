@@ -1,20 +1,25 @@
-import { credentials } from "../../tests/fixtures";
+import { credentials, groups } from "../../tests/fixtures";
 import {
   collectEmulatorsConfigFromEnv,
   plugEmulators,
 } from "../services/firebase";
 
-export async function fixtureEnvironment(dependencies) {
+export async function emulateNewEnvironment({ firestore, fireauth }) {
   const fixtureLevel = resolveFixtureLevel();
   if (!["base", "full"].includes(fixtureLevel)) return;
 
-  const { firestore, fireauth } = dependencies;
+  console.info("connecting with local emulators");
   const { authHost, firestoreHost } = collectEmulatorsConfigFromEnv();
   await plugEmulators({ firestore, fireauth, authHost, firestoreHost });
+}
 
+export async function populateEnvironment({ authCommands, groupsCommands }) {
+  const fixtureLevel = resolveFixtureLevel();
   if (fixtureLevel !== "full") return;
 
-  await injectFixtures(dependencies);
+  console.info("populating service with fixtures");
+  await authCommands.signUp(credentials[0]);
+  await groupsCommands.set(groups);
 }
 
 function resolveFixtureLevel() {
@@ -26,14 +31,4 @@ function resolveFixtureLevel() {
   }
 
   return fixtureLevel;
-}
-
-async function injectFixtures({ authCommands }) {
-  console.info("injecting fixtures");
-  await authCommands.createUser(credentials[0]);
-  await populatingCollections();
-}
-
-function populatingCollections() {
-  // todo
 }

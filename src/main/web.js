@@ -13,14 +13,14 @@ import {
 } from "../services/firebase";
 import { createQueries } from "./queries";
 import { createCommands } from "./commands";
-import { fixtureEnvironment } from "./fixtures";
+import { emulateNewEnvironment, populateEnvironment } from "./fixtures";
 
 main();
 
 async function main() {
   const config = collectFirebaseConfigFromEnv();
   const { firestore, fireauth } = initFirebaseSuite(config);
-  await fixtureEnvironment({ firestore, fireauth });
+  await emulateNewEnvironment({ firestore, fireauth });
 
   await initI18nProvider([
     messagesAuth,
@@ -36,7 +36,10 @@ async function main() {
   const commands = createCommands({
     dbDriver: firestore,
     authDriver: fireauth,
+    ...queries,
   });
+
+  await populateEnvironment(commands);
 
   mountRoot({
     element: "root",
