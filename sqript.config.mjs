@@ -50,6 +50,7 @@ const testTemplate = (params = "", env = {}) => ({
       styles: ["bgGreenBright", "whiteBright"],
       command: `jest --detectOpenHandles --setupTestFrameworkScriptFile=./tests/config/config.js ${params}`,
       env,
+      args: true,
     },
   ],
 });
