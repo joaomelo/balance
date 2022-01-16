@@ -1,1 +1,1 @@
-export * from "./balances-page";
+export * from "./page";

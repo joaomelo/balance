@@ -1,1 +1,1 @@
-export * from "./groups-page";
+export * from "./page";
