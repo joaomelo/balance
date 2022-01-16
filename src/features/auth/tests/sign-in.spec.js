@@ -1,5 +1,5 @@
 import { chromium } from "playwright";
-import { baseUrl, credentials } from "../../../../tests/fixtures";
+import { baseUrl, homePath, credentials } from "../../../../tests/fixtures";
 import { signInMacro, signOutMacro } from "./macros";
 
 describe("sign in", () => {
@@ -22,10 +22,11 @@ describe("sign in", () => {
   });
 
   it("signs in when correct credentials are provided", async () => {
+    await page.goto(baseUrl);
     await signOutMacro(page);
     await signInMacro(page);
 
-    expect(page.url()).toMatch("/accounts");
+    expect(page.url()).toMatch(homePath);
   });
 
   it("show error message when email is invalid", async () => {

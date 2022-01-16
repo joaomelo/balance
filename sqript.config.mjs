@@ -27,8 +27,6 @@ const serversTemplate = (extraEnv = {}) => ({
           {
             APP_ENV_MODE: "DEVELOPMENT",
             APP_ENV_FIXTURE_LEVEL: "full",
-            APP_ENV_FIREAUTH_EMULATOR_HOST: "http://localhost:9099",
-            APP_ENV_FIRESTORE_EMULATOR_HOST: "8080",
           },
           extraEnv,
         ]),
