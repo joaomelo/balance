@@ -3,8 +3,8 @@ import { projectAccounts } from "../body";
 
 export function createAccountsQuery(
   flatAccountsQuery,
-  flatBalancesQuery,
-  flatGroupsQuery
+  flatGroupsQuery,
+  flatBalancesQuery
 ) {
   return select(
     [flatAccountsQuery, flatBalancesQuery, flatGroupsQuery],

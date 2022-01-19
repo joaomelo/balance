@@ -1,10 +1,9 @@
-import { chromium } from 'playwright';
-import { DateTime } from 'luxon';
-import { signInMacro } from '../../auth/tests';
-import { addBalanceMacro } from '../../balances/tests';
-import { goToAccountsMacro, addAccountMacro } from './macros';
+import { chromium } from "playwright";
+import { baseUrl, accountsByName } from "../../../../tests/fixtures";
+import { goToAccountsMacro } from "./macros";
+import { accountsSelectors } from "./selectors";
 
-describe('list accounts', () => {
+describe("list accounts", () => {
   let browser, page;
 
   beforeAll(async () => {
@@ -17,41 +16,34 @@ describe('list accounts', () => {
 
   beforeEach(async () => {
     page = await browser.newPage();
+    await page.goto(baseUrl);
   });
 
   afterEach(async () => {
     await page.close();
   });
 
-  const dateCellSelector = '[role="cell"][data-field="date"]';
-  const amountCellSelector = '[role="cell"][data-field="amount"]';
-
-  test('account without balances show placeholder in last balances data', async () => {
-    const account = 'savings';
-
-    await signInMacro(page);
-    await addAccountMacro(page, { account });
-
-    const dateCellText = await page.textContent(dateCellSelector);
-    expect(dateCellText).toBe('');
-
-    const amountCellText = await page.textContent(amountCellSelector);
-    expect(amountCellText).toBe('');
-  });
-
-  test('account with balances show date and amount of the last balances', async () => {
-    const account = 'savings';
-
-    await signInMacro(page);
-    await addAccountMacro(page, { account });
-    await addBalanceMacro(page);
-
+  test("last balances data appears empty in accounts without balances", async () => {
     await goToAccountsMacro(page);
 
-    const dateCellText = await page.textContent(dateCellSelector);
-    expect(dateCellText).toBe(DateTime.now().toISODate());
+    const id = accountsByName.retirement.id;
 
-    const amountCellText = await page.textContent(amountCellSelector);
-    expect(amountCellText).toMatch('500');
+    const dateCellText = await accountsSelectors.list.date(page, id);
+    expect(dateCellText).toBe("");
+
+    const amountCellText = await accountsSelectors.list.amount(page, id);
+    expect(amountCellText).toBe("");
+  });
+
+  test("account with balances show date and amount of the last balances", async () => {
+    await goToAccountsMacro(page);
+
+    const id = accountsByName.cc.id;
+
+    const dateCellText = await accountsSelectors.list.date(page, id);
+    expect(dateCellText).toEqual(expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/));
+
+    const amountCellText = await accountsSelectors.list.amount(page, id);
+    expect(amountCellText).toEqual(expect.stringMatching(/^\$\d+\.\d{2}$/));
   });
 });

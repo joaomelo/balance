@@ -15,6 +15,8 @@ describe("sign in", () => {
 
   beforeEach(async () => {
     page = await browser.newPage();
+    await page.goto(baseUrl);
+    await signOutMacro(page);
   });
 
   afterEach(async () => {
@@ -22,17 +24,12 @@ describe("sign in", () => {
   });
 
   it("signs in when correct credentials are provided", async () => {
-    await page.goto(baseUrl);
-    await signOutMacro(page);
     await signInMacro(page);
 
     expect(page.url()).toMatch(homePath);
   });
 
   it("show error message when email is invalid", async () => {
-    await page.goto(baseUrl);
-    await signOutMacro(page);
-
     await page.fill("#inputEmail", "notAnEmail");
     await page.fill("#inputPassword", "password");
     await page.click("#buttonSignIn");
@@ -42,9 +39,6 @@ describe("sign in", () => {
   });
 
   it("show error message when password is invalid", async () => {
-    await page.goto(baseUrl);
-    await signOutMacro(page);
-
     await page.fill("#inputEmail", "email@email.com");
     await page.fill("#inputPassword", "bad");
     await page.click("#buttonSignIn");
@@ -54,9 +48,6 @@ describe("sign in", () => {
   });
 
   it("show error message when user does not exist", async () => {
-    await page.goto(baseUrl);
-    await signOutMacro(page);
-
     await page.fill("#inputEmail", "email@email.com");
     await page.fill("#inputPassword", "password");
     await page.click("#buttonSignIn");
@@ -66,9 +57,6 @@ describe("sign in", () => {
   });
 
   it("show error message when password does no match", async () => {
-    await page.goto(baseUrl);
-    await signOutMacro(page);
-
     const { email, password } = credentials[0];
     await page.fill("#inputEmail", email);
     await page.fill("#inputPassword", `__${password}__`);

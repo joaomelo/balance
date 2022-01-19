@@ -15,6 +15,7 @@ describe("sign in", () => {
 
   beforeEach(async () => {
     page = await browser.newPage();
+    await page.goto(baseUrl);
   });
 
   afterEach(async () => {
@@ -22,7 +23,6 @@ describe("sign in", () => {
   });
 
   it("can take user to home page from a invalid route while signed in", async () => {
-    await page.goto(baseUrl);
     await page.waitForNavigation({ url: `**${homePath}` });
 
     await page.goto(`${baseUrl}some-invalid-route`);
@@ -33,7 +33,6 @@ describe("sign in", () => {
   });
 
   it("can take user to sign in page from a invalid route", async () => {
-    await page.goto(baseUrl);
     await signOutMacro(page);
 
     await page.goto(`${baseUrl}some-invalid-route`);
