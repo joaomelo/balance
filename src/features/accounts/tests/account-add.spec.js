@@ -1,9 +1,9 @@
-import { chromium } from 'playwright';
-import { signInMacro } from '../../auth/tests';
-import { addGroupMacro } from '../../groups/tests';
-import { addAccountMacro } from './macros';
+import { chromium } from "playwright";
+import { baseUrl, accounts, groups } from "../../../../tests/fixtures";
+import { goToAccountsMacro, addAccountMacro } from "./macros";
+import { listSelectors } from "./selectors";
 
-describe('add account', () => {
+describe("add account", () => {
   let browser, page;
 
   beforeAll(async () => {
@@ -16,48 +16,41 @@ describe('add account', () => {
 
   beforeEach(async () => {
     page = await browser.newPage();
+    await page.goto(baseUrl);
+    await goToAccountsMacro(page);
   });
 
   afterEach(async () => {
     await page.close();
   });
 
-  test('add account to repository with correct data shape', async () => {
-    await signInMacro(page);
+  test("add account to repository with correct data shape", async () => {
+    const group = groups[0].name;
+    const name = "new account";
+    await addAccountMacro(page, { name, group });
 
-    const group = 'investments';
-    await addGroupMacro(page, group);
+    const id = await listSelectors.idByContent(page, name);
 
-    const account = 'savings';
-    await addAccountMacro(page, { account, group });
+    const nameCellText = await listSelectors.fieldById(page, id, "name");
+    expect(nameCellText).toBe(name);
 
-    const nameCellSelector = '[role="cell"][data-field="name"]';
-    const nameCellText = await page.textContent(nameCellSelector);
-    expect(nameCellText).toBe(account);
-
-    const groupCellSelector = '[role="cell"][data-field="groupName"]';
-    const groupCellText = await page.textContent(groupCellSelector);
+    const groupCellText = await listSelectors.fieldById(page, id, "groupName");
     expect(groupCellText).toBe(group);
   });
 
-  test('show error if empty account name', async () => {
-    await signInMacro(page);
-    await page.click('#buttonAddAccount');
-    await page.click('#buttonSave');
+  test("show error if empty account name", async () => {
+    await addAccountMacro(page);
 
-    const error = await page.$('text=valid name is required');
+    const error = await page.$("text=valid name is required");
     expect(error).toBeTruthy();
   });
 
-  test('show error if another account with the same name already exists', async () => {
-    await signInMacro(page);
+  test("show error if another account with the same name already exists", async () => {
+    const name = accounts[0].name;
 
-    const account = 'savings';
-    await addAccountMacro(page, { account });
+    await addAccountMacro(page, { name });
 
-    await addAccountMacro(page, { account });
-
-    const error = await page.$('text=name is already in use');
+    const error = await page.$("text=name is already in use");
     expect(error).toBeTruthy();
   });
 });
