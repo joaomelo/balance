@@ -43,7 +43,7 @@ function createUpdateStore(store) {
 }
 
 function convertDocToItem(doc) {
-  const isTimestamp = (value) => !!value.toDate;
+  const isTimestamp = (value) => value && !!value.toDate;
 
   const docData = doc.data();
   const item = Object.entries(docData).reduce((item, [field, value]) => {
