@@ -1,8 +1,8 @@
-import { chromium } from 'playwright';
-import { signInMacro } from '../../auth/tests';
-import { addAccountMacro } from './macros';
+import { chromium } from "playwright";
+import { baseUrl, accountsByName } from "../../../../tests/fixtures";
+import { goToAccounts, editAccount, getContentOfId } from "./macros";
 
-describe('edit account', () => {
+describe("edit account", () => {
   let browser, page;
 
   beforeAll(async () => {
@@ -15,27 +15,21 @@ describe('edit account', () => {
 
   beforeEach(async () => {
     page = await browser.newPage();
+    await page.goto(baseUrl);
+    await goToAccounts(page);
   });
 
   afterEach(async () => {
     await page.close();
   });
 
-  test('edit account name', async () => {
-    await signInMacro(page);
+  test("edit account name", async () => {
+    const { id } = accountsByName.house;
+    const newName = "i'm a new name";
 
-    const account = 'savings';
-    await addAccountMacro(page, { account });
+    await editAccount(page, id, { name: newName });
 
-    const editButtonSelector = '[aria-label="edit"]';
-    await page.click(editButtonSelector);
-
-    const newName = 'credit card';
-    await page.fill('#inputName', newName);
-    await page.click('#buttonSave');
-
-    const nameCellSelector = '[role="cell"][data-field="name"]';
-    const nameCellText = await page.textContent(nameCellSelector);
+    const nameCellText = await getContentOfId(page, id, "name");
     expect(nameCellText).toBe(newName);
   });
 });

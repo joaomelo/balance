@@ -1,9 +1,9 @@
-import { chromium } from 'playwright';
-import { signInMacro } from '../../auth/tests';
-import { addAccountMacro } from '../../accounts/tests';
-import { addGroupMacro, goToGroupsMacro } from './macros';
+import { chromium } from "playwright";
+import { signInMacro } from "../../auth/tests";
+import { addAccount } from "../../accounts/tests";
+import { addGroupMacro, goToGroupsMacro } from "./macros";
 
-describe('list groups', () => {
+describe("list groups", () => {
   let browser, page;
 
   beforeAll(async () => {
@@ -22,21 +22,21 @@ describe('list groups', () => {
     await page.close();
   });
 
-  test('proper show accounts data in list', async () => {
-    const group = 'assets';
+  test("proper show accounts data in list", async () => {
+    const group = "assets";
 
     await signInMacro(page);
     await addGroupMacro(page, group);
 
     const accountsCellSelector = '[role="cell"][data-field="accountsNames"]';
     const emptyAccountsCellText = await page.textContent(accountsCellSelector);
-    expect(emptyAccountsCellText).toBe('');
+    expect(emptyAccountsCellText).toBe("");
 
-    const account1 = 'car';
-    await addAccountMacro(page, { group, account: account1 });
+    const account1 = "car";
+    await addAccount(page, { group, account: account1 });
 
-    const account2 = 'house';
-    await addAccountMacro(page, { group, account: account2 });
+    const account2 = "house";
+    await addAccount(page, { group, account: account2 });
 
     await goToGroupsMacro(page);
     const manyAccountsCellText = await page.textContent(accountsCellSelector);

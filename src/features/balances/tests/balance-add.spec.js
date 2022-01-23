@@ -1,9 +1,9 @@
-import { chromium } from 'playwright';
-import { signInMacro } from '../../auth/tests';
-import { addAccountMacro } from '../../accounts/tests';
-import { addBalanceMacro, goToBalancesMacro } from './macros';
+import { chromium } from "playwright";
+import { signInMacro } from "../../auth/tests";
+import { addAccount } from "../../accounts/tests";
+import { addBalanceMacro, goToBalancesMacro } from "./macros";
 
-describe('add balance', () => {
+describe("add balance", () => {
   let browser, page;
 
   beforeAll(async () => {
@@ -22,12 +22,12 @@ describe('add balance', () => {
     await page.close();
   });
 
-  const account = 'savings';
+  const account = "savings";
 
-  test('add balance to repository with correct data shape', async () => {
+  test("add balance to repository with correct data shape", async () => {
     await signInMacro(page);
 
-    await addAccountMacro(page, { account });
+    await addAccount(page, { account });
 
     await addBalanceMacro(page);
 
@@ -36,53 +36,55 @@ describe('add balance', () => {
     expect(accountNameCellText).toBe(account);
   });
 
-  test('show error if no account', async () => {
+  test("show error if no account", async () => {
     await signInMacro(page);
 
     await addBalanceMacro(page);
 
-    const error = await page.$('text=account is required');
+    const error = await page.$("text=account is required");
     expect(error).toBeTruthy();
   });
 
-  test('show error if no amount', async () => {
+  test("show error if no amount", async () => {
     await signInMacro(page);
 
-    await addAccountMacro(page, { account });
+    await addAccount(page, { account });
 
     await goToBalancesMacro(page);
-    await page.click('#buttonAddBalance');
-    await page.fill('#inputAmount', '');
-    await page.click('#buttonSave');
+    await page.click("#buttonAddBalance");
+    await page.fill("#inputAmount", "");
+    await page.click("#buttonSave");
 
-    const error = await page.$('text=amount is required');
+    const error = await page.$("text=amount is required");
     expect(error).toBeTruthy();
   });
 
-  test('show error if invalid date', async () => {
+  test("show error if invalid date", async () => {
     await signInMacro(page);
 
-    await addAccountMacro(page, { account });
+    await addAccount(page, { account });
 
     await goToBalancesMacro(page);
-    await page.click('#buttonAddBalance');
-    await page.press('#inputDate', 'Delete');
-    await page.fill('#inputAmount', '500');
-    await page.click('#buttonSave');
+    await page.click("#buttonAddBalance");
+    await page.press("#inputDate", "Delete");
+    await page.fill("#inputAmount", "500");
+    await page.click("#buttonSave");
 
-    const error = await page.$('text=date is required');
+    const error = await page.$("text=date is required");
     expect(error).toBeTruthy();
   });
 
-  test('show error if attempt to add same date to the same account more than once', async () => {
+  test("show error if attempt to add same date to the same account more than once", async () => {
     await signInMacro(page);
 
-    await addAccountMacro(page, { account });
+    await addAccount(page, { account });
 
     await addBalanceMacro(page);
     await addBalanceMacro(page);
 
-    const error = await page.$('text=already has a recorded balance for this date');
+    const error = await page.$(
+      "text=already has a recorded balance for this date"
+    );
     expect(error).toBeTruthy();
   });
 });

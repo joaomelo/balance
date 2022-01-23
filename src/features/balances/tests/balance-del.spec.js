@@ -1,9 +1,9 @@
-import { chromium } from 'playwright';
-import { signInMacro } from '../../auth/tests';
-import { addAccountMacro } from '../../accounts/tests';
-import { addBalanceMacro } from './macros';
+import { chromium } from "playwright";
+import { signInMacro } from "../../auth/tests";
+import { addAccount } from "../../accounts/tests";
+import { addBalanceMacro } from "./macros";
 
-describe('del balance', () => {
+describe("del balance", () => {
   let browser, page;
 
   beforeAll(async () => {
@@ -22,11 +22,11 @@ describe('del balance', () => {
     await page.close();
   });
 
-  test('del balance', async () => {
+  test("del balance", async () => {
     await signInMacro(page);
 
-    const account = 'savings';
-    await addAccountMacro(page, { account });
+    const account = "savings";
+    await addAccount(page, { account });
     await addBalanceMacro(page);
 
     const accountNameCellSelector = '[role="cell"][data-field="accountName"]';

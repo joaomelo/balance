@@ -11,12 +11,13 @@ const click = (page, sel) => page.locator(sel).click();
 const clickById = (page, id, label) => click(page, buttonOfId(id, label));
 
 export const listSelectors = {
-  idByContent: async (page, content) => {
+  getIdOfContent: async (page, content) => {
     const row = await page.locator(rowWithContent(content));
     const id = await row.evaluate((r) => r.dataset.id);
     return id;
   },
-  fieldById: (page, id, field) =>
+  getContentOfId: (page, id, field) =>
     text(page, `${rowWithId(id)} >> ${cell(field)}`),
-  deleteById: (page, id) => clickById(page, id, "delete"),
+  callDelete: (page, id) => clickById(page, id, "delete"),
+  callEdit: (page, id) => clickById(page, id, "edit"),
 };

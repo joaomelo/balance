@@ -1,8 +1,7 @@
 import { chromium } from "playwright";
 import { baseUrl, accountsByName } from "../../../../tests/fixtures";
 import { goToBalancesMacro } from "../../balances/tests";
-import { goToAccountsMacro } from "./macros";
-import { listSelectors } from "./selectors";
+import { goToAccounts, callDelete } from "./macros";
 
 describe("del account", () => {
   let browser, page;
@@ -18,6 +17,7 @@ describe("del account", () => {
   beforeEach(async () => {
     page = await browser.newPage();
     await page.goto(baseUrl);
+    await goToAccounts(page);
   });
 
   afterEach(async () => {
@@ -25,10 +25,8 @@ describe("del account", () => {
   });
 
   test("del account and respective balances", async () => {
-    await goToAccountsMacro(page);
-
     const { id, name } = accountsByName.house;
-    await listSelectors.deleteById(page, id);
+    await callDelete(page, id);
 
     const isAccountDeleted = await page.locator(name).isHidden();
     expect(isAccountDeleted).toBeTruthy();
