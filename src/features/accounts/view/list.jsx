@@ -2,20 +2,21 @@ import { useState } from "react";
 import { GridToolbar, DataGrid } from "@material-ui/data-grid";
 import { DateTime } from "luxon";
 import { ActionCell } from "../../../libs/components/action-cell";
+import { useCommand } from "../../../libs/hooks/command";
+import { useStream } from "../../../libs/hooks/stream";
 import { useSwitch } from "../../../libs/hooks/switch";
 import { AccountDialog } from "./dialog";
 
-export function AccountsList({
-  accounts,
-  groups,
-  onDel,
-  onEdit,
-  error,
-  isLoading,
-}) {
-  const [initialPayload, setInitialPayload] = useState({});
-  const [isOpen, open, close] = useSwitch();
+export function AccountsList({ dependencies }) {
+  const { accountsQuery, accountsCommands } = dependencies;
 
+  const accounts = useStream(accountsQuery);
+  const rows = accounts.map(mapAccountToRow);
+
+  const [del] = useCommand(accountsCommands.del);
+
+  const [isOpen, open, close] = useSwitch();
+  const [initialPayload, setInitialPayload] = useState({});
   const handleEditClick = (id) => {
     const { name, groupId } = accounts.find((a) => a.id === id);
     setInitialPayload({ id, name, groupId });
@@ -67,20 +68,13 @@ export function AccountsList({
         return (
           <ActionCell
             id={params.id}
-            onDelClick={(id) => onDel({ id })}
+            onDelClick={(id) => del({ id })}
             onEditClick={handleEditClick}
           />
         );
       },
     },
   ];
-
-  const rows = accounts.map((a) => {
-    const { balances, ...accountData } = a;
-    const { date, amount } =
-      balances.length > 0 ? balances[0] : { date: null, amount: null };
-    return { date, amount, ...accountData };
-  });
 
   return (
     <>
@@ -96,14 +90,18 @@ export function AccountsList({
       {isOpen && (
         <AccountDialog
           initialPayload={initialPayload}
-          groups={groups}
-          error={error}
-          onSubmit={onEdit}
           isOpen={isOpen}
           onClose={close}
-          isLoading={isLoading}
+          dependencies={dependencies}
         />
       )}
     </>
   );
+}
+
+function mapAccountToRow(a) {
+  const { balances, ...accountData } = a;
+  const { date, amount } =
+    balances.length > 0 ? balances[0] : { date: null, amount: null };
+  return { date, amount, ...accountData };
 }

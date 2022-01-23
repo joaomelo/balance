@@ -1,31 +1,25 @@
 import { MenuItem, TextField } from "@material-ui/core";
-import { usePayload } from "../../../libs/hooks/payload";
+import { useDialog } from "../../../libs/hooks/dialog";
+import { useStream } from "../../../libs/hooks/stream";
 import { ErrorAlert } from "../../../libs/components/error-alert";
 import { ItemDialog } from "../../../libs/components/item-dialog";
-import { useI18n } from "../../../libs/hooks/i18n";
-import { createErrorReport } from "../../../libs/errors";
 
 export function AccountDialog({
   initialPayload,
-  groups,
-  error,
-  onSubmit,
   isOpen,
   onClose,
-  isLoading,
+  dependencies,
 }) {
-  const t = useI18n();
-  const { payload, bind, reset } = usePayload(initialPayload);
-  const handleSubmit = async () => {
-    const success = await onSubmit(payload);
-    if (success) {
-      reset();
-      onClose();
-    }
-  };
+  const { accountsCommands, groupsQuery } = dependencies;
 
-  const errorReport = createErrorReport(error, {
-    name: ["ACCOUNTS/NAME_INVALID", "ACCOUNTS/NON_UNIQUE_NAME"],
+  const groups = useStream(groupsQuery);
+  const { submit, bind, error, isLoading } = useDialog({
+    command: accountsCommands.set,
+    initialPayload,
+    errorSchema: {
+      name: ["ACCOUNTS/NAME_INVALID", "ACCOUNTS/NON_UNIQUE_NAME"],
+    },
+    onSuccess: onClose,
   });
 
   return (
@@ -34,11 +28,11 @@ export function AccountDialog({
       isLoading={isLoading}
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit}
+      onSubmit={submit}
     >
-      <NameField error={t(errorReport.name)} {...bind("name")} />
+      <NameField error={error("name")} {...bind("name")} />
       <GroupField groups={groups} {...bind("groupId")} />
-      <ErrorAlert>{t(errorReport.escaped)}</ErrorAlert>
+      <ErrorAlert>{error("escaped")}</ErrorAlert>
     </ItemDialog>
   );
 }
