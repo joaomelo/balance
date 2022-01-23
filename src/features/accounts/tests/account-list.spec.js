@@ -37,10 +37,10 @@ describe("list accounts", () => {
   test("account with balances show date and amount of the last balances", async () => {
     const id = accountsByName.cc.id;
 
-    const dateCellText = await listSelectors.fieldById(id, "date");
+    const dateCellText = await listSelectors.fieldById(page, id, "date");
     expect(dateCellText).toEqual(expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/));
 
-    const amountCellText = await listSelectors.fieldById(id, "amount");
+    const amountCellText = await listSelectors.fieldById(page, id, "amount");
     expect(amountCellText).toEqual(expect.stringMatching(/^\$\d+\.\d{2}$/));
   });
 });
