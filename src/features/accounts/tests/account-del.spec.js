@@ -25,35 +25,16 @@ describe("del account", () => {
   });
 
   test("del account and respective balances", async () => {
-    const { id, name } = accountsByName.house;
-
     await goToAccountsMacro(page);
 
-    const nameCellText = await listSelectors.fieldById(page, id, "name");
-    expect(nameCellText).toBe(name);
+    const { id, name } = accountsByName.house;
+    await listSelectors.deleteById(page, id);
 
-    await listSelectors.clickById(page, id, "delete");
-    // const delButtonSelector = '[aria-label="delete"]';
-    // await page.click(delButtonSelector);
+    const isAccountDeleted = await page.locator(name).isHidden();
+    expect(isAccountDeleted).toBeTruthy();
 
-    // const accountNameCell = await page.$(accountNameCellSelector);
-    // expect(accountNameCell).toBeNull();
-
-    // const accountNameCellSelector = '[role="cell"][data-field="name"]';
-    // const accountNameCellText = await page.textContent(accountNameCellSelector);
-    // expect(accountNameCellText).toBe(account);
-
-    // await addBalanceMacro(page);
-
-    // const balanceAccountNameSelector =
-    //   '[role="cell"][data-field="accountName"]';
-    // const balanceAccountNameText = await page.textContent(
-    //   balanceAccountNameSelector
-    // );
-    // expect(balanceAccountNameText).toBe(account);
-
-    // await goToBalancesMacro(page);
-    // const balanceAccountNameCell = await page.$(balanceAccountNameSelector);
-    // expect(balanceAccountNameCell).toBeNull();
+    await goToBalancesMacro(page);
+    const areBalancesDeleted = await page.locator(name).isHidden();
+    expect(areBalancesDeleted).toBeTruthy();
   });
 });
