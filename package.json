@@ -3,9 +3,6 @@
   "version": "0.32.12",
   "description": "Balance records accounts balances (from credit cards or loans for example) and show their evolution in a chart.",
   "main": "dist/index.html",
-  "scripts": {
-    "start": "npx sqript --length=7"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joaomelo/balance.git"
